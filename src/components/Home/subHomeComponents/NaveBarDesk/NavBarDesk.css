@@ -1,0 +1,10 @@
+.NavBarForDesk #logo{
+  font-family: "Style Script", cursive;
+  font-weight: bold;
+  font-style: normal;
+  font-size: 40px;
+  padding: 15px;
+}
+.NavBarForDesk{
+  border-right: 1px solid;
+}

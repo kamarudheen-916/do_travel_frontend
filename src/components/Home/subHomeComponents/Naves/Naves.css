@@ -1,0 +1,9 @@
+@media (max-width : 300px){
+    .nav_icon{
+        font-size: small;
+    }
+}
+
+.naves:hover{
+    cursor: pointer;
+}

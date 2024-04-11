@@ -1,0 +1,73 @@
+::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: rgb(193, 193, 193); 
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(90, 90, 90); 
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: black; 
+  }
+
+.signup{
+    display: flex;
+    justify-content: space-between;
+    
+}
+.Sidebar_signUp{
+    width: 572px;
+    height: 100dvh;
+    background: #333333;
+    
+}
+.center{
+   height: 100dvh;
+   background-image: url('../../../public/images/loginpageImage-8.jpg');
+   width: 100%;
+   background-size: cover;
+   min-width: 500px;
+}
+.SignUpform{
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    padding: 0px;
+    height: 550px;
+    border-radius: 5px 0 0 5px ;
+
+}
+.SignUpform form{
+    box-shadow: 0 0 20px rgba(0, 0, 0, 1);
+    background: #000000c3;
+    min-width: 500px;
+    max-width: 500px;
+    overflow-y: scroll;
+}
+.logo{
+    color: black;
+    position: sticky;
+    top: 0px;
+    margin-bottom: 40px;
+    background-color: rgba(255, 255, 255, 0);
+    font-size: 60px;
+    font-weight: bold;
+    margin-top: 40px;
+}
+
+@media (max-width : 640px){
+  .Sidebar_signUp{
+    display: none;
+  }
+  .SignUpform{
+    height: 75dvh;
+}
+}

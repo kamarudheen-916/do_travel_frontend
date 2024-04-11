@@ -1,0 +1,19 @@
+#logo{
+    font-family: "Style Script", cursive;
+  font-weight: bold;
+  font-style: normal;
+  font-size: 40px;
+  padding: 15px;
+}
+@media (max-width : 412px){
+  #logo{
+    font-size: 30px;
+  }
+
+}
+@media (max-width : 385px){
+  #logo{
+    font-size: 23px;
+  }
+
+}
