@@ -1,0 +1,61 @@
+.ProfileModalOverly{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,.8);
+    z-index: 1000;
+}
+.P_modal{
+    margin-right: 200px; 
+    /* width: 80%; */
+    height: 100dvh;
+    max-width: 1000px;
+    min-width: 300px;
+    position: fixed;
+    /* top: 6%; */
+    left: 27%;
+    transform: (-50%, -50%);
+    background-color: rgb(255, 255, 255);
+    /* padding: 10px; */
+    z-index: 1000;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px rgba(255, 255, 255, 0.1);
+    overflow-y: scroll;
+}
+
+.modal_body{
+ 
+}
+.closeButton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
+    position: fixed;
+    top: 1px;
+    right:  0px;
+  }
+
+ .closeButton span{
+    background-color:#58c385;
+    padding: 1px 7px;
+    border-radius: 5px;
+    color: aliceblue;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+ } 
+ .closeButton span:active{
+    background-color: rgb(197, 4, 4);
+ }
+ .closeButton div{
+    font-size: large;
+    font-weight: bold;
+ }
+@media (max-width:850px) {
+    .P_modal{
+        left: 8%;
+    }
+}

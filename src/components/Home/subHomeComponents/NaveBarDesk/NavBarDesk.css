@@ -6,5 +6,6 @@
   padding: 15px;
 }
 .NavBarForDesk{
-  border-right: 1px solid;
+  border-right: 1px solid rgb(223, 223, 223);
+  background: var(--bg-color);
 }

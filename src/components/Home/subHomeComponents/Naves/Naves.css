@@ -6,4 +6,17 @@
 
 .naves:hover{
     cursor: pointer;
+ 
+    background: rgba(153, 188, 161, 1);
+}
+.naves:active{
+    border-radius: 50px;
+    background: rgba(153, 188, 161, 1);
+}
+
+.icon{
+    color: var(--icon-color);
+}
+#nav_iconName h1 {
+    color:var( --nav-text-color)
 }

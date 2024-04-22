@@ -1,10 +1,6 @@
 
-import axios,{AxiosInstance} from "axios"
+import axiosInstance from "../services/axios"
 import {UserFormData,PropertyFormData, LoginFormData,forgetFormData} from '../Interfaces/interfaces'
-
-const axiosInstance : AxiosInstance =  axios.create({
-    baseURL:'http://localhost:3000/api'
-})
 
 export const SignupApi = (FormData : UserFormData | PropertyFormData,route:string,userType:string):Promise<any>=>{
    return  axiosInstance.post(`/user/${route}`,{FormData,userType})
@@ -38,4 +34,18 @@ export const ResendOTP = async (userType: string, email: string) => {
   
 export const forgottenAPI = (data:{forgetFormData:forgetFormData,userType:string})=>{
     return axiosInstance.post(`/user/forgottenPassword`,data)
+}
+
+export const userCreateShareAPI =async (data:{fileUrl:string,textarea:string,userId:string|null,userType:string|null})=>{
+  return  await axiosInstance.post(`/user/userCreate`,data)
+}
+
+
+export const getAllPostsAPI= async () =>{
+  try {
+    return await axiosInstance.get(`/user/getAllPost/`)
+  } catch (error) {
+    console.log('getAllPostsAPI error :',error);
+    
+  }
 }

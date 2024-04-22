@@ -1,7 +1,7 @@
 import React from 'react'
 import Input from '../atoms/Input/Input'
 import Dropdown from '../atoms/DropDown/DropDown'
-import './Signup.css'
+import '../../pages/Signup/Signup.css'
 import { useEffect, useState } from 'react'
 import { UserFormData } from '../../Interfaces/interfaces'
 import axios from 'axios'
@@ -27,6 +27,8 @@ const  userpart : React.FC<UserPartProps> = ({userFormData,setUserFormData}) => 
     const handleChange =(e :  React.ChangeEvent<HTMLInputElement>)=>{
         const file = e.target.files?.[0];
         if (file) {
+            
+            
             const imageUrl = URL.createObjectURL(file); 
             setSelectedImage(imageUrl); 
             const reader = new FileReader();

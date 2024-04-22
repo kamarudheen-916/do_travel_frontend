@@ -1,4 +1,4 @@
-import OtpForm from "./OtpForm"
+import OtpForm from "../../components/OtpForm"
 function Otp() {
   return (
     <div className='Parant'>

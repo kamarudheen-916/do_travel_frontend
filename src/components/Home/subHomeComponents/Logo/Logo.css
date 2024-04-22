@@ -4,6 +4,7 @@
   font-style: normal;
   font-size: 40px;
   padding: 15px;
+  color: var( --nav-text-color);
 }
 @media (max-width : 412px){
   #logo{

@@ -53,3 +53,20 @@ export interface SetErrorLabelValue {
     name:string,
     message : string,
 }
+
+
+export interface comments {
+    comment:string,
+    id:string,
+    commet_likes:number
+}
+export interface userPost {
+    _id: string;
+    userId: string;
+    post: string;
+    description: string;
+    comments: comments[]; 
+    date: string;
+    like:number
+  
+  }

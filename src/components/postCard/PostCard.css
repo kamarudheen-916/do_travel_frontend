@@ -1,0 +1,32 @@
+.ChatWithResort{
+    background: var(--button-bg-color);
+    color: var(--button-text-color);
+    padding: var(--button-padding);
+    border-radius: var(--button-border-radius);
+}
+.postBody{
+    background: var(--bg-color);
+    max-width: 630px;
+}
+.postCardImage img{
+    width: 100%;
+}
+.PostCardDescription{
+    padding: 10px 10px;
+}
+.likeDiv{
+    padding: 0px 10px;
+}
+
+.comments_Component {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease, max-height 0.5s ease;
+  }
+  
+  .comments_Component.active {
+    opacity: 1;
+    max-height: 1000px; 
+  }
+  

@@ -1,8 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom'
-import Button from '../atoms/Button/Button'
-import Input from '../atoms/Input/Input'
+import Button from './atoms/Button/Button'
+import Input from './atoms/Input/Input'
 import React, { useEffect, useState } from 'react'
-import { ResendOTP, verifyOTPApi } from '../../APIs/api'
+import { ResendOTP, verifyOTPApi } from '../APIs/UserAPI'
 import { useLocation } from 'react-router-dom'
 function OtpForm() {
   const { state } = useLocation();  

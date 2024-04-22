@@ -1,9 +1,9 @@
 import { Link, useNavigate } from 'react-router-dom'
-import Button from '../atoms/Button/Button'
-import Input from '../atoms/Input/Input'
+import Button from './atoms/Button/Button'
+import Input from './atoms/Input/Input'
 import { useState } from 'react';
-import { forgetFormData } from '../../Interfaces/interfaces';
-import { forgottenAPI } from '../../APIs/api';
+import { forgetFormData } from '../Interfaces/interfaces';
+import { forgottenAPI } from '../APIs/UserAPI';
 
 function ForgottenForm() {
   const navigate = useNavigate()

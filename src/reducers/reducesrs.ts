@@ -27,3 +27,8 @@ export const  authReducer  =(state:any=initialState,action:any)=>{
     
 }
 
+
+export const reRender =(state :any={reRender : false},action:any)=>{
+    state.reRender = action
+    return state
+}

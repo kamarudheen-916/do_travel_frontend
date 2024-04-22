@@ -2,7 +2,42 @@
 @tailwind components;
 @tailwind utilities;
 
-*{
-    box-sizing: border-box;
-    overflow-y: hidden;
+* {
+  box-sizing: border-box;
+  overflow-y: hidden;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgb(193, 193, 193); 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(90, 90, 90); 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: black; 
+}
+
+:root {
+  --button-bg-color: #0a5f1e; 
+  --button-text-color:rgb(255, 255, 255);
+  --button-font-weight:500;
+  --button-padding:5px 15px;
+  --button-border-radius:5px;
+  --nav-text-color:#000000;
+  --bg-color:white;
+  --icon-color:#158d31;
+  
+}
+body{
+  background: #ffffff;
+  height: 100dvh;
 }

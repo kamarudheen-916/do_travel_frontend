@@ -1,11 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom'
-import Button from '../atoms/Button/Button'
-import Input from '../atoms/Input/Input'
+import Button from './atoms/Button/Button'
+import Input from './atoms/Input/Input'
 import { useState } from 'react'
-import { LoginFormData } from '../../Interfaces/interfaces'
-import { loginAPI } from '../../APIs/api'
+import { LoginFormData } from '../Interfaces/interfaces'
+import { loginAPI } from '../APIs/UserAPI'
 import { useDispatch } from 'react-redux'
 function LoginForm() {
+  
   const [userType, setUserType] = useState<string>('user'); 
   const handleUserTypeChange = (event:React.ChangeEvent<HTMLInputElement>) => {
     setUserType(event.target.value);
@@ -29,16 +30,19 @@ function LoginForm() {
     e.preventDefault()
     const loginResponse = await loginAPI(loginFormData,userType)
     if(loginResponse.data.success){
-      console.log(loginResponse.data);
+      console.log('------------===========',loginResponse.data.user);
       localStorage.setItem('token',loginResponse.data.token)
       if(userType === 'user'){
         localStorage.setItem('userName',loginResponse.data.user.firstName)
         localStorage.setItem('userProfile',loginResponse.data.user.Profile)
+        localStorage.setItem('userId',loginResponse.data.user._id)
+        localStorage.setItem('userType',userType)
         }
         else{
         localStorage.setItem('userName',loginResponse.data.user.PropertyName)
         localStorage.setItem('userProfile',loginResponse.data.user.PropertyProfile)
-
+        localStorage.setItem('userId',loginResponse.data.user._id)
+        localStorage.setItem('userType',userType)
         }
       Dispatch({type:'login_successful',payload:loginResponse.data.token})
       navigate('/')

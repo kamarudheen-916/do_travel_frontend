@@ -1,4 +1,4 @@
-import ForgottenForm from "./ForgottenForm"
+import ForgottenForm from "../../components/ForgottenForm"
 function Forgotten() {
   return (
     <div>

@@ -29,8 +29,8 @@ const Input : React.FC<Props>=(props) =>{
     }
   };
   return (
-    <div className='flex flex-col'>
-        <label className='label ' htmlFor="userName">{props.title}</label>
+    <div  className='Input flex flex-col'>
+        <label className='label ' htmlFor="">{props.title}</label>
         <input      
                     className='input w-full'
                     placeholder={props.placeholder}
@@ -47,9 +47,7 @@ const Input : React.FC<Props>=(props) =>{
                     onFocus={handleFocus}
                     data-focused = {focused.toString()}
         />
-        <span  className='errorLabel text-left'>{props.errorLabelValue}</span>
-
-               
+        <span  className='errorLabel text-left'>{props.errorLabelValue}</span>               
   </div>
   )
 }

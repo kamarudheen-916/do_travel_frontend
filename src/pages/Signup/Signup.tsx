@@ -1,10 +1,10 @@
-import Userpart from './userpart'
-import Button from '../atoms/Button/Button'
+import Userpart from '../../components/signup/userpart'
+import Button from '../../components/atoms/Button/Button'
 import './Signup.css'
 import { Link,useNavigate } from 'react-router-dom'
-import PropertyPart from './PropertyPart'
+import PropertyPart from '../../components/signup/PropertyPart'
 import { useState } from 'react'
-import { SignupApi } from '../../APIs/api'
+import { SignupApi } from '../../APIs/UserAPI'
 
 function Signup() {
   

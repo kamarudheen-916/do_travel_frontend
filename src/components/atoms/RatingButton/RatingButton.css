@@ -1,0 +1,6 @@
+.RatingButton{
+    background: var(--button-bg-color);
+    color: var(--button-text-color);
+    padding: var(--button-padding);
+    border-radius: var(--button-border-radius);
+}
