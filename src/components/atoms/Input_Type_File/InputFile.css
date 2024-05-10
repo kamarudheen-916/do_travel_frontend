@@ -1,0 +1,18 @@
+
+#uploadFile[type=file]{
+    display: none;
+}
+.inputFileMain label {
+    background: #178244;
+    border-radius: 5px;
+    padding: 8px;
+    display: inline-block;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.inputFileMain label:hover {
+    background: #136933;
+}

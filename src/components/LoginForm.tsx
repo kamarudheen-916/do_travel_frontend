@@ -5,6 +5,8 @@ import { useState } from 'react'
 import { LoginFormData } from '../Interfaces/interfaces'
 import { loginAPI } from '../APIs/UserAPI'
 import { useDispatch } from 'react-redux'
+import Cookies from 'js-cookie'
+import Logo from './Home/subHomeComponents/Logo/Logo'
 function LoginForm() {
   
   const [userType, setUserType] = useState<string>('user'); 
@@ -30,19 +32,22 @@ function LoginForm() {
     e.preventDefault()
     const loginResponse = await loginAPI(loginFormData,userType)
     if(loginResponse.data.success){
-      console.log('------------===========',loginResponse.data.user);
       localStorage.setItem('token',loginResponse.data.token)
       if(userType === 'user'){
         localStorage.setItem('userName',loginResponse.data.user.firstName)
         localStorage.setItem('userProfile',loginResponse.data.user.Profile)
         localStorage.setItem('userId',loginResponse.data.user._id)
         localStorage.setItem('userType',userType)
+        Cookies.set('userType',userType)
+        Cookies.set('userId',loginResponse.data.user._id)
         }
         else{
         localStorage.setItem('userName',loginResponse.data.user.PropertyName)
         localStorage.setItem('userProfile',loginResponse.data.user.PropertyProfile)
         localStorage.setItem('userId',loginResponse.data.user._id)
         localStorage.setItem('userType',userType)
+        Cookies.set('userType',userType)
+        Cookies.set('userId',loginResponse.data.user._id)
         }
       Dispatch({type:'login_successful',payload:loginResponse.data.token})
       navigate('/')
@@ -51,11 +56,14 @@ function LoginForm() {
     }
   }
   return (
-    <div className='w-full flex justify-center items-center mt-20' >
-                  <form onSubmit={(e:any)=>handleLoginSubmit(e)} action="" className='LoginForm p-8  rounded '>
-                  <div className='text-white text-2xl mb-10 font-bold text-center'>Login</div>
-                       <div className='flex justify-around text-white mb-3'>
-                            <div className='flex justify-around w-full border-2 rounded-md'>
+    <div className='w-full flex justify-center items-center mt-20 ' >
+                  <form onSubmit={(e:any)=>handleLoginSubmit(e)} action="" className='LoginForm px-6 py-3  rounded-lg border-2 border-green-600'>
+                  <div className=' text-2xl mb-6 font-bold  text-center '>
+                    <div><Logo /></div>
+                    <h1 style={{ color: 'var(--icon-color)' }}>Login</h1>
+                    </div>
+                       <div className='flex justify-around text-green-800 mb-3 gap-3'>
+                            <div className='flex justify-around w-full border-2 border-green-600 text rounded-md'>
                                 <label htmlFor="userRadio">User</label>
                                 <input
                                         
@@ -67,7 +75,7 @@ function LoginForm() {
                                         onChange={handleUserTypeChange} // Update user type when radio button is clicked
                                     />    
                             </div>  
-                            <div className='flex justify-around w-full border-2 rounded-md'>
+                            <div className='flex justify-around w-full border-2 border-green-600 text rounded-md'>
                                 <label htmlFor="properyRadio">Property</label>
                                 <input
                                         type="radio"
@@ -88,6 +96,7 @@ function LoginForm() {
                           type={'email'}
                           title={'User Email'}
                           name={'email'}
+                          placeholder='Enter Email'
                         />
                         <Input 
                           pattern={`^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`}
@@ -98,13 +107,14 @@ function LoginForm() {
                           type={'password'} 
                           title={'Password'} 
                           name={'password'}
+                          placeholder='Enter Password'
                         />
                         <div>
-                            <Button  name={'Submit'}/>
+                            <Button  bgcolor='#178834' font_color='#ffff' name={'Submit'}/>
                         </div>
                         <div className='mt-5 flex justify-between'>
-                          <Link className='text-blue-200 mr-6' to={'/forgottenPassword'}>Forgotten Password?</Link>
-                          <Link className='text-blue-200 ' to={'/signup'}>Create New Account</Link>
+                          <Link className='text-green-400 mr-6' to={'/forgottenPassword'}>Forgotten Password?</Link>
+                          <Link className='text-green-400 ' to={'/signup'}>Create New Account</Link>
                         </div>
                         <div className='mt-6 text-center'>
                           <a href="" className='text-white '> <i className="fa-brands fa-google" style={{color:'white'}}></i> Login with google  </a>

@@ -12,12 +12,24 @@ import Home from "./pages/home/Home";
 import Profile from "./pages/Profile/Profile";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 import { RootState } from "./redux/store";
+import OthersProfle from "./pages/OthersProfile/OthersProfle";
+import AdminLogin from "./pagesAdmin/adminLogin";
+import AdminSignup from "./pagesAdmin/AdminSignup";
+import AdminHome from "./pagesAdmin/AdminHome";
+import AdminUser from "./pagesAdmin/AdminUser";
+import AdminProperty from "./pagesAdmin/AdminProperty";
+import AdminBookings from "./pagesAdmin/AdminBookings";
+import AdminReports from "./pagesAdmin/AdminReports";
+import AdminPosts from "./pagesAdmin/AdminPosts";
+import AdminRooms from "./pagesAdmin/AdminRooms";
+import Notificatoin from "./pages/Notifications/Notificatoin";
 
 export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 function App() {
   const token = useTypedSelector((state) => state.auth.token);
   return (
+
     <Router>
       <Routes>
         <Route
@@ -42,8 +54,53 @@ function App() {
           path="/userProfile"
           element ={token ? <Profile/> : <Navigate to={'/login'}/>} 
           />
+          <Route
+          path="/notifications"
+          element ={token ? <Notificatoin/> : <Navigate to={'/login'}/>} 
+          />
+        <Route
+          path="/OthersProfile/:profileId/:isProperty" 
+          element ={token ? <OthersProfle /> : <Navigate to={'/login'}/>} 
+        />
+        <Route
+          path="/adminLogin"
+          element={<AdminLogin/>}
+        />
+         <Route
+          path="/adminSignup"
+          element={<AdminSignup/>}
+        />
+         <Route
+          path="/adminHome"
+          element={<AdminHome/>}
+        />
+        <Route
+          path="/adminUser"
+          element={<AdminUser/>}
+        />
+        <Route
+          path="/adminProperties"
+          element={<AdminProperty/>}
+        />
+        <Route
+          path="/adminBookings"
+          element={<AdminBookings/>}
+        />
+        <Route
+          path="/adminReports"
+          element={<AdminReports/>}
+        />
+        <Route
+          path="/adminPosts"
+          element={<AdminPosts/>}
+        />
+        <Route
+          path="/adminRooms"
+          element={<AdminRooms/>}
+        />
       </Routes>
     </Router>
+
   );
 }
 export default App;

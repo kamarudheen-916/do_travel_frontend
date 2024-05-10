@@ -1,42 +1,30 @@
 
 
-.signup{
-    display: flex;
-    justify-content: space-between;
-    
-}
-.Sidebar_signUp{
-    width: 572px;
-    height: 100dvh;
-    background: #333333;
-    
-}
 .center{
-   height: 100dvh;
-   background-image: url('../../../public/images/loginpageImage-8.jpg');
-   width: 100%;
-   background-size: cover;
    min-width: 500px;
 }
 .SignUpform{
-    width: 100%;
     text-align: center;
     display: flex;
     justify-content: center;
+    margin-top: 50px;
+    /* flex-direction: column; */
     padding: 0px;
-    height: 550px;
-    border-radius: 5px 0 0 5px ;
-
+    max-height: 650px;
+    
 }
 .SignUpform form{
-    box-shadow: 0 0 20px rgba(0, 0, 0, 1);
-    background: #000000c3;
     min-width: 500px;
     max-width: 500px;
-    overflow-y: scroll;
+    padding: 10px;
+    border: 1px solid #178433;
+    border-radius: 5px ;
+    overflow-y: auto;
+  
+
 }
 .logo{
-    color: black;
+    color: rgb(20, 141, 42);
     position: sticky;
     top: 0px;
     margin-bottom: 40px;

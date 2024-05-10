@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { userPost } from '../../Interfaces/interfaces'
+import { userPost } from '../../../Interfaces/interfaces'
 import './PostCard.css'
 import LikeDiv from '../postLikeDiv/likeDiv'
 import Comments from '../postComment/Comments'
@@ -17,7 +17,9 @@ const PostCard : React.FC<userPost> =(props)=> {
               <div className="topDiv flex justify-between items-center mt-5 mb-3">
                   <div className="profileAndName flex items-center  ml-3">
                     <div className="profileImageOnHome">
-                      <img src={profile} alt="" />
+                      {profile ===''?
+                        <i className="fa-solid fa-user" style={{ fontSize: "30px" }}></i> :
+                        <img src={profile} alt="" />}
                     </div>
                     <div className="profileAndName font-medium ml-3">
                       <h1>{userName}</h1>
@@ -29,7 +31,7 @@ const PostCard : React.FC<userPost> =(props)=> {
                     </button>
                   </div> */}
                 </div>
-                <div className="postCardImage rounded">
+                <div className="postCardImage ">
                   <img src={props.post} alt="" />
                 </div>
                 <div >

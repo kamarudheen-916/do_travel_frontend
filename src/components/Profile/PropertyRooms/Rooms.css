@@ -1,0 +1,51 @@
+.roomsMainDiv{
+    border: 1px solid #178244;
+    padding: 5px;
+}
+.roomName{
+    font-weight: bold;
+    font-size: larger;
+    color: #13b456; ;
+}
+.reviewsSpan{
+    font-weight: 100;
+}
+.reviewDiv{
+    display: flex;
+    line-height: 16px;
+}
+.reviewDiv .review h1{
+ font-weight: bold;
+ font-size: 16px;
+}
+.reviewDiv .review span{
+    font-size: 12px;
+    margin-left: 3px;
+}
+.reviewIcon h1{
+    background: #178244;
+    color: aliceblue;
+    padding: 5px;
+    border-radius: 5px 5px 5px 0;
+    margin-left: 4px;
+}
+.roomPrice{
+    text-align: end;
+}
+.roomPrice span{
+    color: rgb(193, 23, 23);
+    font-size: small;
+    text-decoration: line-through;
+}
+.roomPrice h1{
+    font-size: x-large;
+    color: #178244;
+}
+.numberOfdays{
+    font-size: small;
+    text-align: end;
+}
+.cancellation{
+    font-size:small ;
+    color: #13b456;
+}

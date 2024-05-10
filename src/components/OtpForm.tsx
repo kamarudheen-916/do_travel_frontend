@@ -4,6 +4,7 @@ import Input from './atoms/Input/Input'
 import React, { useEffect, useState } from 'react'
 import { ResendOTP, verifyOTPApi } from '../APIs/UserAPI'
 import { useLocation } from 'react-router-dom'
+import Logo from './Home/subHomeComponents/Logo/Logo'
 function OtpForm() {
   const { state } = useLocation();  
   const navigate = useNavigate()
@@ -72,11 +73,14 @@ function OtpForm() {
     <div>
             <div>
             <div className='w-full flex justify-center items-center mt-20' >
-                  <form action=""  className='LoginForm p-8  rounded '>
-                      <div className='text-white text-2xl mb-10 font-bold text-center'>Enter OTP</div>
+                  <form action=""  className='LoginForm p-8  rounded  rounded-lg border-2 border-green-600'>
+                  <div className=' text-2xl mb-6 font-bold  text-center '>
+                    <div><Logo /></div>
+                    <h1 style={{ color: 'var(--icon-color)' }}>Login</h1>
+                    </div>
                         <Input onChange={(e)=>otpChange(e)} placeholder='Enter OTP' type={'text'} title={'Enter OTP'} name={'otp'}/>
                         <div>
-                            <Button onSubmit={handleOTP} name={'Submit'}/>
+                            <Button bgcolor='#178834' font_color='#ffff' onSubmit={handleOTP} name={'Submit'}/>
                         </div>
                         <div className='mt-5 text-center'>
                           <div>

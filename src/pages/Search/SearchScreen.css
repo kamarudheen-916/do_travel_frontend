@@ -1,0 +1,87 @@
+/* SearchScreen.css */
+.search-screen {
+    position: fixed;
+    top: 0;
+    left: 42%;
+    width: 400px;
+    height: 100dvh;
+    background-color: #ffffffce;
+    z-index: 1000; /* Ensure it appears above other content */
+    transition: transform 3s ease-in-out;
+    transform: translateX(-100%);
+    border:1px solid #178834;
+    overflow-x: hidden;
+  }
+  
+  .search-screen.show {
+    transform: translateX(0);
+  }
+  
+  .search-screen-content {
+    width: 400px; /* Adjust as needed */
+ 
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+  }
+  
+  .search-screen input[type='text'] {
+   width:100%;
+   margin-top: 20px; 
+  padding: 10px;
+  border: 1px solid #178834;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  }
+  .search-screen input[type='text']:focus{
+   
+    outline:solid 1px #178834;
+   
+   }
+  .search-screen button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #178834;
+    font-size: 16px;   
+  }
+  .search-screen button:hover{
+    color: #333;
+  }
+  .searchData{
+    display: flex;
+    /* gap: 10px; */
+    padding-left: 20px;
+    margin-top: 10px;
+  }
+  .searchData:hover{
+    background: #1788335e;
+  }
+  .userProfileImage{
+    overflow: hidden;
+  }
+  .userProfileImage img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    
+  }
+  .userProfileName{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+  }
+  .userProfileName span{
+    color: #178834;
+  }
+  .isPropery{
+    color: #9a9696;
+    font-size: small;
+  }
+  .userProfileName .nameDiv{
+    line-height: 15px;
+  }

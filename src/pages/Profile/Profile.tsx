@@ -1,19 +1,23 @@
 
 import { useEffect, useState } from 'react';
 import NavBarDesk from '../../components/Home/subHomeComponents/NaveBarDesk/NavBarDesk'
-import ProfileMain from '../../components/Profile/ProfileMain'
-import { getAllPostsAPI } from '../../APIs/UserAPI';
+import ProfileMain from '../../components/Profile/ProfileMain/ProfileMain'
+import {  getAllPostsAPI } from '../../APIs/UserAPI';
 import { userPost } from '../../Interfaces/interfaces';
+import { TypedUseSelectorHook, useSelector } from "react-redux";
+import { RootState } from '../../redux/store';
 
+export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 function Profile() {
+  const isDarkThemeOn = useTypedSelector(state=>state.darkTheme.isDarkTheme)
   const [allPosts, setAllPosts] = useState<userPost[]>([]);
+  const [isOpenProfileModal,setIsOpenProfileModal] = useState<boolean>(false)
+  const [reload,setReload] =useState<boolean>(false)
   const fetchUserPosts = async()=>{
     try {
         const Res = await getAllPostsAPI()
-        console.log('fetch user post res:',Res);
-        
-        if(Res?.data){
-          setAllPosts(Res.data.allPost)
+        if(Res?.data){          
+          setAllPosts(Res.data.allPosts)
         }else {
           throw new Error(Res?.data.message)
         }
@@ -21,17 +25,20 @@ function Profile() {
       console.log('Fetch user posts error in Profile main component :',error);
     }
   };  
-  useEffect(()=>{
-        
+  useEffect(()=>{    
         fetchUserPosts()
-    },[])
+        setReload(false)
+    },[isOpenProfileModal,reload])
   return (
-    <div className='flex '>
+    <div className={`flex ${isDarkThemeOn ? 'bg-black text-white':''}`}>
         <div className='navBar'>
-            <NavBarDesk reload={fetchUserPosts} />
+            <NavBarDesk  reload={setReload} />
         </div>
         <div className='ProfileMain w-full flex justify-center '>
-            <ProfileMain  allPosts={allPosts}/>
+            <ProfileMain 
+            setIsOpenProfileModal={setIsOpenProfileModal} 
+            isOpenProfileModal={isOpenProfileModal} 
+            allPosts={allPosts}/>
         </div>
     </div>
   )

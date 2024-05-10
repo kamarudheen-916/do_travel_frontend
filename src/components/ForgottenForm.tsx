@@ -4,6 +4,7 @@ import Input from './atoms/Input/Input'
 import { useState } from 'react';
 import { forgetFormData } from '../Interfaces/interfaces';
 import { forgottenAPI } from '../APIs/UserAPI';
+import Logo from './Home/subHomeComponents/Logo/Logo';
 
 function ForgottenForm() {
   const navigate = useNavigate()
@@ -36,11 +37,14 @@ const handleForgotterSubmit =async (e:React.ChangeEvent<HTMLFormElement>) =>{
 }
   return (
     <div>
-            <div className='w-full flex justify-center items-center mt-20' >
-                  <form action="" onSubmit={(e:React.ChangeEvent<HTMLFormElement>)=>handleForgotterSubmit(e)} className='LoginForm p-8  rounded '>
-                      <div className='text-white text-2xl mb-10 font-bold text-center'>Forgotten Password</div>
-                      <div className='flex justify-around text-white mb-3'>
-                            <div className='flex justify-around w-full border-2 rounded-md'>
+            <div className='w-full flex justify-center items-center mt-20' style={{minWidth:'500px'}} >
+                  <form action="" onSubmit={(e:React.ChangeEvent<HTMLFormElement>)=>handleForgotterSubmit(e)} className=' p-8    rounded-lg border-2 border-green-600'>
+                  <div className=' text-2xl mb-6 font-bold  text-center '>
+                    <div><Logo /></div>
+                    <h1 style={{ color: 'var(--icon-color)' }}>Forgotten Your Password..?</h1>
+                    </div>
+                      <div className='flex justify-around text-green-800 mb-3 gap-3'>
+                            <div className='flex justify-around w-full border-2 border-green-600 text rounded-md'>
                                 <label htmlFor="userRadio">User</label>
                                 <input
                                         
@@ -52,7 +56,7 @@ const handleForgotterSubmit =async (e:React.ChangeEvent<HTMLFormElement>) =>{
                                         onChange={handleUserTypeChange} // Update user type when radio button is clicked
                                     />    
                             </div>  
-                            <div className='flex justify-around w-full border-2 rounded-md'>
+                            <div className='flex justify-around w-full border-2 border-green-600 text rounded-md'>
                                 <label htmlFor="properyRadio">Property</label>
                                 <input
                                         type="radio"
@@ -99,10 +103,10 @@ const handleForgotterSubmit =async (e:React.ChangeEvent<HTMLFormElement>) =>{
                                 placeholder={'Confirm Your Password'} 
                             />
                         <div>
-                            <Button  name={'Submit'}/>
+                            <Button bgcolor='#178844' font_color='#fff' name={'Submit'}/>
                         </div>
                         <div className='mt-5 text-center'>
-                          <Link className='text-blue-200 ' to={'/login'}>Back to Login</Link>
+                          <Link className='text-green-400 ' to={'/login'}>Back to Login</Link>
                         </div>
                   </form>
                 </div>

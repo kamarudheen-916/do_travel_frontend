@@ -47,3 +47,16 @@
     top: 0px;
  
   }
+  .addRoomButton{
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    font-weight: var(--button-font-weight);
+    padding: var(--button-padding);
+    border-radius: var(--button-border-radius);
+    width: 100%;
+    margin-top: 10px;
+  }
+  .addRoomButton:active{
+    background: #068f41;
+  }
+ 

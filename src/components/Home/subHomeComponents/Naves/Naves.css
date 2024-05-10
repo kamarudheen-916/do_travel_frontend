@@ -1,6 +1,9 @@
-@media (max-width : 300px){
+@media (max-width : 700px){
     .nav_icon{
-        font-size: small;
+        font-size: xx-small;
+    }
+    #nav_iconName h1{
+       display: none;
     }
 }
 
@@ -18,5 +21,22 @@
     color: var(--icon-color);
 }
 #nav_iconName h1 {
-    color:var( --nav-text-color)
+    /* color:var( --nav-text-color) */
 }
+
+  
+.countSpan {
+   
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background-color: #db0f0f; /* Red background color */
+    color: #ffffff; /* White text color */
+    font-size: 12px;
+    border-radius: 50%;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+  

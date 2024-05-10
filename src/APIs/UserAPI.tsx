@@ -40,12 +40,56 @@ export const userCreateShareAPI =async (data:{fileUrl:string,textarea:string,use
   return  await axiosInstance.post(`/user/userCreate`,data)
 }
 
-
 export const getAllPostsAPI= async () =>{
   try {
-    return await axiosInstance.get(`/user/getAllPost/`)
+    return await axiosInstance.get(`/user/getAllPosts`)
   } catch (error) {
     console.log('getAllPostsAPI error :',error);
+    throw error
+  }
+}
+export const getAllFeedsAPI= async () =>{
+  try {
+    return await axiosInstance.get(`/user/getAllFeeds`)
+  } catch (error) {
+    console.log('getAllFeedsAPI error :',error);
+    throw error
+  }
+}
+
+export const getOthersProfilePostsAPI= async (profileId:any,profileType:any) =>{
+  try {
+    return await axiosInstance.get(`/user/getOthersProfilePosts?profileId=${profileId}&profileType=${profileType}`)
+  } catch (error) {
+    console.log('getOthersProfilePostsAPI error :',error);
+    throw error
+  }
+}
+
+export const uploadImgAPI = async (fileURL:string)=>{
+  try {    
+    return await axiosInstance.put('/user/uploadImg',{fileURL})
+  } catch (error) {
+    console.log('uploadImgAPI error :',error);
+    throw error
+  }
+}
+
+export const fetchDataAPI = async ()=>{
+  try {
+    return await axiosInstance.get('/user/getUserData')
+  } catch (error) {
+    console.log('fetch user data for edit profile in User API:',error);
     
+    throw error
+  }
+}
+
+export const updateDataAPI = async (userData:UserFormData|PropertyFormData)=>{
+  try {
+    return await axiosInstance.put('/user/updateUserData',userData)
+  } catch (error) {
+    console.log('update user data for edit profile in User API:',error);
+    throw error
   }
 }

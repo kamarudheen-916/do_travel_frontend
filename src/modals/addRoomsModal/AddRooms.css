@@ -1,0 +1,33 @@
+.addRoomsOverLay{
+    position:fixed;
+    top:0;
+    left: 0;
+    right:0;
+    bottom: 0;
+    background-color: rgba(18, 27, 17, 0.8);
+    z-index: 1000;
+}
+.addRoomsMain{
+    margin-right: 20px;
+    max-width: 600px;
+    min-width: 600px;
+    position:fixed;
+    top: 6%;
+    left:50%;
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    /* padding: 10px; */
+    z-index: 1000;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px rgba(255, 255, 255, 0.1);
+}
+.closeButton{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 10px;
+    position: fixed;
+    top: 1px;
+    right:  0px;
+    z-index: 1000;
+}

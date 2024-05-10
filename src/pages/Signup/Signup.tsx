@@ -5,6 +5,7 @@ import { Link,useNavigate } from 'react-router-dom'
 import PropertyPart from '../../components/signup/PropertyPart'
 import { useState } from 'react'
 import { SignupApi } from '../../APIs/UserAPI'
+import Logo from '../../components/Home/subHomeComponents/Logo/Logo'
 
 function Signup() {
   
@@ -63,21 +64,16 @@ function Signup() {
     }
   return (
     <div className='signup parant'>
-        <div className="first  Sidebar_signUp">
-            {/* <img className='w-full h-full'  src="../../../public/images/loginpageImage-2.jpg" alt="" /> */}
-        </div>
         <div className="center">
-            <div className='logo text-center text-white'>
-                <h1>do Travel</h1>
-            </div>
-            <div className='SignUpform '>
-                <form action="" onSubmit={(e:any)=>handleSubmit(e)}  className=' p-6 ' encType='multipart/form-data'>
-                    <div className='text-white text-2xl mb-6 font-bold text-center'>
-                         <h1>Sign up</h1>   
+            <div className='SignUpform'>
+                <form action="" onSubmit={(e:any)=>handleSubmit(e)}  className=' ' encType='multipart/form-data'>
+                    <div className=' text-2xl mb-6 font-bold  '>
+                    <div><Logo /></div>
+                    <h1 style={{ color: 'var(--icon-color)' }}>Sign up</h1>
                     </div>
                     <div className='checkBox'>
-                       <div className='flex justify-around text-white mb-3'>
-                            <div className='flex justify-around w-full border-2 rounded-md'>
+                       <div className='flex justify-around gap-2 '>
+                            <div className='flex justify-around w-full border-2 border-green-600 text-green-700  rounded-md'>
                                 <label htmlFor="userRadio">User</label>
                                 <input
                                         type="radio"
@@ -88,7 +84,7 @@ function Signup() {
                                         onChange={handleUserTypeChange} // Update user type when radio button is clicked
                                     />    
                             </div>  
-                            <div className='flex justify-around w-full border-2 rounded-md'>
+                            <div className='flex justify-around w-full border-2 border-green-600 text-green-700  rounded-md'>
                                 <label htmlFor="properyRadio">Property</label>
                                 <input
                                         type="radio"
@@ -102,17 +98,15 @@ function Signup() {
                        </div>
                             {userType === 'user' && <Userpart userFormData={userFormData} setUserFormData={setUserFormData}  />}
                             {userType === 'property' && <PropertyPart propertyFormData={propertyFormData} setPropertyFormData={setPropertyFormData}/>}
-                            <Button  name='submit'/>
+                            <Button font_color='#ffff'  bgcolor='#178244' name='submit'/>
                         <div style={{textAlign:'center',marginTop:'10px'}}>
-                            <Link className='text-white' to={'/login'}>Already hava an account?</Link>
+                            <Link className='' to={'/login'}>Already hava an account?</Link>
                         </div>
                        </div>
                 </form>
             </div>
         </div>
-        <div className="third Sidebar_signUp ">
-         {/* <img className='w-full h-full' src="../../../public/images/loginpageImage-3.jpg" alt="" /> */}
-        </div>
+       
     </div>
   )
 }

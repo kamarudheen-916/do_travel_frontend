@@ -5,62 +5,55 @@ import Logo from "../../components/Home/subHomeComponents/Logo/Logo";
 import Naves from "../../components/Home/subHomeComponents/Naves/Naves";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getAllPostsAPI } from "../../APIs/UserAPI";
+import { getAllFeedsAPI } from "../../APIs/UserAPI";
 import { userPost } from "../../Interfaces/interfaces";
+import { TypedUseSelectorHook, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import NoPost from "../../components/noPostsIcon/NoPosts";
 
-
-
+ const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 function Home() {
-  const [allPosts, setAllPosts] = useState<userPost[]>([]);
+  const isDarkModeOn = useTypedSelector((state) => state.darkTheme.isDarkTheme);
+  const [AllFeeds, setAllFeeds] = useState<userPost[]>([]);
   const userName = localStorage.getItem("userName");
   const Profile: any = localStorage.getItem("userProfile");
-  // const userId = localStorage.getItem("userId");
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const allPosts = await getAllPostsAPI(userId);
-  //       if (allPosts?.data) {
-  //         setAllPosts(allPosts.data.allPost);
-  //       } else {
-  //         throw new Error(allPosts?.data.message) 
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
+  const userId = localStorage.getItem("userId");
+  const [reload,setReload] =useState<boolean>(false)
 
-  //   fetchData(); 
-  // }, []);
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const AllFeeds = await getAllFeedsAPI();
+        console.log(AllFeeds);
+        
+        if (AllFeeds?.data.success) {
+          const data = AllFeeds.data.allFeeds.flat()
+          console.log('*****>',AllFeeds.data.allFeeds);
+          
+          setAllFeeds(data);
+        } else {
+          console.log(AllFeeds?.data.message) 
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData(); 
+  }, []);
 
   return (
-    <div className="h-full sm:flex ">
-      <div className="navBar  sm:block hidden bg-stone-200 md:w-96 w-60 pl-2  h-full">
-        <NavBarDesk />
+    <div className={`h-full flex  `}>
+      <div className="overflow-x-hidden">
+        <NavBarDesk reload={setReload}/>
       </div>
-      <div className="middle w-full h-full flex flex-col ">
-        <div className="topBar sm:hidden h-16 bg-stone-400 flex items-center justify-around">
-          <Logo />
-          <div className="mt-2 " id="searchInputOnMobile">
-            <input
-              type="text"
-              name=""
-              id="Search"
-              placeholder="Search"
-              className="rounded p-1 mb-3"
-            />
-            {/* <Input type="text" placeholder="Search "/> */}
-          </div>
-          <div id="notificationIconOnMobile">
-            <Naves
-              icon={<i className="fa-solid fa-bell text-xl"></i>}
-              //  iconName="Notification"
-            />
-          </div>
-        </div>
-        <div className="middleBar bg-white flex justify-around">
+      <div className="middle w-full h-full flex  ">
+        <div className={`middleBar  flex justify-around ${isDarkModeOn? 'bg-black' :'bg-white'}`}>
           <div className="overflow-y-scroll">
-            {allPosts.map((post,index) => (
+            <div className="w-96">{AllFeeds.length < 1 && <NoPost />}</div>
+            {AllFeeds.map((post,index) => (
               <div key={index} className="postInHome mt-10">
                 <div className="topDiv flex justify-between items-center mt-5 mb-3">
                   <div className="profileAndName flex items-center ">
@@ -119,92 +112,32 @@ function Home() {
             ))}
           </div>
         </div>
-        <div className="mobileNaveBar bg-black w-full sm:hidden h-16">
+        {/* <div className="mobileNaveBar bg-black w-full sm:hidden h-16">
           <NavBarMobile />
-        </div>
+        </div> */}
       </div>
-      <div className="thirdBar   lg:block hidden    h-full bg-stone-800">
-        <div className="ProfileInHome text-white mt-4 ml-7 p-2 h-full">
+      <div className={`thirdBar   lg:block hidden h-full ${isDarkModeOn ? 'bg-black text-white':''}`}>
+        <div className="ProfileInHome text-white mt-8 h-full">
             <Link to={'/userProfile'}>
-            <div className="flex items-center mb-3">
+            <div className="mb-3 flex flex-col items-center gap-6 pt-5 pb-20 rounded-md   bg-green-800 mr-5 text-center " style={{boxShadow:`${isDarkModeOn ? "rgb(0 255 65) 5px 3px 20px":'rgb(0 0 0) 0px 3px 10px'}`} }>
             {Profile ? (
               <img
                 src={Profile}
-                style={{ borderRadius: "50%", width: "50px", height: "50px" }}
+                style={{ borderRadius: "50%", width: "120px", height: "120px" }}
                 alt="Profile"
               />
             ) : (
               <i className="fa-solid fa-user" style={{ fontSize: "30px" }}></i>
             )}
             <h1 className="ml-2">{userName}</h1>
-          </div>
-            </Link>
-          <div className="mt-10">
-            <h1>Recelntly Saved</h1>
-            <ol className="mt-5">
-              <li className="flex py-3 ">
-                <img
-                  src="images/image1.jpg"
-                  style={{ borderRadius: "50%", width: "30px", height: "30px" }}
-                  alt=""
-                />
-                <div className="ml-2 flex items-center text-sm">
-                  <h1 className="mr-6 ">Vally Resort</h1>
-                  <h1>Follow</h1>
-                </div>
-              </li>
-              <li className="flex py-3 ">
-                <img
-                  src="images/image1.jpg"
-                  style={{ borderRadius: "50%", width: "30px", height: "30px" }}
-                  alt=""
-                />
-                <div className="ml-2 flex items-center text-sm">
-                  <h1 className="mr-6 ">Vally Resort</h1>
-                  <h1>Follow</h1>
-                </div>
-              </li>
-              <li className="flex py-3 ">
-                <img
-                  src="images/image1.jpg"
-                  style={{ borderRadius: "50%", width: "30px", height: "30px" }}
-                  alt=""
-                />
-                <div className="ml-2 flex items-center text-sm">
-                  <h1 className="mr-6 ">Vally Resort</h1>
-                  <h1>Follow</h1>
-                </div>
-              </li>
-              <li className="flex py-3 ">
-                <img
-                  src="images/image1.jpg"
-                  style={{ borderRadius: "50%", width: "30px", height: "30px" }}
-                  alt=""
-                />
-                <div className="ml-2 flex items-center text-sm">
-                  <h1 className="mr-6 ">Vally Resort</h1>
-                  <h1>Follow</h1>
-                </div>
-              </li>
-              <li className="flex py-3 ">
-                <img
-                  src="images/image1.jpg"
-                  style={{ borderRadius: "50%", width: "30px", height: "30px" }}
-                  alt=""
-                />
-                <div className="ml-2 flex items-center text-sm">
-                  <h1 className="mr-6 ">Vally Resort</h1>
-                  <h1>Follow</h1>
-                </div>
-              </li>
-            </ol>
-            <h1 className="text-blue-500">click here for more</h1>
-          </div>
-          <div>
-            <div className="" style={{ marginTop: "250px" }}>
+            <div>
+            <div className=" text-white" >
               <h6 className="text-xs">© 2024 do_Travel FROM Brocamp</h6>
             </div>
           </div>
+          </div>
+            </Link>
+          
         </div>
       </div>
     </div>

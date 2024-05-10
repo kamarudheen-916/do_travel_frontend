@@ -1,0 +1,41 @@
+/* styles.css */
+.form-container {
+    max-width: 500px;
+    margin: 10px auto;
+}
+
+.addRoomLabel {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+
+}
+
+.addRoomInput {
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+   
+}
+.addRoomInput:focus{
+    outline: none;
+}
+.form-container .addRoomButton{
+    background: var(--button-bg-color);
+    color: var(--button-text-color);
+    font-weight: var(--button-font-weight);
+    padding: var(--button-padding);
+    border-radius: var(--button-border-radius);
+    width: 100%;
+    margin:10px  0;
+}
+
+.form-container .addRoomButton:active{
+    background: #13b456;
+}
+.editUserName{
+    
+}

@@ -14,7 +14,6 @@ export interface UserFormData {
     Profile: string; 
     IsVerified:boolean
     OTP:string;
-    
 }
 
 export interface PropertyFormData {
@@ -57,11 +56,13 @@ export interface SetErrorLabelValue {
 
 export interface comments {
     comment:string,
-    id:string,
-    commet_likes:number
+    commentedId:string,
+    commet_likes:number,
+    _id?:string,
+    commentTime:string
 }
 export interface userPost {
-    _id: string;
+    _id?: string;
     userId: string;
     post: string;
     description: string;
@@ -70,3 +71,59 @@ export interface userPost {
     like:number
   
   }
+export interface Room{
+    _id?:string,
+    propertyId:string;
+    roomName:string,
+    typeOfRoom:string,
+    rating:number,
+    location:string,
+    facilities:string[],
+    reviews:string[],
+    price:number,
+    numOfNights:number,
+    numOfAdults:number,
+    numOfRoomLeft:number;
+    freeCancellation:boolean,
+    isBeforePayment:boolean,
+    images:string[]
+}
+export interface searchData {
+    _id?:string,
+    profileId?:string,
+    profile:string,
+    name:string,
+    isFollowed?:boolean
+    isProperty?:boolean
+}
+export interface NotificationData {
+    notificationProfile:string ,
+    notificationName:string ,
+    isProperty:boolean ,
+    followingId:string
+ }
+
+ export interface FollowReq{
+    requesterId:string,
+    followerId:string,
+    isProperty:boolean
+}
+
+export interface followingData  {
+    followingID:string,
+    follwingDate:Date,
+    isAccepted:boolean,
+    isProperty:boolean
+}
+export interface followerData {
+    followerID: string;
+    follwingDate: Date;
+    isAccepted: boolean;
+    isProperty:boolean
+}
+
+export interface followSchemaInterface {
+        userId:string,
+        following:[followingData],
+        follower:[followerData]
+}

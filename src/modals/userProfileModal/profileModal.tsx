@@ -1,5 +1,5 @@
 import { userPost } from "../../Interfaces/interfaces";
-import PostCard from "../../components/postCard/PostCard";
+import PostCard from "../../components/post/postCard/PostCard";
 import "./profileModal.css";
 interface profileModalProps {
   closeModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,7 +12,6 @@ const profileModal: React.FC<profileModalProps> = (props) => {
       <div className="ProfileModalOverly text-red"></div>
       <div className="P_modal">
         <div className="closeButton ">
-          {/* <div></div> */}
           <span onClick={() => props.closeModal(false)}>X</span>
         </div>
         {props.modalData && props.modalData.length > 0 && (

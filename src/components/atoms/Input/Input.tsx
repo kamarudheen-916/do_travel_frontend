@@ -1,6 +1,11 @@
 
 import { useState } from 'react';
 import './Input.css'
+import { TypedUseSelectorHook, useSelector } from "react-redux";
+import { RootState } from '../../../redux/store';
+
+export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+
 interface Props{
     title?:string;
     type:string;
@@ -19,6 +24,7 @@ interface Props{
 }
 
 const Input : React.FC<Props>=(props) =>{
+  const isDarkModeOn = useTypedSelector((state) => state.darkTheme.isDarkTheme);
   const [focused,setFocused] =useState(false)
   const handleBlur =()=>{
     setFocused(true)
@@ -32,7 +38,7 @@ const Input : React.FC<Props>=(props) =>{
     <div  className='Input flex flex-col'>
         <label className='label ' htmlFor="">{props.title}</label>
         <input      
-                    className='input w-full'
+                    className={`input w-full ${isDarkModeOn?'bg-green-900 text-white':''}`}
                     placeholder={props.placeholder}
                     type={props.type}
                     name={props.name}

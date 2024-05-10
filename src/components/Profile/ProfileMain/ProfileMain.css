@@ -1,0 +1,62 @@
+.EditProfileButton{
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    font-weight: var(--button-font-weight);
+    padding: var(--button-padding);
+    border-radius: var(--button-border-radius);
+    
+}
+.userName {
+    margin-top: 10px;
+}
+.userName h1{
+    font-weight: bold;
+}
+.followerDiv h1{
+    margin-top: 20px;
+    font-weight: 500;
+}.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); 
+    color: white;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+  }
+  
+  /* Show overlay when hovering over the parent div */
+  .postDiv:hover .overlay {
+    display: flex; /* Show the overlay */
+  }
+  
+  .overlay span {
+    /* Adjust text styles as needed */
+    margin: 10px; /* Add some margin around the text */
+    color: aliceblue;
+  }
+
+  
+  .ProfileModal{
+    position: absolute;
+    z-index: 2;
+    top: 0px;
+ 
+  }
+  .addRoomButton{
+    background-color: var(--button-bg-color);
+    color: var(--button-text-color);
+    font-weight: var(--button-font-weight);
+    padding: var(--button-padding);
+    border-radius: var(--button-border-radius);
+    width: 100%;
+    margin-top: 10px;
+  }
+  .addRoomButton:active{
+    background: #068f41;
+  }
+ 

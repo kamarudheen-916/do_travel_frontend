@@ -1,24 +1,11 @@
-.Parant{
-    display: flex;
-    justify-content: space-between  ;
-    height: 100vh;
-}
-.sideBar{
-   background-color: #313131;
-   width: 572px;
-}
+
 .LoginForm{
     
-    box-shadow: 0 0 20px rgba(0, 0, 0, 1);
-    background: #000000c3;
     max-width: 500px;
     min-width: 200px;
 
 }
 .centerBar{
-    background-image:url('../../../public/images/loginpageImage-8.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
     min-width: 500px;
 }
 
