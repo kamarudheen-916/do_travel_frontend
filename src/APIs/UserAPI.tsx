@@ -36,7 +36,7 @@ export const forgottenAPI = (data:{forgetFormData:forgetFormData,userType:string
     return axiosInstance.post(`/user/forgottenPassword`,data)
 }
 
-export const userCreateShareAPI =async (data:{fileUrl:string,textarea:string,userId:string|null,userType:string|null})=>{
+export const userCreateShareAPI =async (data:{fileUrl:string,textarea:string,userId:string|null,userType:string|null,userName:any,Profile:any})=>{
   return  await axiosInstance.post(`/user/userCreate`,data)
 }
 

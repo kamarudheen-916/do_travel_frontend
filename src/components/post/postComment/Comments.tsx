@@ -6,6 +6,7 @@ import { deleteCommentAPI, editCommentAPI, submitCommentAPI } from "../../../API
 import Loading from "../../Loading/Loading";
 import LineLoader from "../../Loading/LineLoader/LineLoader";
 import { ToastContainer,toast } from "react-toastify";
+import { useTypedSelector } from "../../../redux/reduxUseSelector";
 
 
 interface commentProps {
@@ -16,7 +17,7 @@ interface commentProps {
   setPostData: React.Dispatch<React.SetStateAction<userPost>>;
 }
 const Comments: React.FC<commentProps> = (props) => {
-
+  const isDarkModeOn = useTypedSelector((state) => state.darkTheme.isDarkTheme);
 
   const [isSubmitting, setIsSubmitting] = useState(false); // Add loading state
   const [deleteCommentIndex, setDeleteCommentIndex] = useState<number | null>(null);
@@ -41,11 +42,13 @@ const Comments: React.FC<commentProps> = (props) => {
     setEditComment(comment)
   }
 
-  const submitComment = async () => {
+  const submitComment = async () => {    
     if (comment === "") {
       return;
     } else {
       setIsSubmitting(true);
+      console.log('props . postId:',props);
+      
       const res = await submitCommentAPI(comment, props.postId);
       setIsLoading(true)
       if (res?.data.success) {
@@ -83,7 +86,7 @@ const Comments: React.FC<commentProps> = (props) => {
     }
   }
   return (
-    <div className="">
+    <div className={`${isDarkModeOn ? 'bg-gray-800':'bg-comment'} rounded-md`}>
     <ToastContainer />
       {isLoading && <LineLoader />}
       <div className="Comment_div">
@@ -94,13 +97,13 @@ const Comments: React.FC<commentProps> = (props) => {
             onChange={(e) => setComment(e.target.value)}
             type="text"
             name=""
-            className="w-full "
+            className="w-full text-black"
             id=""
           />
           {isSubmitting ? (
             <Loading />
           ) : (
-            <FiSend className="sendCommentIcon" onClick={submitComment} />
+            <FiSend className="sendCommentIcon " color="#178834" onClick={submitComment} />
           )}
         </div>
         <div className="EachComment">

@@ -1,6 +1,8 @@
 .Comment_div{
-    background: #beccbe;    
     padding:5px 15px;
+}
+.bg-comment{
+    background: #beccbe;
 }
 .comment_profile{
     display: flex;
@@ -34,6 +36,7 @@
 }
 .sendCommentIcon{
     transform: scale(1.3);
+    
 }
 .sendCommentIcon:active{
     transform: scale(1);

@@ -32,7 +32,7 @@ const SearchScreen: React.FC<Props> = ({ onClose, onChange, searchData, searchIn
   };
 
   return (
-    <div className={`search-screen ${isDarkModeOn ? 'bg-black bg-opacity-85 ':''}`}>
+    <div className={`search-screen ${isDarkModeOn ? 'bg-black text-black bg-opacity-85 ':''}`}>
       <div className="search-screen-content">
         <input type="text" onChange={onChange} placeholder="Search..." />
         <div className="gap-3 flex text-sm text-green-700">

@@ -24,7 +24,7 @@ const ProfileMain: React.FC<props> = ({
   setIsOpenProfileModal,
   othersProfile,
 }) => {
-  const userType = Cookies.get("userType");
+  const userType = localStorage.getItem("userType");
   const [isRoom, setIsRoom] = useState<boolean>(true);
   const [isAddRoom, setAddRoom] = useState<boolean>(false);
   const [roomData, setRoomData] = useState<Room[]>();
@@ -42,8 +42,12 @@ const ProfileMain: React.FC<props> = ({
     setModalData(datas);
   };
   useEffect(() => {
+    console.log('userType',userType);
+    
     if (userType === "user") {
       setIsRoom(false);
+    console.log('set is room',isRoom);
+
     }
   }, []);
 
@@ -100,7 +104,7 @@ const ProfileMain: React.FC<props> = ({
           )}
         </div>
       )}
-      {isRoom && (
+      {isRoom && userType === 'property' &&(
         <div className="roomShowDiv">
           <div>
             <button className="addRoomButton" onClick={() => setAddRoom(true)}>

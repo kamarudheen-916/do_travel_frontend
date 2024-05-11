@@ -61,15 +61,24 @@ export interface comments {
     _id?:string,
     commentTime:string
 }
+export interface ratingData{
+    raterId:string,
+    rate:number,
+    _id?:string,
+    ratedDate:Date,
+}
 export interface userPost {
     _id?: string;
     userId: string;
+    isProperty:boolean,
     post: string;
     description: string;
     comments: comments[]; 
     date: string;
     like:number
-  
+    ratings?:[ratingData]
+    PostProfile:string,
+    PostName:string,
   }
 export interface Room{
     _id?:string,

@@ -10,6 +10,7 @@
 }
 .postCardImage img{
     width: 100%;
+    max-height: 500px; 
 }
 .PostCardDescription{
     padding: 10px 10px;

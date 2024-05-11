@@ -16,8 +16,9 @@ function Profile() {
   const fetchUserPosts = async()=>{
     try {
         const Res = await getAllPostsAPI()
-        if(Res?.data){          
+        if(Res?.data){                    
           setAllPosts(Res.data.allPosts)
+          console.log('all Posts :',allPosts);
         }else {
           throw new Error(Res?.data.message)
         }

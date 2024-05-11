@@ -10,7 +10,7 @@ const  PostShow:React.FC<postShowProps> =(props) => {
     {
       props.allPosts.map((post,index)=>(
        <div key={index} onClick={()=>props.onPostClick(post)} className='postDiv items-center' style={{width:'32.5%',position:'relative'}} >
-        <div className='imageDivInProfile w-full h-full '>
+        <div className='imageDivInProfile w-full h-full max-h-80 '>
          <img  className='w-full' src={post.post} alt="" style={{width:'100%',height:'100%'}} />
         </div>
          <div className='overlay'>

@@ -76,7 +76,7 @@ const userCreate: React.FC<userCreateProps> = (props) => {
    setIsLoading(true)
     const userId = localStorage.getItem('userId')
     const userType = localStorage.getItem('userType')
-    const response = await userCreateShareAPI({fileUrl,textarea,userId,userType})
+    const response = await userCreateShareAPI({fileUrl,textarea,userId,userType,userName,Profile})
     // Dispatch()
     if(response.data.success){
       setIsLoading(false)
@@ -92,7 +92,7 @@ const userCreate: React.FC<userCreateProps> = (props) => {
     <>
       <ToastContainer/>
       <div className='overLay'>  </div>
-      <div className={ `userCreateModal ${isDarkModeOn ? 'bg-black':''} `}>
+      <div className={ `userCreateModal ${isDarkModeOn ? 'bg-black text-white' :''} `}>
         <div className={`top_Div `}>
           <h3>Create New Post</h3>
           <button onClick={() => props.modalCloseOpen(false)}>X</button>
@@ -150,7 +150,7 @@ const userCreate: React.FC<userCreateProps> = (props) => {
                   <BsEmojiSmile  onClick={()=>setIsEmojiOpen(!isEmojiOpen)}/>
                  {isEmojiOpen &&
                    <div className='relative  h-52 mt-5'>
-                   {/* <Picker 
+                   <Picker 
 
                     data={data} 
                     maxFrequentRows={0} 
@@ -159,9 +159,9 @@ const userCreate: React.FC<userCreateProps> = (props) => {
                     theme={'light'}
                     searchPosition={'none'}
                     
-                     /> */}
+                     />
                      
-                   <EmojiPicker 
+                   {/* <EmojiPicker 
                    onEmojiClick={onEmojiClick}
                    searchDisabled
                     // data={data} 
@@ -171,7 +171,7 @@ const userCreate: React.FC<userCreateProps> = (props) => {
                     // theme={'light'}
                     // searchPosition={'none'}
                     
-                     />
+                     /> */}
                  </div>
                  }
                     {/* <h1>0/220</h1> */}

@@ -10,6 +10,7 @@ import { userPost } from "../../Interfaces/interfaces";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import NoPost from "../../components/noPostsIcon/NoPosts";
+import PostCard from "../../components/post/postCard/PostCard";
 
  const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -23,7 +24,7 @@ function Home() {
 
   
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAllFeedsData = async () => {
       try {
         const AllFeeds = await getAllFeedsAPI();
         console.log(AllFeeds);
@@ -41,7 +42,7 @@ function Home() {
       }
     };
 
-    fetchData(); 
+    fetchAllFeedsData(); 
   }, []);
 
   return (
@@ -50,65 +51,13 @@ function Home() {
         <NavBarDesk reload={setReload}/>
       </div>
       <div className="middle w-full h-full flex  ">
-        <div className={`middleBar  flex justify-around ${isDarkModeOn? 'bg-black' :'bg-white'}`}>
+        <div className={`middleBar  flex justify-around ${isDarkModeOn? 'bg-black text-white' :'bg-white'}`}>
           <div className="overflow-y-scroll">
             <div className="w-96">{AllFeeds.length < 1 && <NoPost />}</div>
             {AllFeeds.map((post,index) => (
-              <div key={index} className="postInHome mt-10">
-                <div className="topDiv flex justify-between items-center mt-5 mb-3">
-                  <div className="profileAndName flex items-center ">
-                    <div className="profileImageOnHome">
-                      <img src="/images/image1.jpg" alt="" />
-                    </div>
-                    <div className="profileAndName font-medium ml-3">
-                      <h1>Vally Resort</h1>
-                    </div>
-                  </div>
-                  <div>
-                    <button className="BookNowButton bg-stone-400">
-                      Book Now
-                    </button>
-                  </div>
-                </div>
-                <div className="imageOrVedio rounded">
-                  <img src={post.post} alt="" />
-                </div>
-                <div className="likeDiv flex justify-between mt-1">
-                  <div className="likeCommentShare flex w-24 justify-between">
-                    <div>
-                      <i className="fa-regular fa-heart text-xl text-stone-800"></i>
-                    </div>
-                    <div>
-                      <i className="fa-regular fa-comment text-xl text-stone-800"></i>
-                    </div>
-                    <div>
-                      <i className="fa-regular fa-paper-plane text-xl text-stone-800"></i>
-                    </div>
-                  </div>
-                  <div className="save">
-                    <div>
-                      <i className="fa-regular fa-bookmark text-xl text-stone-800"></i>
-                    </div>
-                  </div>
-                </div>
-                <div className="description">
-                  <h1>{post.description} </h1>
-                </div>
-                <div className="ratingDiv mt-4 flex justify-between">
-                  <div className="Rating bg-stone-400">
-                    <i className="fa-regular fa-star"></i>
-                    <i className="fa-regular fa-star"></i>
-                    <i className="fa-regular fa-star"></i>
-                    <i className="fa-regular fa-star"></i>
-                    <i className="fa-regular fa-star"></i>
-                  </div>
-                  <div>
-                    <Link className="pb-1 px-3 rounded bg-stone-400" to={""}>
-                      Chat With Resort
-                    </Link>
-                  </div>
-                </div>
-              </div>
+             <div key={index}>
+                <PostCard  key={index} {...post}/>
+               </div>
             ))}
           </div>
         </div>

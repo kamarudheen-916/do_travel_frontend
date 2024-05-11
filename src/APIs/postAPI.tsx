@@ -2,6 +2,7 @@ import axiosInstance from "../services/axios";
 
 export const submitCommentAPI = async (comment:string,postId:string|undefined)=>{
     try {
+       
         return await axiosInstance.post('/user/postComment',{comment,postId})
     } catch (error) {
         console.log('submitCommentAPi error :',error);
@@ -26,3 +27,12 @@ export const editCommentAPI = async (postId:string|undefined,commentId:string|un
         console.log('edit comment error ',error);
     }
 }
+
+export const updateRatingAPI = async (postId:string|undefined,rating:any)=>{
+    try {
+        return await axiosInstance.put('/user/updateRating',{postId,rating})
+    } catch (error) {
+        console.log('updateRating error ',error);
+    }
+}
+
