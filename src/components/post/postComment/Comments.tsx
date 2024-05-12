@@ -15,11 +15,11 @@ interface commentProps {
   comments: comments[];
   postId: string | undefined;
   setPostData: React.Dispatch<React.SetStateAction<userPost>>;
+  
 }
 const Comments: React.FC<commentProps> = (props) => {
   const isDarkModeOn = useTypedSelector((state) => state.darkTheme.isDarkTheme);
-
-  const [isSubmitting, setIsSubmitting] = useState(false); // Add loading state
+  const [isSubmitting, setIsSubmitting] = useState(false); 
   const [deleteCommentIndex, setDeleteCommentIndex] = useState<number | null>(null);
   const [editCommentIndex,setEditCommentIndex] = useState<number|null>(null)
   const [comment, setComment] = useState("");
@@ -27,11 +27,6 @@ const Comments: React.FC<commentProps> = (props) => {
   const [editComment,setEditComment] = useState<string>('')
   const [editableComment,setEditableComment] = useState<comments>()
   const reversedComments = [...props.comments].reverse();
-  // const notifySuccess = (message:string) => toast.success(message,{
-  //   position:"top-center",
-  //   autoClose:1000,
-  //   hideProgressBar:true
-  //  });
    const notifyError = (message:any) => toast.error(message,{
      position:"top-center",
      autoClose:1000,
@@ -79,7 +74,7 @@ const Comments: React.FC<commentProps> = (props) => {
     const res = await editCommentAPI(props.postId,editableComment?._id,editedComment)
     if(res?.data.success){
       props.setPostData(res?.data.post)
-      // notifySuccess('comment updated')
+     
       setEditCommentIndex(null)
     }else{
       notifyError(res?.data.message)

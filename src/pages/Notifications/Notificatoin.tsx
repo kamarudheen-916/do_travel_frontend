@@ -5,6 +5,7 @@ import { cancelFollReqAPI, confirmFollReqAPI, fetchFollwerRequestAPI } from "../
 import { NotificationData } from "../../Interfaces/interfaces";
 import { useDispatch } from "react-redux";
 import { checkCount } from "../../reducers/reducer2";
+import Notification from "../../components/NotificationComponent/Notification";
 
 const Notificatoin: React.FC<{}> = () => {
   const Dispatch = useDispatch()
@@ -12,44 +13,44 @@ const Notificatoin: React.FC<{}> = () => {
 
   const userId = localStorage.getItem('userId')
   const [NotificationsData,setNoificationData] = useState<NotificationData[]|[]>([])
-  const [isReqConfirmed,setIsReqConfirmed] =  useState<boolean|null>(null)
-  const [isReqCancelled,setIsReqCancelled] =  useState<boolean|null>(null)
+  // const [isReqConfirmed,setIsReqConfirmed] =  useState<boolean|null>(null)
+  // const [isReqCancelled,setIsReqCancelled] =  useState<boolean|null>(null)
   useEffect(()=>{
     async function fetchFollowRequest(){
       const Res = await fetchFollwerRequestAPI(userId)
       console.log(Res);
       setNoificationData(Res.data)
       Dispatch(checkCount(Res.data.length))
-      setIsReqConfirmed(false)
+      // setIsReqConfirmed(false)
     }
     fetchFollowRequest()
   },[])
 
-  const handleConfirmFollReq =async (followerId:string) =>{
-    try {
-      const Res = await confirmFollReqAPI(followerId,userId)
-      if(Res.data.success){
-        setIsReqConfirmed(true)
-      }
+  // const handleConfirmFollReq =async (followerId:string) =>{
+  //   try {
+  //     const Res = await confirmFollReqAPI(followerId,userId)
+  //     if(Res.data.success){
+  //       setIsReqConfirmed(true)
+  //     }
      
-    } catch (error) {
-      console.log('hadle confirm follow request error :',error);
+  //   } catch (error) {
+  //     console.log('hadle confirm follow request error :',error);
       
-    }
-  }
+  //   }
+  // }
 
-  const handleCancellFollReq =async (followerId:string) =>{
-    try {
-      const Res = await cancelFollReqAPI(followerId,userId)
-      console.log('handleCancellFollReq :',Res);
-      if(Res.data.success){
-        setIsReqCancelled(true)
-      }
-    } catch (error) {
-      console.log('hadle confirm follow request error :',error);
+  // const handleCancellFollReq =async (followerId:string) =>{
+  //   try {
+  //     const Res = await cancelFollReqAPI(followerId,userId)
+  //     console.log('handleCancellFollReq :',Res);
+  //     if(Res.data.success){
+  //       setIsReqCancelled(true)
+  //     }
+  //   } catch (error) {
+  //     console.log('hadle confirm follow request error :',error);
       
-    }
-  }
+  //   }
+  // }
   return (
     <div
       className={`flex  ${isDarkModeOn ? "bg-black text-white" : "bg-white "}`}
@@ -75,24 +76,27 @@ const Notificatoin: React.FC<{}> = () => {
           }
 
          { NotificationsData.map((data,index)=>(
-             <div key={index} className="flex gap-1">
-           <div className="userProfileImage" >
-             <img src={data.notificationProfile} alt="" />
-           </div>
-           <div className="userProfileName gap-24">
-             <div className="nameDiv">
-               <h1 className={`${isDarkModeOn ? "text-gray-300" : ""}`}>{data.notificationName}</h1>
-               {data.isProperty && <h1 className="isPropery">Property</h1>}
-             </div>
-            <div className="flex gap-5 ">
-                {!isReqConfirmed &&!isReqCancelled&& <div className="hover:bg-green-800 cursor-pointer hover:text-white hover:rounded px-2 py-1 text-green-600" onClick={()=>handleConfirmFollReq(data.followingId)}>Confirm</div> }
-                { isReqConfirmed && <div className="hover:bg-green-800  hover:text-white hover:rounded px-2 py-1 text-green-600" >Confirmed</div> }
-                { isReqCancelled && <div className="hover:bg-green-800  hover:text-white hover:rounded px-2 py-1 text-green-600" >Cancelled</div> }
-                {!isReqConfirmed && !isReqCancelled&&  <div className="hover:bg-green-800 cursor-pointer hover:text-white hover:rounded px-2 py-1 text-green-600" onClick={()=>handleCancellFollReq(data.followingId)}>Cancel</div>}
-            </div>
+          <div key={index}>
+              <Notification data={data} isDarkModeOn={isDarkModeOn}  />
+          </div>
+        //      <div key={index} className="flex gap-1">
+        //    <div className="userProfileImage" >
+        //      <img src={data.notificationProfile} alt="" />
+        //    </div>
+        //    <div className="userProfileName gap-24">
+        //      <div className="nameDiv">
+        //        <h1 className={`${isDarkModeOn ? "text-gray-300" : ""}`}>{data.notificationName}</h1>
+        //        {data.isProperty && <h1 className="isPropery">Property</h1>}
+        //      </div>
+        //     <div className="flex gap-5 ">
+        //         {!isReqConfirmed &&!isReqCancelled&&  <div className="hover:bg-green-800 cursor-pointer hover:text-white hover:rounded px-2 py-1 text-green-600" onClick={()=>handleConfirmFollReq(data.followingId)}>Confirm</div> }
+        //         { isReqConfirmed && <div className="hover:bg-green-800  hover:text-white hover:rounded px-2 py-1 text-green-600" >Confirmed</div> }
+        //         { isReqCancelled && <div className="hover:bg-green-800  hover:text-white hover:rounded px-2 py-1 text-green-600" >Cancelled</div> }
+        //         {!isReqConfirmed && !isReqCancelled&&  <div className="hover:bg-green-800 cursor-pointer hover:text-white hover:rounded px-2 py-1 text-green-600" onClick={()=>handleCancellFollReq(data.followingId)}>Cancel</div>}
+        //     </div>
          
-           </div>
-         </div>
+        //    </div>
+        //  </div>
          )) }
         </div>
       </div>

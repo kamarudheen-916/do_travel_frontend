@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./followingModal.css";
 import SearchSkeleton from "../../components/skeloton/userSkeleton";
-import { followSchemaInterface, followerData, followingData } from "../../Interfaces/interfaces";
 import { fetchFDataAPI } from "../../APIs/followAPI";
 import { Link } from "react-router-dom";
 import { useTypedSelector } from "../../redux/reduxUseSelector";

@@ -35,4 +35,19 @@ export const updateRatingAPI = async (postId:string|undefined,rating:any)=>{
         console.log('updateRating error ',error);
     }
 }
-
+export const savePostAPI = async (postId:string|undefined,isSave:boolean)=>{
+    try {
+        return await axiosInstance.put('/user/saveOrUnSavePost',{postId,isSave})
+    } catch (error) {
+        console.log('save post api error in postAPI page:',error);
+        
+    }
+}
+export const isPostSavedAPI = async (postId:string|undefined)=>{
+    try {
+        return await axiosInstance.get(`/user/isPostSaved?postId=${postId}`)
+    } catch (error) {
+        console.log('is post saved  api error in postAPI page:',error);
+        
+    }
+}

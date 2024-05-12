@@ -38,8 +38,8 @@
     top: 0;
     right: 0;
     margin: 5px;
-    background-color: #178834; /* Button background color */
-    color: white; /* Button text color */
+    /* background-color: #178834;  */
+    color: #1beb4f; 
     border: none;
     padding: 0px 3px;
     border-radius: 4px;

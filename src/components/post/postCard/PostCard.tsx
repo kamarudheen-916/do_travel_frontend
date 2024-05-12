@@ -5,7 +5,8 @@ import LikeDiv from '../postLikeDiv/likeDiv';
 import Comments from '../postComment/Comments';
 import { useTypedSelector } from '../../../redux/reduxUseSelector';
 import { Link } from 'react-router-dom';
-import { updateRatingAPI } from '../../../APIs/postAPI';
+import { isPostSavedAPI, savePostAPI, updateRatingAPI } from '../../../APIs/postAPI';
+import SharingModal from '../../../modals/sharePostModal/sharePostModal';
 
 const PostCard: React.FC<userPost > = (props) => {
   const isDarkModeOn = useTypedSelector((state) => state.darkTheme.isDarkTheme);
@@ -15,9 +16,13 @@ const PostCard: React.FC<userPost > = (props) => {
   const [isComment, setIsComment] = useState<boolean>(false);
   const [postData,setPostData] = useState<userPost>(props)
   const [ratingStar, setRatingStar] = useState<number[]>([0,0,0,0,0]);
+  const [isSaved,setIsSaved] = useState<boolean>(false)
+  const [isShareOpen,setIsShareOpen] = useState<boolean>(false)
   const [ratings, setRatings] = useState<number>(0);
 
   useEffect(() => {
+    console.log('isSaved:',isSaved);
+    
     const rate: ratingData | undefined = props.ratings?.find(item => item.raterId === userId);
     if (rate) {
       const updatedRatings = ratingStar.map((_, index) => (index <= rate.rate-1 ? 1 : 0));
@@ -38,12 +43,37 @@ const PostCard: React.FC<userPost > = (props) => {
     }
   };
 
+  const handlePostsave = async ()=>{
+    setIsSaved(!isSaved)
+    const res = await savePostAPI(props._id,isSaved)
+    console.log('handle post save response :',res?.data);
+    
+    if(res?.data.success){
+      alert(res.data.message)
+    }
+  }
+  useEffect(()=>{
+    async function checkIsPostSaved (){
+      const res = await isPostSavedAPI(props._id)
+      if(res?.data.success){
+        setIsSaved(true)
+      }else{
+        setIsSaved(false)
+      }
+    }
+    checkIsPostSaved()
+  },[isSaved])
+
   return (
     <div className={`postBody ${isDarkModeOn ? 'bg-black' : ''}`}>
+      <div> 
+      {isShareOpen &&  <SharingModal  handleClose={()=>setIsShareOpen(false)} userId={userId} />}
+      </div>
       <div className="">
         <div className="">
           <div className="topDiv flex justify-between items-center mt-5 mb-3">
-            <div className="profileAndName flex items-center  ">
+           <Link to={`/OthersProfile/${props && props.userId}/${props && props.isProperty}`}>
+           <div className="profileAndName flex items-center  ">
               <div className="profileImageOnHome">
                 {profile === '' ? (
                   <i className="fa-solid fa-user" style={{ fontSize: '30px' }}></i>
@@ -55,15 +85,27 @@ const PostCard: React.FC<userPost > = (props) => {
                 <h1>{props.PostName}</h1>
               </div>
             </div>
+           </Link>
           </div>
           <div className="postCardImage ">
             <img src={props.post} alt="" />
           </div>
           <div>
-            <LikeDiv isComment={isComment} setIsComment={setIsComment} />
+            <LikeDiv 
+            setIsShareOpen={setIsShareOpen}
+            handlePostSave={handlePostsave}
+            setIsSaved={setIsSaved}
+            isSaved={isSaved}
+            isComment={isComment} 
+            setIsComment={setIsComment} />
           </div>
           <div className={`comments_Component ${isComment ? 'active' : ''}`}>
-            <Comments postId={postData._id} comments={postData.comments} setPostData={setPostData} profile={profile} userName={userName} />
+            <Comments 
+            postId={postData._id} 
+            comments={postData.comments} 
+            setPostData={setPostData} 
+            profile={profile} 
+            userName={userName} />
           </div>
           <div className="PostCardDescription">
             <h1>{props.description} </h1>
