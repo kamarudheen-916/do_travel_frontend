@@ -75,7 +75,7 @@ export interface userPost {
     description: string;
     comments: comments[]; 
     date: string;
-    like:number
+    like:[string]
     ratings?:[ratingData]
     PostProfile:string,
     PostName:string,

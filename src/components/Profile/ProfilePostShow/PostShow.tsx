@@ -14,7 +14,7 @@ const  PostShow:React.FC<postShowProps> =(props) => {
          <img  className='w-full' src={post.post} alt="" style={{width:'100%',height:'100%'}} />
         </div>
          <div className='overlay'>
-          <span>Likes: {post.like}</span>
+          <span>Likes: {post.like.length}</span>
           <span>Comments: {post.comments.length}</span>
           </div>
           

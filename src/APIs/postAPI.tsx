@@ -43,11 +43,47 @@ export const savePostAPI = async (postId:string|undefined,isSave:boolean)=>{
         
     }
 }
+
 export const isPostSavedAPI = async (postId:string|undefined)=>{
     try {
         return await axiosInstance.get(`/user/isPostSaved?postId=${postId}`)
     } catch (error) {
         console.log('is post saved  api error in postAPI page:',error);
         
+    }
+}
+
+export const likePostAPI = async (postId:string|undefined,isLiked:boolean)=>{
+    try {        
+        return await axiosInstance.put('/user/likeOrUnLikePost',{postId,isLiked})
+    } catch (error) {
+        console.log('save post api error in postAPI page:',error);
+        
+    }
+}
+export const isPostLikedAPI = async (postId:string|undefined)=>{
+    try {
+        return await axiosInstance.get(`/user/isPostLiked?postId=${postId}`)
+    } catch (error) {
+        console.log('is post saved  api error in postAPI page:',error);
+        
+    }
+}
+
+
+export const fetchPostLikersDataAPI = async (postId:string|undefined|null)=>{
+    try {
+        return await axiosInstance.get(`/user/fetchPostLikersData?postId=${postId}`)
+    } catch (error) {
+        console.log('is post saved  api error in postAPI page:',error);
+        
+    }
+}
+
+export const deletePostAPI = async(postId:string|undefined|null)=>{
+    try {
+        return await axiosInstance.delete(`/user/deletePost?postId=${postId}`)
+    } catch (error) {
+        console.log('delete post  api error in postAPI page:',error);
     }
 }

@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import { ratingData, userPost } from '../../../Interfaces/interfaces';
 import './PostCard.css';
 import LikeDiv from '../postLikeDiv/likeDiv';
 import Comments from '../postComment/Comments';
 import { useTypedSelector } from '../../../redux/reduxUseSelector';
 import { Link } from 'react-router-dom';
-import { isPostSavedAPI, savePostAPI, updateRatingAPI } from '../../../APIs/postAPI';
+import { isPostLikedAPI, isPostSavedAPI, likePostAPI, savePostAPI, updateRatingAPI } from '../../../APIs/postAPI';
 import SharingModal from '../../../modals/sharePostModal/sharePostModal';
+import CustomAlert from '../../alerts/customAlerts/CustomAlerts';
+import ShowLikesModal from '../../../modals/likesModal/LikesModal';
+import PostOptionModal from '../../../modals/PostOptionModal/PostOptionModal';
 
-const PostCard: React.FC<userPost > = (props) => {
+const PostCard: React.FC<userPost & {closeModal?:React.Dispatch<React.SetStateAction<boolean>>} > = (props) => {
   const isDarkModeOn = useTypedSelector((state) => state.darkTheme.isDarkTheme);
+  const [customAlertMessage, setCustomAlertMessage] = useState<string>('');
   const profile: any = localStorage.getItem('userProfile');
   const userName: any = localStorage.getItem('userName');
   const userId: any = localStorage.getItem('userId');
@@ -17,12 +21,13 @@ const PostCard: React.FC<userPost > = (props) => {
   const [postData,setPostData] = useState<userPost>(props)
   const [ratingStar, setRatingStar] = useState<number[]>([0,0,0,0,0]);
   const [isSaved,setIsSaved] = useState<boolean>(false)
+  const [isLiked,setIsLiked] =useState<boolean>(false)
   const [isShareOpen,setIsShareOpen] = useState<boolean>(false)
+  const [isShowLikesOpen,setIsShowLikesOpen] = useState<boolean>(false)
+  const [isDeletePopupVisible, setIsDeletePopupVisible] = useState<boolean>(false);
   const [ratings, setRatings] = useState<number>(0);
 
-  useEffect(() => {
-    console.log('isSaved:',isSaved);
-    
+  useEffect(() => {    
     const rate: ratingData | undefined = props.ratings?.find(item => item.raterId === userId);
     if (rate) {
       const updatedRatings = ratingStar.map((_, index) => (index <= rate.rate-1 ? 1 : 0));
@@ -37,9 +42,9 @@ const PostCard: React.FC<userPost > = (props) => {
     const res = await updateRatingAPI(props._id, starIndex+1);
     if(res?.data.success){
       setRatings(starIndex)
-      alert(res.data.message)
+      setCustomAlertMessage(res.data.message);
     }else{
-      alert(res?.data.message)
+      setCustomAlertMessage(res?.data.message);
     }
   };
 
@@ -49,24 +54,61 @@ const PostCard: React.FC<userPost > = (props) => {
     console.log('handle post save response :',res?.data);
     
     if(res?.data.success){
-      alert(res.data.message)
+      setCustomAlertMessage(res.data.message);
+    }
+  }
+  const handlePostLike = async ()=>{
+    try {
+      setIsLiked(!isLiked)
+      const res = await likePostAPI(props._id,isLiked)
+      if(res?.data.success){
+        setCustomAlertMessage(res.data.message)
+      }else{
+        setCustomAlertMessage(res?.data.message)
+      }
+    } catch (error) {
+      console.log('handle post like error :',error)
     }
   }
   useEffect(()=>{
     async function checkIsPostSaved (){
+    try {
       const res = await isPostSavedAPI(props._id)
       if(res?.data.success){
         setIsSaved(true)
       }else{
         setIsSaved(false)
       }
+    } catch (error) {
+      console.log('check is post saved error in Post card useEffct :',error );
+      
+    }
+    }
+    async function checkIsPostLiked(){
+      try {
+        const res = await isPostLikedAPI(props._id)
+        if(res?.data.success){
+          setIsLiked(true)
+        }else{
+          setIsLiked(false)
+        }
+      } catch (error) {
+      console.log('check is post liked error in Post card useEffct :',error );
+        
+      }
     }
     checkIsPostSaved()
+    checkIsPostLiked()
+
   },[isSaved])
 
   return (
     <div className={`postBody ${isDarkModeOn ? 'bg-black' : ''}`}>
+        {customAlertMessage && (
+        <CustomAlert message={customAlertMessage} onClose={() => setCustomAlertMessage('')} />
+      )}
       <div> 
+      {isShowLikesOpen && <ShowLikesModal data={props.like} handleClose={()=>setIsShowLikesOpen(false)} postId={props._id}/>}
       {isShareOpen &&  <SharingModal  handleClose={()=>setIsShareOpen(false)} userId={userId} />}
       </div>
       <div className="">
@@ -86,16 +128,33 @@ const PostCard: React.FC<userPost > = (props) => {
               </div>
             </div>
            </Link>
+           <div className='flex gap-5  '>
+                {props.isProperty && <Link to={`/OthersProfile/${props && props.userId}/${props && props.isProperty}`}>
+                    <button className='bg-green-800 text-white px-3 rounded-sm'>Book your stay</button>
+                </Link> }
+                <div className='font-extrabold '>
+                  <p className='text-green-700 cursor-pointer' onClick={()=>setIsDeletePopupVisible(true)}>•••</p>
+                 <div>
+                  {isDeletePopupVisible && <PostOptionModal onDeleteRefresh={props.closeModal} postUserId={props.userId} postId={props._id} handleClose={setIsDeletePopupVisible}/>}
+                 </div>
+                </div>
+           </div>
+          
           </div>
           <div className="postCardImage ">
             <img src={props.post} alt="" />
           </div>
           <div>
             <LikeDiv 
+            setIsShowLikesOpen={()=>setIsShowLikesOpen(!isShowLikesOpen)}
+            numberOfComments={props.comments.length}
+            numberOfLikes={props.like.length}
+            handlePostLike={handlePostLike}
             setIsShareOpen={setIsShareOpen}
             handlePostSave={handlePostsave}
             setIsSaved={setIsSaved}
             isSaved={isSaved}
+            isLiked={isLiked}
             isComment={isComment} 
             setIsComment={setIsComment} />
           </div>

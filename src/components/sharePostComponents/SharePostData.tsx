@@ -49,7 +49,7 @@ const  SharePostData:React.FC<props>=(props)=> {
          }
     </div>
     <div>
-          <i onClick={()=>handleSelectSharies(isSelected)} className={`${isSelected ? 'fa-solid':'fa-regular'} fa-circle mr-2 cursor-pointer`}></i>
+          <i onClick={()=>handleSelectSharies(isSelected)} className={`${isSelected ? 'fa-solid':'fa-regular'} text-green-600 fa-circle mr-2 cursor-pointer`}></i>
     </div>
          
      </div>

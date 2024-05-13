@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Room } from "../../../Interfaces/interfaces";
 import "./Rooms.css";
+import ShowRoomDetailsModal from '../../../modals/showRoomDeatilsModal/RoomDeatailModal';
 
 const Rooms: React.FC<{
   roomData: Room[] | undefined
@@ -8,6 +9,8 @@ const Rooms: React.FC<{
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5); 
   const [activeButton, setActiveButton] = useState(1); 
+  const [roomDetailsModalOpen,setRoomDetailsModalOpen] =useState<boolean>(false)
+
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -20,8 +23,11 @@ const Rooms: React.FC<{
 
   return (
     <>
+       {roomDetailsModalOpen &&  <ShowRoomDetailsModal handleClose={()=>setRoomDetailsModalOpen(false)}/>}
       {currentItems?.map((room, index) => (
-        <div key={index} className="mt-4 flex roomsMainDiv">
+        <div onClick={()=>setRoomDetailsModalOpen(true)} key={index} className="mt-4 flex roomsMainDiv">
+          <div>
+          </div>
           <div className="roomImg w-60 m-2 rounded">
             <img
               src={room.images[0]}
