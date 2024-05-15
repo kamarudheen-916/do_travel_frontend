@@ -92,18 +92,12 @@ const NavBarDesk:React.FC<props> = (props)=> {
         </div>
         <Naves  onClick={()=>Navigate('/')} icon={<i className="fa-solid fa-house text-xl"></i>} iconName="Home" />
         <Naves icon={<i className="fa-solid fa-magnifying-glass text-xl"></i>} onClick={handleSearch} iconName="Search" />
-       <div className="">
-           <Link to={'/notifications'}>
-            <Naves count={notificaionCount}   icon={<i className="fa-solid fa-bell text-xl"></i>} iconName="Notification" />
-          </Link>
-       </div>
-        <Naves count={messageCount}  icon={<i className="fa-solid fa-envelope text-xl"></i>} iconName="Message" />
+        <Naves onClick={()=>Navigate('/notifications')}  count={notificaionCount}   icon={<i className="fa-solid fa-bell text-xl"></i>} iconName="Notification" />
+        <Naves onClick={()=>Navigate('/messages')} count={messageCount}  icon={<i className="fa-solid fa-envelope text-xl"></i>} iconName="Message" />
         <Naves  icon={<i className="fa-solid fa-square-plus text-xl"></i>} onClick={()=>setIsCreateOpen(true)} iconName="Create" />
-        <Naves  icon={<i className="fa-solid fa-paperclip text-xl"></i>} iconName="Bookings" />
+        <Naves onClick={()=>Navigate('/bookings')}  icon={<i className="fa-solid fa-paperclip text-xl"></i>} iconName="Bookings" />
         <Naves  icon={<i className="fa-solid fa-moon text-xl"></i>} iconName="Theme" onClick={handleDarkMode} />
-        <Link to={'/userProfile'} >
-          <Naves  icon={<i className="fa-solid fa-user text-xl"></i>} iconName="Profile" />
-        </Link>
+        <Naves onClick={()=>Navigate('/userProfile')}  icon={<i className="fa-solid fa-user text-xl"></i>} iconName="Profile" />
         <Naves onClick={handleLogout}  icon={<i className="fa-solid fa-right-from-bracket text-2xl"></i>} iconName="Log out" />
 
         <div className="createModals">

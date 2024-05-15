@@ -23,6 +23,8 @@ import AdminReports from "./pagesAdmin/AdminReports";
 import AdminPosts from "./pagesAdmin/AdminPosts";
 import AdminRooms from "./pagesAdmin/AdminRooms";
 import Notificatoin from "./pages/Notifications/Notificatoin";
+import Bookings from "./pages/Bookings/Booking";
+import Messages from "./pages/Messages/Messages";
 
 export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -57,6 +59,14 @@ function App() {
           <Route
           path="/notifications"
           element ={token ? <Notificatoin/> : <Navigate to={'/login'}/>} 
+          />
+           <Route
+          path="/bookings"
+          element ={token ? <Bookings/> : <Navigate to={'/login'}/>} 
+          />
+           <Route
+          path="/messages"
+          element ={token ? <Messages/> : <Navigate to={'/login'}/>} 
           />
         <Route
           path="/OthersProfile/:profileId/:isProperty" 

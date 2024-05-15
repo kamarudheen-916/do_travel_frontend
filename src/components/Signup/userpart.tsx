@@ -124,7 +124,7 @@ const userpart: React.FC<UserPartProps> = ({
           title={"First Name"}
           name={"firstName"}
           id={"firstName"}
-          placeholder={"Enter Your First Name"}
+          placeholder={"Enter firstname"}
         />
         <Input
           pattern="^[A-Za-z0-9]{1,16}$"

@@ -38,7 +38,7 @@ const Input : React.FC<Props>=(props) =>{
     <div  className='Input flex flex-col'>
         <label className='label ' htmlFor="">{props.title}</label>
         <input      
-                    className={`input w-full ${isDarkModeOn?'bg-green-900 text-white':''}`}
+                    className={`input w-full bg-gray-300 placeholder:text-gray-600 rounded text-black focus:outline-none p-3`}
                     placeholder={props.placeholder}
                     type={props.type}
                     name={props.name}

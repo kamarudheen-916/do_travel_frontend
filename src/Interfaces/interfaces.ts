@@ -136,3 +136,34 @@ export interface followSchemaInterface {
         following:[followingData],
         follower:[followerData]
 }
+
+export interface bookingData {
+    _id?:string
+    roomId:string
+    roomName:string
+    roomType:string
+    images:string[]
+    propertyName:string
+    propertyProfile:string
+    propertyId:string
+    bookingUserId:string
+    First_Name:string
+    Second_Name:string
+    Email:string
+    Nationality:string
+    Mobile:number
+    numberOfAdults:number
+    numberOfChilden:number
+    isCancellationfree:boolean
+    isBeforePayment:boolean
+    totalPrice:number
+    numberDays:number
+    food:string[]
+    facilities:string[]
+    checkInDate:string
+    checkOutDate:string
+    numberOfRoom:number
+    paymentIsOnline:boolean
+    bookingStatus:string
+    location:string
+}

@@ -5,10 +5,12 @@ import { addRoomAPI } from "../../APIs/propertyAPI";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LineLoader from "../Loading/LineLoader/LineLoader";
+import { useTypedSelector } from "../../redux/reduxUseSelector";
 
 const AddRoomForm :React.FC<{
   closeModal:React.Dispatch<React.SetStateAction<boolean>>
 }> = (props) => {
+  const isDarkThemeOn = useTypedSelector(state=>state.darkTheme.isDarkTheme)
   const [isLoading,setIsLoading] =useState(false)
   const notifySuccess = (message:string) => toast.success(message,{
     position:"top-center",
@@ -127,7 +129,7 @@ const AddRoomForm :React.FC<{
   };
 
   return (
-    <form onSubmit={handleAddRoomSubmit} className="form-container">
+    <form onSubmit={handleAddRoomSubmit} className={`form-container ${isDarkThemeOn ? 'bg-black':'bg-white'}`}>
      <div className="mb-2">
      {isLoading && <LineLoader />}
      </div>

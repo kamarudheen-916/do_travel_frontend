@@ -5,10 +5,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .input{
-    background: rgba(0, 197, 76, 0.1);
-    height: 30px;
-    border-radius: 5px;
-    padding: 15px;
+    
     font-size: medium;
     margin-bottom: 10px;
     width: 100%;

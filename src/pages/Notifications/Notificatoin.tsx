@@ -52,9 +52,7 @@ const Notificatoin: React.FC<{}> = () => {
   //   }
   // }
   return (
-    <div
-      className={`flex  ${isDarkModeOn ? "bg-black text-white" : "bg-white "}`}
-    >
+    <div className={`flex  ${isDarkModeOn ? "bg-black text-white" : "bg-white "}`}>
       <div>
         <NavBarDesk />
       </div>
@@ -79,24 +77,6 @@ const Notificatoin: React.FC<{}> = () => {
           <div key={index}>
               <Notification data={data} isDarkModeOn={isDarkModeOn}  />
           </div>
-        //      <div key={index} className="flex gap-1">
-        //    <div className="userProfileImage" >
-        //      <img src={data.notificationProfile} alt="" />
-        //    </div>
-        //    <div className="userProfileName gap-24">
-        //      <div className="nameDiv">
-        //        <h1 className={`${isDarkModeOn ? "text-gray-300" : ""}`}>{data.notificationName}</h1>
-        //        {data.isProperty && <h1 className="isPropery">Property</h1>}
-        //      </div>
-        //     <div className="flex gap-5 ">
-        //         {!isReqConfirmed &&!isReqCancelled&&  <div className="hover:bg-green-800 cursor-pointer hover:text-white hover:rounded px-2 py-1 text-green-600" onClick={()=>handleConfirmFollReq(data.followingId)}>Confirm</div> }
-        //         { isReqConfirmed && <div className="hover:bg-green-800  hover:text-white hover:rounded px-2 py-1 text-green-600" >Confirmed</div> }
-        //         { isReqCancelled && <div className="hover:bg-green-800  hover:text-white hover:rounded px-2 py-1 text-green-600" >Cancelled</div> }
-        //         {!isReqConfirmed && !isReqCancelled&&  <div className="hover:bg-green-800 cursor-pointer hover:text-white hover:rounded px-2 py-1 text-green-600" onClick={()=>handleCancellFollReq(data.followingId)}>Cancel</div>}
-        //     </div>
-         
-        //    </div>
-        //  </div>
          )) }
         </div>
       </div>

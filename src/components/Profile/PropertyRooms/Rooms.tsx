@@ -1,7 +1,11 @@
 import { useState } from 'react';
-import { Room } from "../../../Interfaces/interfaces";
+import { Room, bookingData } from "../../../Interfaces/interfaces";
 import "./Rooms.css";
 import ShowRoomDetailsModal from '../../../modals/showRoomDeatilsModal/RoomDeatailModal';
+import BookNowModal from '../../../modals/showRoomDeatilsModal/BookNowModal';
+import BookingDetailsModal from '../../../modals/showRoomDeatilsModal/BookingDetailModal';
+
+
 
 const Rooms: React.FC<{
   roomData: Room[] | undefined
@@ -10,6 +14,38 @@ const Rooms: React.FC<{
   const [itemsPerPage] = useState(5); 
   const [activeButton, setActiveButton] = useState(1); 
   const [roomDetailsModalOpen,setRoomDetailsModalOpen] =useState<boolean>(false)
+  const [BookRoomModalOpen,setBookRoomModalOpen] =useState<boolean>(false)
+  const [BookingDetailsModalOpen,setBookingDetailsModalOpen] = useState<boolean>(false)
+  const [roomData,setRoomData] = useState<Room>()
+  const [bookingData,setBookingData] =useState<bookingData>({
+    roomId:'',
+    roomName:'',
+    roomType:'',
+    propertyName:'',
+    propertyProfile:'',
+    propertyId:'',
+    bookingUserId:'',
+    First_Name:'',
+    Second_Name:'',
+    Email:'',
+    Nationality:'',
+    Mobile:0,
+    numberOfAdults:0,
+    numberOfChilden:0,
+    isCancellationfree:false,
+    isBeforePayment:false,
+    totalPrice:0,
+    numberDays:0,
+    food:[],
+    facilities:[],
+    checkInDate:'',
+    checkOutDate:'',
+    numberOfRoom:0,
+    paymentIsOnline:true,
+    images:[],
+    bookingStatus:'',
+    location:''
+  })
 
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -21,11 +57,18 @@ const Rooms: React.FC<{
     setActiveButton(pageNumber); // Set the active button when paginating
   };
 
+  const handleBook_NowOpen = (room:Room)=>{
+    setRoomDetailsModalOpen(true)
+    setRoomData(room)
+  }
+
   return (
     <>
-       {roomDetailsModalOpen &&  <ShowRoomDetailsModal handleClose={()=>setRoomDetailsModalOpen(false)}/>}
+       {roomDetailsModalOpen &&  <ShowRoomDetailsModal  bookingData={bookingData} setBookingData={setBookingData} data={roomData}  handleBookNowOpen={()=>setBookRoomModalOpen(true)} handleClose={()=>setRoomDetailsModalOpen(false)}  /> }
+       {BookRoomModalOpen && <BookNowModal bookingData={bookingData} setBookingData={setBookingData} RoomData={roomData} handleClose={()=>setBookRoomModalOpen(false)} handleBookeDeatilsOpen={()=>setBookingDetailsModalOpen(true)} />}
+       {BookingDetailsModalOpen && <BookingDetailsModal BookingData={bookingData} handleClose={()=>setBookingDetailsModalOpen(false)}/>}
       {currentItems?.map((room, index) => (
-        <div onClick={()=>setRoomDetailsModalOpen(true)} key={index} className="mt-4 flex roomsMainDiv">
+        <div onClick={()=>handleBook_NowOpen(room)} key={index} className="mt-4 flex roomsMainDiv">
           <div>
           </div>
           <div className="roomImg w-60 m-2 rounded">

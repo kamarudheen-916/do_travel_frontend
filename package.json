@@ -38,7 +38,8 @@
     "react-router-dom": "^6.22.3",
     "react-toastify": "^10.0.5",
     "redux": "^5.0.1",
-    "styled-components": "^6.1.8"
+    "styled-components": "^6.1.8",
+    "sweetalert2": "^11.11.0"
   },
   "devDependencies": {
     "@mui/x-charts": "^7.3.2",
