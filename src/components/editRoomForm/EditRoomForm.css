@@ -1,0 +1,43 @@
+/* styles.css */
+.Editform-container {
+   max-width: 600px;
+    margin: 10px auto;
+    padding: 0px 10px;
+}
+
+.addRoomLabel {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+
+}
+
+
+.addRoomInput {
+    margin-left: 12px;
+    color: black;
+    border: 1px solid #a5a5a5;
+    background: #c8c3c3;
+    border-radius: 4px;
+    padding: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 192px;
+   
+}
+.addRoomInput:focus{
+    outline: none;
+}
+.Editform-container .addRoomButton{
+    background: var(--button-bg-color);
+    color: var(--button-text-color);
+    font-weight: var(--button-font-weight);
+    padding: var(--button-padding);
+    border-radius: var(--button-border-radius);
+    width: 100%;
+    margin:10px  0;
+}
+
+.Editform-container .addRoomButton:active{
+    background: #13b456;
+}
+

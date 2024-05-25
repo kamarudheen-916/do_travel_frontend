@@ -3,8 +3,9 @@ import "./ShowRoomDetailsModal.css";
 
 import { useTypedSelector } from "../../redux/reduxUseSelector";
 import { Room, bookingData } from "../../Interfaces/interfaces";
-import React, { useEffect } from "react";
+import React from "react";
 import Input from "../../components/atoms/Input/Input";
+
 
 interface ModalProps {
     handleClose: () => void;
@@ -32,13 +33,8 @@ const BookNowModal: React.FC<ModalProps> = (props) => {
     }
     async function handleBooking (e:React.ChangeEvent<HTMLFormElement>){
         e.preventDefault()
-        console.log(props.bookingData);
-        if(!props.bookingData.paymentIsOnline){
-            props.handleBookeDeatilsOpen()
-            props.handleClose()
-        }else{
-            alert('Online Payment')
-        }
+        props.handleBookeDeatilsOpen()
+        props.handleClose()
     }
        
     return (

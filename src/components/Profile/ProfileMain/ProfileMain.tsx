@@ -28,6 +28,7 @@ const ProfileMain: React.FC<props> = ({
   const [isRoom, setIsRoom] = useState<boolean>(true);
   const [isAddRoom, setAddRoom] = useState<boolean>(false);
   const [roomData, setRoomData] = useState<Room[]>();
+  const [RoomEditModalOpen,setRoomEditModalOpen] = useState<boolean>(false)
   // const [isOpenProfileModal,setIsOpenProfileModal] = useState<boolean>(false)
   const [modalData, setModalData] = useState<userPost[]>();
 
@@ -61,7 +62,7 @@ const ProfileMain: React.FC<props> = ({
       }
     };
     fetchRoomData();
-  }, [isAddRoom]);
+  }, [isAddRoom,RoomEditModalOpen]);
   return (
     <div className="max-w-4xl min-w-96  h-dvh overflow-y-scroll relative">
       <div className="profileTopDiv">
@@ -111,7 +112,7 @@ const ProfileMain: React.FC<props> = ({
               Add Room
             </button>
           </div>
-          {roomData?.length == 0 ? <NoPost /> : <Rooms roomData={roomData} />}
+          {roomData?.length && roomData?.length < 1? <NoPost /> : <Rooms setRoomData={setRoomData} setRoomEditModalOpen={setRoomEditModalOpen} RoomEditModlaOpen={RoomEditModalOpen} roomData={roomData} />}
         </div>
       )}
 

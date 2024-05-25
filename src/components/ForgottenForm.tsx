@@ -5,8 +5,14 @@ import { useState } from 'react';
 import { forgetFormData } from '../Interfaces/interfaces';
 import { forgottenAPI } from '../APIs/UserAPI';
 import Logo from './Home/subHomeComponents/Logo/Logo';
+import { ToastContainer, toast } from 'react-toastify';
 
 function ForgottenForm() {
+   const notifyError = (message:any) => toast.error(message,{
+     position:"top-center",
+     autoClose:1000,
+     hideProgressBar:true
+    });
   const navigate = useNavigate()
   const [userType, setUserType] = useState<string>('user'); 
   const handleUserTypeChange = (event:React.ChangeEvent<HTMLInputElement>) => {
@@ -32,11 +38,14 @@ const handleForgotterSubmit =async (e:React.ChangeEvent<HTMLFormElement>) =>{
     const {email,hashedPassword,userType} = forgotenResponse.data
     navigate('/otp', { state: { email,hashedPassword,userId:'',userType,isForgotten:true } });
   }else{
-    alert(forgotenResponse.data.message)
+    notifyError(forgotenResponse.data.message)
   }
 }
   return (
     <div>
+        <div>
+      <ToastContainer/>
+    </div>
             <div className='w-full flex justify-center items-center mt-20' style={{minWidth:'500px'}} >
                   <form action="" onSubmit={(e:React.ChangeEvent<HTMLFormElement>)=>handleForgotterSubmit(e)} className=' p-8    rounded-lg border-2 border-green-600'>
                   <div className=' text-2xl mb-6 font-bold  text-center '>

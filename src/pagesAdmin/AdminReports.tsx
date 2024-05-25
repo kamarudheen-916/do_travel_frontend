@@ -1,13 +1,16 @@
-import React from 'react'
+
+import ReportTable from '../components/atoms/Table/reportTable'
 import AdminNav from '../componentsAdmin/AdminNav/AdminNav'
 
 function AdminReports() {
   return (
-    <div>
+    <div className='bg-slate-800 text-white'>
       <div>
         <AdminNav />
       </div>
-      admin Reports
+      <div className='h-dvh'>
+          <ReportTable />
+      </div>
     </div>
   )
 }

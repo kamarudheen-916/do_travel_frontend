@@ -164,7 +164,7 @@ const ShowRoomDetailsModal: React.FC<ModalProps> = (props) => {
              <ToastContainer theme={`${isDarkThemeOn ? 'light':'dark'}`}/>
             <section className={`roomDetailesModal-main ${isDarkThemeOn ? 'bg-gray-900':''}`}>
             <div className={`roomDetailesModal-header  ${isDarkThemeOn ? 'bg-gray-900':'bg-white'} `}>
-                <button className={`roomDetailesModal-Button`} onClick={props.handleClose}>X</button>
+                <button className={`roomDetailesModal-Button text-green-700`} onClick={props.handleClose}>X</button>
                 <h1 className={`following_heding`}>Room Details</h1>
             </div>
 
@@ -255,30 +255,30 @@ const ShowRoomDetailsModal: React.FC<ModalProps> = (props) => {
                     <div className="flex flex-wrap justify-evenly rounded-md border border-green-800 mx-2 my-10 py-2 px-2">
                         <div className="flex gap-1">
                             <h1>Availabilty :</h1>
-                            <h1 className="text-green-700">{props.data?.numOfRoomLeft} Rooms are available</h1>
+                            <h1 className={`${isDarkThemeOn ? 'text-yellow-400' : 'text-yellow-700'}`}>{props.data?.numOfRoomLeft} Rooms are available</h1>
                         </div>
                        { props.data?.isBeforePayment ? 
                        <div className="flex gap-1">
                             <h1>Payment :</h1>
-                            <h1 className="text-green-700">You can pay at the property</h1>
+                            <h1 className={`${isDarkThemeOn ? 'text-yellow-400' : 'text-yellow-700'}`}>You can pay at the property</h1>
                         </div>
                         :
                         <div className="flex gap-1">
                             <h1>Payment :</h1>
-                            <h1 className="text-green-700">Pay Before Checkin</h1>
+                            <h1 className={`${isDarkThemeOn ? 'text-yellow-400' : 'text-yellow-700'}`}>Pay Before Checkin</h1>
                        </div>
                     }
                         {props.data?.freeCancellation ?<div className="flex gap-1">
                             <h1>Cancellation : </h1>
-                            <h1 className="text-green-700">Free</h1>
+                            <h1 className={`${isDarkThemeOn ? 'text-yellow-400' : 'text-yellow-700'} `}>Free</h1>
                         </div> :
                         <div className="flex gap-1">
                             <h1>Cancellation : </h1>
-                            <h1 className="text-green-700">You may need pay some mony</h1>
+                            <h1 className={`${isDarkThemeOn ? 'text-yellow-400' : 'text-yellow-700'}`}>You may need pay some mony</h1>
                          </div>}
-                        <div className="flex gap-1 items-center ">
+                        <div className={`flex gap-1 items-center font-extrabold text-lg  ${isDarkThemeOn ? 'text-yellow-400' : 'text-yellow-700'}`}>
                             <h1>Total Price :</h1>
-                            <h1 className="text-green-700">₹ {TotalPrice}/-</h1>
+                            <h1 className="">₹ {TotalPrice}/-</h1>
                         </div>
                     </div>
                     <div className="px-2 pb-2" >

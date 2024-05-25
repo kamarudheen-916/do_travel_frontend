@@ -7,8 +7,14 @@ import { loginAPI } from '../APIs/UserAPI'
 import { useDispatch } from 'react-redux'
 import Cookies from 'js-cookie'
 import Logo from './Home/subHomeComponents/Logo/Logo'
+import { ToastContainer, toast } from 'react-toastify';
 function LoginForm() {
-  
+ 
+   const notifyError = (message:any) => toast.error(message,{
+     position:"top-center",
+     autoClose:1000,
+     hideProgressBar:true
+    });
   const [userType, setUserType] = useState<string>('user'); 
   const handleUserTypeChange = (event:React.ChangeEvent<HTMLInputElement>) => {
     setUserType(event.target.value);
@@ -52,11 +58,12 @@ function LoginForm() {
       Dispatch({type:'login_successful',payload:loginResponse.data.token})
       navigate('/')
     }else{
-      alert(loginResponse.data.message)
+      notifyError(loginResponse.data.message)
     }
   }
   return (
     <div className='w-full flex justify-center items-center mt-20 ' >
+      <ToastContainer />
                   <form onSubmit={(e:any)=>handleLoginSubmit(e)} action="" className='LoginForm px-6 py-3  rounded-lg border-2 border-green-600'>
                   <div className=' text-2xl mb-6 font-bold  text-center '>
                     <div><Logo /></div>

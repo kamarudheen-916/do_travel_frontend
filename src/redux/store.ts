@@ -4,6 +4,7 @@ import { reRender } from "../reducers/reducesrs";
 import { darkTheme } from "../reducers/reducesrs";
 import { notificationCountReducer } from "../reducers/reducesrs";
 import notification from '../reducers/reducer2'
+import adminSlice from "../reducers/adminSlice";
 export type RootState = ReturnType<typeof rootReducer>;
 
 
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   reRender: reRender,
   darkTheme,
   notification,
+  adminAuth:adminSlice
 });
 
 const store = configureStore({

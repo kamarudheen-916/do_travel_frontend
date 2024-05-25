@@ -12,6 +12,27 @@ export const addRoomAPI =async(roomData:Room)=>{
     }
 }
 
+
+export const editRoomAPI =async(roomData:Room)=>{
+    try {
+        console.log('test--------------',roomData);
+        
+        return await axiosInstance.put('/user/editRoom',roomData)
+    } catch (error) {
+        console.log('addRoomAPI error : ',error);
+        throw error
+    }
+}
+
+
+export const deleteRoomAPI =async(roomId:Room)=>{
+    try {
+        return await axiosInstance.delete(`/user/deleteRoom?roomId=${roomId}`)
+    } catch (error) {
+        console.log('delte RoomAPI error : ',error);
+        throw error
+    }
+}
 export const fetchRoomDataAPI = async()=>{
     try {
         return await axiosInstance.get('/user/fetchRoomData')
@@ -36,5 +57,14 @@ export const submitCommentAPI = async (comment:string,postId:string)=>{
     } catch (error) {
         console.log('submitCommentAPi error :',error);
         
+    }
+}
+
+
+export const updateRoomRatingAPI = async (roomId:string|undefined,rating:any,ratingComment:string)=>{
+    try {
+        return await axiosInstance.put('/user/updateRoomRating',{roomId,rating,ratingComment})
+    } catch (error) {
+        console.log('updateRating error ',error);
     }
 }

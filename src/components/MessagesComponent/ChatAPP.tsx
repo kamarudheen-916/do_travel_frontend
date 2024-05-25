@@ -1,64 +1,103 @@
-import React, { useState } from 'react';
-
-interface Message {
-    text: string;
-    sender: 'user' | 'bot';
-    timestamp: string;
+import { useEffect, useRef, useState } from "react";
+import ChatBar from "../Chats/ChatBar/ChatBar";
+import './ChatApp.css';
+import { io, Socket } from 'socket.io-client';
+import ChatFooter from "../Chats/ChatFooter/ChatFooter";
+import ChatBody from "../Chats/ChatBody/ChatBody";
+import { getMessageAPI } from "../../APIs/ChatAPI";
+import { useNavigate } from "react-router-dom";
+import notificationSound from '../../../public/sounds/Iphone Message Tone Download - MobCup.Com.Co.mp3'
+interface onlineUser {
+  [userId: string]: string;
 }
 
-const Chat: React.FC = () => {
-    const [messages, setMessages] = useState<Message[]>([
-        {
-            text: "Hi there! How can I help you today?",
-            sender: 'bot',
-            timestamp: new Date().toISOString(),
-        }
-    ]);
-    const [inputText, setInputText] = useState<string>('');
+const ChatAPP: React.FC = () => {
+  const Navigate = useNavigate();
+  const [socket, setSocket] = useState<Socket | null>(null);
+  const [onlineUser, setOnlinUser] = useState<onlineUser>();
+  const [messages, setMessages] = useState<any[]>([]);
+  const [typingStatus, setTypingStatus] = useState('');
+  const [selectedUser, setSelectedUser] = useState<string | null>();
+  const [selectedUserProfile, setSelectedUserProfile] = useState<string | null>();
+  const [selectedUserName, setSelectedUserName] = useState<string | null>();
+  const userId = localStorage.getItem('userId');
+  const lastMessageRef = useRef<any>(null);
 
-    const handleMessageSend = () => {
-        if (inputText.trim() !== '') {
-            const newMessage: Message = {
-                text: inputText,
-                sender: 'user',
-                timestamp: new Date().toISOString(),
-            };
-            setMessages([...messages, newMessage]);
-            setInputText('');
-            // In a real application, you would handle the bot's response here
-            // For now, let's simulate a simple bot response after a delay
-            setTimeout(() => {
-                const botResponse: Message = {
-                    text: `You said: ${inputText}. That's interesting!`,
-                    sender: 'bot',
-                    timestamp: new Date().toISOString(),
-                };
-                setMessages([...messages, botResponse]);
-            }, 1000);
-        }
-    };
+  const getMessage = async () => {
+    if (selectedUser) {
+      const res = await getMessageAPI(selectedUser);
+      console.log('messages ', res);
+      setMessages(res?.data);
+    }
+  };
 
-    return (
-        <div className="chat-container">
-            <div className="chat-messages">
-                {messages.map((message, index) => (
-                    <div key={index} className={`message ${message.sender}`}>
-                        <span className="message-text">{message.text}</span>
-                        <span className="message-timestamp">{message.timestamp}</span>
-                    </div>
-                ))}
-            </div>
-            <div className="chat-input">
-                <input
-                    type="text"
-                    placeholder="Type a message..."
-                    value={inputText}
-                    onChange={(e) => setInputText(e.target.value)}
-                />
-                <button onClick={handleMessageSend}>Send</button>
-            </div>
-        </div>
-    );
+  useEffect(() => {
+    getMessage();
+  }, [selectedUser, setMessages]);
+
+  useEffect(() => {
+    if (userId) {
+      const socket: Socket = io('http://localhost:3000', {
+        query: { userId }
+      });
+      setSocket(socket);
+      socket.on('getOnlineUsers', (users) => { setOnlinUser(users); });
+
+      return () => { socket.close(); };
+    } else {
+      if (socket) {
+        socket.close();
+        setSocket(null);
+      }
+    }
+  }, [userId]);
+
+  useEffect(() => {
+    
+    socket?.on('newMessage', (newMessage) => {
+      const sound = new Audio(notificationSound)
+      sound.play()
+      setMessages((prevMessages) => [...prevMessages, newMessage])
+    });
+    
+    return ()=> {socket?.off('newMessage')}
+  }, [socket]);
+
+  useEffect(() => {
+    lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  const addMessage = (message: any) => {
+    setMessages((prevMessages) => [...prevMessages, message]);
+  };
+
+  return (
+    <div className="chat">
+      <ChatBar
+        selectedUser={selectedUser}
+        setSelectedUser={setSelectedUser}
+        setSelectedUserProfile={setSelectedUserProfile}
+        setSelectedUserName={setSelectedUserName}
+        onlineUsers={onlineUser}
+      />
+      <div className="w-full">
+        <ChatBody
+          selectedUser={selectedUser}
+          messages={messages}
+          typingStatus={typingStatus}
+          lastMessageRef={lastMessageRef}
+          selectedUserProfile={selectedUserProfile}
+          selectedUserName={selectedUserName}
+        />
+        {selectedUser && (
+          <ChatFooter
+            recipientId={selectedUser}
+            addMessage={addMessage} // Pass the addMessage function as a prop
+          />
+        )}
+      </div>
+    </div>
+  );
 };
 
-export default Chat;
+export default ChatAPP;

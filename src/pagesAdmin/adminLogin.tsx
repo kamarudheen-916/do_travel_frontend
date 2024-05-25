@@ -1,27 +1,34 @@
-import { Link, useNavigate } from 'react-router-dom'
+import {  useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import { LoginFormData } from '../Interfaces/interfaces'
-import { loginAPI } from '../APIs/UserAPI'
+import {  adminFormData } from '../Interfaces/interfaces'
+
 import { useDispatch } from 'react-redux'
 import Cookies from 'js-cookie'
 import Logo from '../components/Home/subHomeComponents/Logo/Logo'
 import Input from '../components/atoms/Input/Input'
 import Button from '../components/atoms/Button/Button'
+import { adminLoginAPI } from '../API_admin/adminAPI'
+import { ToastContainer, toast } from 'react-toastify';
+import {  adminLogin } from '../reducers/adminSlice'
+
 function AdminLogin() {
   
-  const [userType, setUserType] = useState<string>('user'); 
-  const handleUserTypeChange = (event:React.ChangeEvent<HTMLInputElement>) => {
-    setUserType(event.target.value);
-};
+
+   const notifyError = (message:any) => toast.error(message,{
+     position:"top-center",
+     autoClose:1000,
+     hideProgressBar:true
+    });
+
   const Dispatch = useDispatch()
   const navigate = useNavigate()
-  const [loginFormData,setLoginFormData]= useState <LoginFormData>({
-    email:'',
+  const [adminFormData,setAdminFormData]= useState <adminFormData>({
+    adminName:'',
     password:'',
   })
   const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setLoginFormData((prev) => ({
+    setAdminFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -30,32 +37,24 @@ function AdminLogin() {
 
   const handleLoginSubmit = async (e:React.ChangeEvent<HTMLInputElement>)=>{
     e.preventDefault()
-    const loginResponse = await loginAPI(loginFormData,userType)
-    if(loginResponse.data.success){
-      localStorage.setItem('token',loginResponse.data.token)
-      if(userType === 'user'){
-        localStorage.setItem('userName',loginResponse.data.user.firstName)
-        localStorage.setItem('userProfile',loginResponse.data.user.Profile)
-        localStorage.setItem('userId',loginResponse.data.user._id)
-        localStorage.setItem('userType',userType)
-        Cookies.set('userType',userType)
-        }
-        else{
-        localStorage.setItem('userName',loginResponse.data.user.PropertyName)
-        localStorage.setItem('userProfile',loginResponse.data.user.PropertyProfile)
-        localStorage.setItem('userId',loginResponse.data.user._id)
-        localStorage.setItem('userType',userType)
-        Cookies.set('userType',userType)
-        }
-      Dispatch({type:'login_successful',payload:loginResponse.data.token})
-      navigate('/')
+    const loginResponse = await adminLoginAPI(adminFormData)
+    if(loginResponse?.data.success){
+      console.log('admin response :',loginResponse.data);
+      
+      Cookies.set('adminToken', loginResponse.data.token, { expires: 1 });
+      Dispatch(adminLogin(loginResponse.data.token))
+      navigate('/admin/adminHome')
+    
     }else{
-      alert(loginResponse.data.message)
+      notifyError(loginResponse?.data.message)
     }
   }
   return (
-    <div className='w-full flex justify-center items-center mt-20 ' >
-                  <form onSubmit={(e:any)=>handleLoginSubmit(e)} action="" className='LoginForm px-6 py-3  rounded-lg border-2 border-green-600'>
+    <div className='w-full flex justify-center items-center mt-20  ' >
+                  <div>
+                <ToastContainer/>
+              </div>
+                  <form onSubmit={(e:any)=>handleLoginSubmit(e)} action="" className='LoginForm px-14 py-10  rounded-lg border-2 border-green-600'>
                   <div className=' text-2xl mb-6 font-bold  text-center '>
                     <div><Logo /></div>
                     <h1 style={{ color: 'var(--icon-color)' }}>Admin Login</h1>
@@ -64,18 +63,18 @@ function AdminLogin() {
                       
                         <Input 
                           required={true} 
-                          value={loginFormData.email} 
-                          errorLabelValue={'It should be a valid email address!'} 
+                          value={adminFormData.adminName} 
+                          errorLabelValue={'It should be a valid name !'} 
                           onChange={handleLoginChange} 
-                          type={'email'}
-                          title={'User Email'}
-                          name={'email'}
-                          placeholder='Enter Email'
+                          type={'text'}
+                          title={'Admin Name'}
+                          name={'adminName'}
+                          placeholder='Enter Admin Name...'
                         />
                         <Input 
                           pattern={`^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$`}
                           required={true} 
-                          value={loginFormData.password} 
+                          value={adminFormData.password} 
                           errorLabelValue={'Invalid password!'} 
                           onChange={handleLoginChange} 
                           type={'password'} 
@@ -86,13 +85,7 @@ function AdminLogin() {
                         <div>
                             <Button  bgcolor='#178834' font_color='#ffff' name={'Submit'}/>
                         </div>
-                        <div className='mt-5 flex justify-between'>
-                          <Link className='text-green-400 mr-6' to={'/forgottenPassword'}>Forgotten Password?</Link>
-                          <Link className='text-green-400 ' to={'/signup'}>Create New Account</Link>
-                        </div>
-                        <div className='mt-6 text-center'>
-                          <a href="" className='text-white '> <i className="fa-brands fa-google" style={{color:'white'}}></i> Login with google  </a>
-                        </div>
+                       
                   </form>
                 </div>
   )

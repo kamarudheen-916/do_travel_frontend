@@ -27,3 +27,12 @@ export const cancelBookingAPI = async (BookingId:any)=>{
         
     }
 }
+
+export const onlineBookingAPI = async (bookingData:any,roomPrice:any)=>{
+    try {
+        return await axiosInstance.post(`/user/onlinePayment`,{bookingData:bookingData,roomPrice})
+    } catch (error) {
+        console.log('confirm booking api error :',error);
+        
+    }
+}

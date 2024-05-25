@@ -1,22 +1,35 @@
-import { useState } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import { Room, bookingData } from "../../../Interfaces/interfaces";
 import "./Rooms.css";
-import ShowRoomDetailsModal from '../../../modals/showRoomDeatilsModal/RoomDeatailModal';
-import BookNowModal from '../../../modals/showRoomDeatilsModal/BookNowModal';
-import BookingDetailsModal from '../../../modals/showRoomDeatilsModal/BookingDetailModal';
+import ShowRoomDetailsModal from '../../../modals/RoomRelatedModals/RoomDeatailModal';
+import BookNowModal from '../../../modals/RoomRelatedModals/BookNowModal';
+import BookingDetailsModal from '../../../modals/RoomRelatedModals/BookingDetailModal';
+import RoomEdit from '../../../modals/RoomRelatedModals/RoomEdit';
+import { deleteRoomAPI } from '../../../APIs/propertyAPI';
+import { ToastContainer, toast } from 'react-toastify';
+import Swal from 'sweetalert2';
+import RatingModal from '../../../modals/RoomRelatedModals/RoomRatingModal/RatingModal';
 
 
 
 const Rooms: React.FC<{
-  roomData: Room[] | undefined
+  roomData: Room[]|undefined
+  setRoomEditModalOpen:React.Dispatch<SetStateAction<boolean>>
+  RoomEditModlaOpen:boolean
+  setRoomData:React.Dispatch<SetStateAction<Room[]|undefined>>
 }> = (props) => {
+  const userType = localStorage.getItem('userType')
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5); 
   const [activeButton, setActiveButton] = useState(1); 
   const [roomDetailsModalOpen,setRoomDetailsModalOpen] =useState<boolean>(false)
   const [BookRoomModalOpen,setBookRoomModalOpen] =useState<boolean>(false)
   const [BookingDetailsModalOpen,setBookingDetailsModalOpen] = useState<boolean>(false)
+  // const [RoomEditModalOpen,setRoomEditModalOpen] = useState<boolean>(false)
   const [roomData,setRoomData] = useState<Room>()
+  const [ratingModalOpen, setRatingModalOpen] = useState<boolean>(false); 
+  const [roomId,setRoomId] = useState<any>()
+ 
   const [bookingData,setBookingData] =useState<bookingData>({
     roomId:'',
     roomName:'',
@@ -44,9 +57,22 @@ const Rooms: React.FC<{
     paymentIsOnline:true,
     images:[],
     bookingStatus:'',
-    location:''
+    location:'',
+   
   })
 
+  const notifySuccess = (message:string) => toast.success(message,{
+    position:"top-center",
+    autoClose:1000,
+    hideProgressBar:true
+   });
+   const notifyError = (message:any) => toast.error(message,{
+     position:"top-center",
+     autoClose:1000,
+     hideProgressBar:true
+    });
+
+    useEffect(()=>{},[props.roomData])
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -58,76 +84,130 @@ const Rooms: React.FC<{
   };
 
   const handleBook_NowOpen = (room:Room)=>{
-    setRoomDetailsModalOpen(true)
+    if(userType === 'property'){
+      props.setRoomEditModalOpen(true)
+    }else{
+      setRoomDetailsModalOpen(true)
+    }
     setRoomData(room)
   }
 
+ const handleDeleteRoom = async (roomId:any)=>{
+    try {
+
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",      
+        confirmButtonText: "Yes, delete it!"
+        }).then(async(result) => {
+        if (result.isConfirmed) {
+          const res = await deleteRoomAPI(roomId)
+          if(res.data.success){         
+            if(res.data.rooms){
+              props.setRoomData(res.data.rooms)
+            }
+            notifySuccess(res.data.message)
+          }else{
+            notifyError(res.data.message)
+          }
+        }
+        });
+    } catch (error) {
+      console.log('delete room error :',error);
+      
+    }
+ }
+
+
   return (
     <>
-       {roomDetailsModalOpen &&  <ShowRoomDetailsModal  bookingData={bookingData} setBookingData={setBookingData} data={roomData}  handleBookNowOpen={()=>setBookRoomModalOpen(true)} handleClose={()=>setRoomDetailsModalOpen(false)}  /> }
-       {BookRoomModalOpen && <BookNowModal bookingData={bookingData} setBookingData={setBookingData} RoomData={roomData} handleClose={()=>setBookRoomModalOpen(false)} handleBookeDeatilsOpen={()=>setBookingDetailsModalOpen(true)} />}
-       {BookingDetailsModalOpen && <BookingDetailsModal BookingData={bookingData} handleClose={()=>setBookingDetailsModalOpen(false)}/>}
+      <ToastContainer />
+      <RatingModal roomId={roomId} handleClose={()=>setRatingModalOpen(false)} isOpen={ratingModalOpen} />
+       <div>
+            {roomDetailsModalOpen &&  <ShowRoomDetailsModal  bookingData={bookingData} setBookingData={setBookingData} data={roomData}  handleBookNowOpen={()=>setBookRoomModalOpen(true)} handleClose={()=>setRoomDetailsModalOpen(false)}  /> }
+            {BookRoomModalOpen && <BookNowModal bookingData={bookingData} setBookingData={setBookingData} RoomData={roomData} handleClose={()=>setBookRoomModalOpen(false)} handleBookeDeatilsOpen={()=>setBookingDetailsModalOpen(true)} />}
+            {BookingDetailsModalOpen && <BookingDetailsModal RoomData={roomData} BookingData={bookingData} handleClose={()=>setBookingDetailsModalOpen(false)}/>}
+       </div>
+       <div>
+            {props.RoomEditModlaOpen &&  <RoomEdit RoomData={roomData} handleClose={()=>props.setRoomEditModalOpen(false)} />}
+       </div>
       {currentItems?.map((room, index) => (
-        <div onClick={()=>handleBook_NowOpen(room)} key={index} className="mt-4 flex roomsMainDiv">
+        <div>
+          {room.numOfRoomLeft >0 &&
+            <div key={index}>
+            <div  key={index} className="mt-14 flex roomsMainDiv">
+            <div>
+            </div>
+            <div className="roomImg w-60  m-2 rounded">
+              <img
+                onClick={()=>handleBook_NowOpen(room)}
+                className='h-52'
+                src={room.images[0]}
+                alt=""
+              />
+            </div>
+            <div className="roomDetails flex">
+              <div className="firstPart">
+                <div className="">
+                  <h1 className="roomName  ">{room.roomName}</h1>
+                </div>
+                <div onClick={() => {setRatingModalOpen(true),setRoomId(room._id)}} className="ratingDiv text-yellow-500 cursor-pointer">
+                  <i className="fa-regular fa-star"></i>
+                  <i className="fa-regular fa-star"></i>
+                  <i className="fa-regular fa-star"></i>
+                  <i className="fa-regular fa-star"></i>
+                  <i className="fa-regular fa-star"></i>
+                </div>
+                <div className="text-blue-500">{room.location}</div>
+                <div>
+                  <h1 className="font-bold">{room.typeOfRoom}</h1>
+                </div>
+                <div className="cancellation">
+                  <div className="">
+                    {room.freeCancellation && <h1>Free Cancellation</h1>}
+                  </div>
+                  <div className="">
+                    {room.isBeforePayment && <h1>
+                      No prepayment needed <span>- pay at the property</span>
+                    </h1>}
+                  </div>
+                </div>
+                <div className="text-red-700">
+                  <h1>Only <span>{room.numOfRoomLeft}</span> room left at this price on our site</h1>
+                </div>
+              </div>
+              <div className="secondPart flex flex-col justify-between">
+                <div className="reviewDiv">
+                  <div className="review">
+                    <h1>Very good</h1>
+                    <span className="reviewsSpan"><span>{room.reviews?.length}</span> reviews</span>
+                  </div>
+                  <div className="reviewIcon">
+                    {/* <h1 className="">{room.rating}</h1> */}
+                  </div>
+                </div>
+                <div>
+                  <div className="numberOfdays">
+                    <h1><span>{room.numOfNights}</span>night, <span>{room.numOfAdults}</span> adults</h1>
+                  </div>
+                  <div className="roomPrice">
+                    <span>₹4,320</span>
+                    <h1>₹{room.price}</h1>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
           <div>
-          </div>
-          <div className="roomImg w-60 m-2 rounded">
-            <img
-              src={room.images[0]}
-              alt=""
-            />
-          </div>
-          <div className="roomDetails flex">
-            <div className="firstPart">
-              <div className="">
-                <h1 className="roomName  ">{room.roomName}</h1>
-              </div>
-              <div className="ratingDiv text-yellow-500">
-                <i className="fa-regular fa-star"></i>
-                <i className="fa-regular fa-star"></i>
-                <i className="fa-regular fa-star"></i>
-                <i className="fa-regular fa-star"></i>
-                <i className="fa-regular fa-star"></i>
-              </div>
-              <div className="text-blue-500">{room.location}</div>
-              <div>
-                <h1 className="font-bold">{room.typeOfRoom}</h1>
-              </div>
-              <div className="cancellation">
-                <div className="">
-                  {room.freeCancellation && <h1>Free Cancellation</h1>}
-                </div>
-                <div className="">
-                  {room.isBeforePayment && <h1>
-                    No prepayment needed <span>- pay at the property</span>
-                  </h1>}
-                </div>
-              </div>
-              <div className="text-red-700">
-                <h1>Only <span>{room.numOfRoomLeft}</span> room left at this price on our site</h1>
-              </div>
+              <button onClick={()=>handleDeleteRoom(room._id)} className='bg-green-800 rounded px-2 py-1 w-full'>Delete</button>
             </div>
-            <div className="secondPart flex flex-col justify-between">
-              <div className="reviewDiv">
-                <div className="review">
-                  <h1>Very good</h1>
-                  <span className="reviewsSpan"><span>{room.reviews?.length}</span> reviews</span>
-                </div>
-                <div className="reviewIcon">
-                  <h1 className="">{room.rating}</h1>
-                </div>
-              </div>
-              <div>
-                <div className="numberOfdays">
-                  <h1><span>{room.numOfNights}</span>night, <span>{room.numOfAdults}</span> adults</h1>
-                </div>
-                <div className="roomPrice">
-                  <span>₹4,320</span>
-                  <h1>₹{room.price}</h1>
-                </div>
-              </div>
             </div>
-          </div>
+          }
         </div>
       ))}
       

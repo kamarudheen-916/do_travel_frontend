@@ -3,11 +3,14 @@ import "./ShowRoomDetailsModal.css";
 
 import { useTypedSelector } from "../../redux/reduxUseSelector";
 import Swal from 'sweetalert2'
-import { bookingData } from "../../Interfaces/interfaces";
+import { Room, bookingData } from "../../Interfaces/interfaces";
 import { confirmBookingAPI } from "../../APIs/BookingAPI";
+import {loadStripe} from '@stripe/stripe-js'
+import { onlineBookingAPI } from "../../APIs/BookingAPI";
 interface ModalProps {
     handleClose: () => void;
     BookingData : bookingData
+    RoomData : Room|undefined
 }
 
 
@@ -15,23 +18,47 @@ interface ModalProps {
 const BookingDetailsModal: React.FC<ModalProps> = (props) => {
     const isDarkThemeOn = useTypedSelector(state=>state.darkTheme.isDarkTheme)
     async function handleConfimBooking (){
+
+
         try {
-            const res = await confirmBookingAPI(props.BookingData)
-            if(res?.data.success){
-                Swal.fire({
-                    icon: "success",
-                    title: "Congratulations..",
-                    text: "Your Booking is Confirmed.",
-                    didClose:props.handleClose
-                  });
-            }else{
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops..!",
-                    text: "Your Booking is not Confirmed..!",
-                    didClose:props.handleClose
-                  });
-            }
+
+            if(props.BookingData.paymentIsOnline){
+                    const Publishable_key =  import.meta.env.VITE_STRIPE_Publishable_key 
+                    const stripe = await loadStripe(Publishable_key)
+                    const paymentRes = await onlineBookingAPI(props.BookingData,props.RoomData?.price)
+                    if(paymentRes?.data.success){
+                        const sessionId = paymentRes.data.session.id;
+                        await confirmBookingAPI(props.BookingData)
+                       if(stripe){
+                        const { error } = await stripe?.redirectToCheckout({ sessionId });
+                        if (error) {
+                            console.error("Stripe checkout error", error);
+                        }
+                       }
+                    }   else{
+                        console.error("Payment session creation failed", paymentRes?.data.message);
+                    }
+                }else{
+                    
+                    const res =await confirmBookingAPI(props.BookingData)
+                    if(res?.data.success){
+                        Swal.fire({
+                            icon: "success",
+                            title: "Congratulations..",
+                            text: "Your Booking is Confirmed.",
+                            didClose:props.handleClose
+                          });
+                    }else{
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops..!",
+                            text: "Your Booking is not Confirmed..!",
+                            didClose:props.handleClose
+                          });
+                    }
+                }
+            
+           
         } catch (error) {
             console.log('uploading (confirming) booking deltails error :',error);
             

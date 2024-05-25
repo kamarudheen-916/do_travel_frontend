@@ -1,10 +1,9 @@
 import "./PostOptionModal.css";
 import { useTypedSelector } from "../../redux/reduxUseSelector";
-import { deletePostAPI } from "../../APIs/postAPI";
+import { deletePostAPI, reportPostAPI } from "../../APIs/postAPI";
 import { useEffect, useState } from "react";
-import CustomRedAlert from "../../components/alerts/customAlerts/customRedAlert";
 import CustomAlert from "../../components/alerts/customAlerts/CustomAlerts";
-
+import { ToastContainer, toast } from 'react-toastify';
 
 interface ModalProps {
     handleClose: React.Dispatch<React.SetStateAction<boolean>>;
@@ -17,9 +16,21 @@ interface ModalProps {
 
 const PostOptionModal: React.FC<ModalProps> = ({ handleClose,postId,postUserId,onDeleteRefresh }) => {
 
+       const notifyError = (message:any) => toast.error(message,{
+         position:"top-center",
+         autoClose:1000,
+         hideProgressBar:true
+        });
+        const notifySuccess = (message:string) => toast.success(message,{
+            position:"top-center",
+            autoClose:1000,
+            hideProgressBar:true
+           });
     const userId = localStorage.getItem('userId')
     const isDarkThemeOn = useTypedSelector(state=>state.darkTheme.isDarkTheme)
     const [reload,setReload] = useState(false)
+    const [isReport,setIsReport] =useState(false)
+    const [reportReson,setReportReson] = useState<string>()
     const [customAlertMessage, setCustomAlertMessage] = useState<string>('');
     useEffect(()=>{
 
@@ -35,15 +46,28 @@ const PostOptionModal: React.FC<ModalProps> = ({ handleClose,postId,postUserId,o
                 handleClose(false)
                 setCustomAlertMessage(res.data.message)
             }else{
-                alert(res?.data.message)
+                notifyError(res?.data.message)
             }
         } catch (error) {
             console.log('handle delete post error in Post option modal :',error);
             
         }
     }
+    const handleSubmitReport =async()=>{
+        const data ={postId,reason:reportReson}
+        const res = await reportPostAPI(data)
+        if(res?.data.success){
+            notifySuccess(res.data.message)
+        }else{
+            notifyError(res?.data.message)
+        }
+        setIsReport(false)
+    }
     return (
         <div className={'PostOptionModal'}>
+              <div>
+      <ToastContainer/>
+    </div>
             {customAlertMessage && (
         <CustomAlert message={customAlertMessage} onClose={() => setCustomAlertMessage('')} />
               )}
@@ -55,7 +79,13 @@ const PostOptionModal: React.FC<ModalProps> = ({ handleClose,postId,postUserId,o
                     { userId === postUserId &&
                      <h1 onClick={handleDeletePost} className='py-1 hover:bg-green-800 hover:bg-opacity-40 hover:text-white'>Delete</h1>
                      }
-                      <h1 className="py-1 hover:bg-green-800 hover:bg-opacity-40 hover:text-white">Report</h1>
+                      <div>
+                           <h1 onClick={()=>setIsReport(!isReport)} className="py-1 hover:bg-green-800 hover:bg-opacity-40 hover:text-white cursor-pointer">Report</h1>
+                          {isReport && <div >
+                                <input onChange={(e)=>setReportReson(e.target.value)} type="text" placeholder="Reason.." className="px-2 py-1 rounded m-2 text-black"/>
+                                <button onClick={handleSubmitReport} className="border border-green-700 px-2 py-1 rounded hover:bg-green-700 hover:text-white">Submit</button>
+                           </div>}
+                      </div>
                   </div>
                 </div>
             </section>

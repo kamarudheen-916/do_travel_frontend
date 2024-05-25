@@ -87,3 +87,13 @@ export const deletePostAPI = async(postId:string|undefined|null)=>{
         console.log('delete post  api error in postAPI page:',error);
     }
 }
+
+export const reportPostAPI = async (data:any)=>{
+    try {
+        const response = await axiosInstance.post(`/user/reportPost`,data)
+          return response
+    } catch (error) {
+        console.log('fetchAllUserDataAPI error:',error);
+        
+    }
+}

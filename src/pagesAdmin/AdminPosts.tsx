@@ -1,9 +1,9 @@
-import React from 'react'
+
 import AdminNav from '../componentsAdmin/AdminNav/AdminNav'
 
 function AdminPosts() {
   return (
-    <div>
+    <div className='bg-slate-800 text-white'>
         <div>
             <AdminNav />
         </div>

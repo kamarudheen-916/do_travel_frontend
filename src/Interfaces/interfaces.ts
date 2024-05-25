@@ -1,4 +1,5 @@
 export interface UserFormData {
+    _id?:string;
     firstName: string;
     lastName: string;
     email: string;
@@ -17,7 +18,7 @@ export interface UserFormData {
 }
 
 export interface PropertyFormData {
-   
+    _id?:string;
     PropertyName: string;
     email: string;
     password: string;
@@ -65,7 +66,8 @@ export interface ratingData{
     raterId:string,
     rate:number,
     _id?:string,
-    ratedDate:Date,
+    ratedDate:Date, 
+    comments:string,
 }
 export interface userPost {
     _id?: string;
@@ -85,7 +87,7 @@ export interface Room{
     propertyId:string;
     roomName:string,
     typeOfRoom:string,
-    rating:number,
+    ratings?:[ratingData],
     location:string,
     facilities:string[],
     reviews:string[],
@@ -166,4 +168,22 @@ export interface bookingData {
     paymentIsOnline:boolean
     bookingStatus:string
     location:string
+    createdAt?:Date
+}
+
+export interface adminFormData {
+    adminName:'',
+    password:'',
+}
+
+export interface PostReport{
+    _id?:string
+    postId:string
+    reporterId:string
+    reason:string
+    reportDate:Date
+    status:string
+    reporterName:string
+    reporterType:string
+
 }

@@ -11,13 +11,16 @@
 
 }
 
+
 .addRoomInput {
-    margin-left: 10px;
-    border: 1px solid #ccc;
+    margin-left: 12px;
+    color: black;
+    border: 1px solid #a5a5a5;
+    background: #c8c3c3;
     border-radius: 4px;
     padding: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
+    width: 192px;
    
 }
 .addRoomInput:focus{

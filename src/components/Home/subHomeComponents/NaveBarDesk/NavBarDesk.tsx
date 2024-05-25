@@ -13,10 +13,12 @@ import { RootState } from "../../../../redux/store"
 import { fetchFollwerRequestAPI } from "../../../../APIs/followAPI" 
 import { getThemModeAPI, setThemModeAPI } from "../../../../APIs/themeModeAPi"
 import Cookies from "js-cookie";
+
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 interface props{
   reload?:React.Dispatch<React.SetStateAction<boolean>>
 }
+
 
 const NavBarDesk:React.FC<props> = (props)=> {
 
@@ -30,6 +32,7 @@ const NavBarDesk:React.FC<props> = (props)=> {
   const [messageCount,setmessageCount]= useState(0)
   // const count = useSelector((state:RootState)=>state.notification)
   const userId = Cookies.get('userId')
+  const userName = localStorage.getItem('userName')
   useEffect(()=>{
     const fetch = async ()=>{
 
@@ -40,6 +43,7 @@ const NavBarDesk:React.FC<props> = (props)=> {
   },[])
   const Navigate =  useNavigate()
   const Dispatch = useDispatch()
+  
   const handleLogout =()=>{
     localStorage.removeItem('token')
     Dispatch({type:'logout',payload:null})
@@ -84,6 +88,11 @@ const NavBarDesk:React.FC<props> = (props)=> {
   useEffect(()=>{
     setSearchResult([])
   },[isSearchOpen])
+
+  const handleMessages =()=>{
+    Navigate('/messages');
+  }
+  
  
   return (
     <div className={`NavBarForDesk overflow-hidden h-dvh  flex flex-col ${isDark ? 'bg-black ':'bg-white'} `}>
@@ -93,7 +102,7 @@ const NavBarDesk:React.FC<props> = (props)=> {
         <Naves  onClick={()=>Navigate('/')} icon={<i className="fa-solid fa-house text-xl"></i>} iconName="Home" />
         <Naves icon={<i className="fa-solid fa-magnifying-glass text-xl"></i>} onClick={handleSearch} iconName="Search" />
         <Naves onClick={()=>Navigate('/notifications')}  count={notificaionCount}   icon={<i className="fa-solid fa-bell text-xl"></i>} iconName="Notification" />
-        <Naves onClick={()=>Navigate('/messages')} count={messageCount}  icon={<i className="fa-solid fa-envelope text-xl"></i>} iconName="Message" />
+        <Naves onClick={handleMessages} count={messageCount}  icon={<i className="fa-solid fa-envelope text-xl"></i>} iconName="Message" />
         <Naves  icon={<i className="fa-solid fa-square-plus text-xl"></i>} onClick={()=>setIsCreateOpen(true)} iconName="Create" />
         <Naves onClick={()=>Navigate('/bookings')}  icon={<i className="fa-solid fa-paperclip text-xl"></i>} iconName="Bookings" />
         <Naves  icon={<i className="fa-solid fa-moon text-xl"></i>} iconName="Theme" onClick={handleDarkMode} />

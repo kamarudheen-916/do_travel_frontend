@@ -7,8 +7,14 @@ import Cookies from 'js-cookie'
 import Logo from '../components/Home/subHomeComponents/Logo/Logo'
 import Input from '../components/atoms/Input/Input'
 import Button from '../components/atoms/Button/Button'
+import { ToastContainer, toast } from 'react-toastify';
 function AdminSignup() {
-  
+ 
+   const notifyError = (message:any) => toast.error(message,{
+     position:"top-center",
+     autoClose:1000,
+     hideProgressBar:true
+    });
   const [userType, setUserType] = useState<string>('user'); 
   const handleUserTypeChange = (event:React.ChangeEvent<HTMLInputElement>) => {
     setUserType(event.target.value);
@@ -50,11 +56,14 @@ function AdminSignup() {
       Dispatch({type:'login_successful',payload:loginResponse.data.token})
       navigate('/')
     }else{
-      alert(loginResponse.data.message)
+      notifyError(loginResponse.data.message)
     }
   }
   return (
     <div className='w-full flex justify-center items-center mt-20 ' >
+        <div>
+      <ToastContainer/>
+    </div>
                   <form onSubmit={(e:any)=>handleLoginSubmit(e)} action="" className='LoginForm px-6 py-3  rounded-lg border-2 border-green-600'>
                   <div className=' text-2xl mb-6 font-bold  text-center '>
                     <div><Logo /></div>

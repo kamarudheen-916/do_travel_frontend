@@ -5,11 +5,29 @@ import React, { useEffect, useState } from 'react'
 import { ResendOTP, verifyOTPApi } from '../APIs/UserAPI'
 import { useLocation } from 'react-router-dom'
 import Logo from './Home/subHomeComponents/Logo/Logo'
+import { ToastContainer, toast } from 'react-toastify';
 function OtpForm() {
+  const notifySuccess = (message:string) => toast.success(message,{
+    position:"top-center",
+    autoClose:1000,
+    hideProgressBar:true,
+
+   });
+   const notifyConfirmOtp = (message:string) => toast.success(message,{
+    position:"top-center",
+    autoClose:1000,
+    hideProgressBar:true,
+    onClose:()=>navigate('/login')
+   });
+   const notifyError = (message:any) => toast.error(message,{
+     position:"top-center",
+     autoClose:1000,
+     hideProgressBar:true
+    });
   const { state } = useLocation();  
   const navigate = useNavigate()
   const [OTP,setOTP] = useState<string>()
-  const [minutes,setMinutes] = useState(0)
+  const [minutes,setMinutes] = useState(1)
   const [seconds,setSeconds] = useState(30)
   const OTPData = {
     OTP,
@@ -44,10 +62,10 @@ function OtpForm() {
       e.preventDefault()
       const response = await verifyOTPApi(OTPData)  
       if(response.data.success){
-        alert(response.data.message)
-        navigate('/login')
+        notifyConfirmOtp(response.data.message)
+        
       }else{
-        alert(response.data.message)
+        notifyError(response.data.message)
       }
   }
   const handleResendOTP = async (e:any)=>{
@@ -55,25 +73,27 @@ function OtpForm() {
     setMinutes(0)
     setSeconds(30)
     if(OTPData.userType === undefined){
-      alert('Please try again..!')
+      notifyError('Please try again..!')
       navigate ('/login')
     }else{
-      alert(`otp data . email :${OTPData.email}`)
       const response = await ResendOTP(OTPData.userType,OTPData.email)
       console.log('REasend ',response);
       
       if(response){
-        alert(response.data.message)
+        notifySuccess(response.data.message)
       }else{
-        alert(response)
+        notifyError(response)
       }
     }
   }
   return (
     <div>
+        <div>
+      <ToastContainer/>
+    </div>
             <div>
             <div className='w-full flex justify-center items-center mt-20' >
-                  <form action=""  className='LoginForm p-8  rounded  rounded-lg border-2 border-green-600'>
+                  <form action=""  className='LoginForm p-8    rounded-lg border-2 border-green-600'>
                   <div className=' text-2xl mb-6 font-bold  text-center '>
                     <div><Logo /></div>
                     <h1 style={{ color: 'var(--icon-color)' }}>Login</h1>

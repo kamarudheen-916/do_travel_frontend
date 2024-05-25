@@ -46,12 +46,12 @@ function Home() {
   }, []);
 
   return (
-    <div className={`h-full flex  `}>
+    <div className={`h-full flex  ${isDarkModeOn? 'bg-black text-white' :'bg-white'}`}>
       <div className="overflow-x-hidden">
         <NavBarDesk reload={setReload}/>
       </div>
       <div className="middle w-full h-full flex  ">
-        <div className={`middleBar  flex justify-around ${isDarkModeOn? 'bg-black text-white' :'bg-white'}`}>
+        <div className={`middleBar  flex justify-around `}>
           <div className="overflow-y-scroll">
             <div className="w-96">{AllFeeds.length < 1 && <NoPost />}</div>
             {AllFeeds.map((post,index) => (

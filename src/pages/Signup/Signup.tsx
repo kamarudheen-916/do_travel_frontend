@@ -6,12 +6,17 @@ import PropertyPart from '../../components/signup/PropertyPart'
 import { useState } from 'react'
 import { SignupApi } from '../../APIs/UserAPI'
 import Logo from '../../components/Home/subHomeComponents/Logo/Logo'
-
+import { ToastContainer, toast } from 'react-toastify';
 function Signup() {
   
     const [userType, setUserType] = useState<string>('user'); 
     const navigate = useNavigate()
     
+       const notifyError = (message:any) => toast.error(message,{
+         position:"top-center",
+         autoClose:1000,
+         hideProgressBar:true
+        });
     // const [isFormValid,setIsFormValid] = useState<boolean>(false)
     const [userFormData,setUserFormData] = useState({
             firstName: '',
@@ -59,11 +64,14 @@ function Signup() {
         const email = response.data.Data.email
         navigate('/otp', { state: { userId, userType ,isForgottenPassword:false,email} });
        }else{
-        alert(response.data.message)
+        notifyError(response.data.message)
        }
     }
   return (
     <div className='signup parant'>
+          <div>
+      <ToastContainer/>
+    </div>
         <div className="center">
             <div className='SignUpform'>
                 <form action="" onSubmit={(e:any)=>handleSubmit(e)}  className=' ' encType='multipart/form-data'>

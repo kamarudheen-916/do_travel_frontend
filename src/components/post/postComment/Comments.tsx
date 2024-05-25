@@ -18,6 +18,7 @@ interface commentProps {
   
 }
 const Comments: React.FC<commentProps> = (props) => {
+
   const isDarkModeOn = useTypedSelector((state) => state.darkTheme.isDarkTheme);
   const [isSubmitting, setIsSubmitting] = useState(false); 
   const [deleteCommentIndex, setDeleteCommentIndex] = useState<number | null>(null);
@@ -27,6 +28,7 @@ const Comments: React.FC<commentProps> = (props) => {
   const [editComment,setEditComment] = useState<string>('')
   const [editableComment,setEditableComment] = useState<comments>()
   const reversedComments = [...props.comments].reverse();
+  
    const notifyError = (message:any) => toast.error(message,{
      position:"top-center",
      autoClose:1000,
@@ -65,7 +67,7 @@ const Comments: React.FC<commentProps> = (props) => {
       setDeleteCommentIndex(null); // Close delete box
       props.setPostData(res.data.post)
     }else{
-      alert(res?.data.message)
+      notifyError(res?.data.message)
       setDeleteCommentIndex(null);
     }
 

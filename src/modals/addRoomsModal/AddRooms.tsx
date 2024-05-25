@@ -16,6 +16,7 @@ const  AddRooms:React.FC<Props>=(props)=> {
             <span onClick={()=>props.closeModal(false)}>X</span>
         </div>
         <div className={`addRoomsMain ${isDarkThemeOn ? 'bg-black':''}`} >
+          <div className='text-center bg-slate-500 '>Add Room</div>
             <AddRoomForm closeModal={props.closeModal}/>
         </div>
     </div>
