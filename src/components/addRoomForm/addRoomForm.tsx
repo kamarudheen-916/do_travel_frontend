@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import LineLoader from "../Loading/LineLoader/LineLoader";
 import { useTypedSelector } from "../../redux/reduxUseSelector";
 import ShowImagesModal from "../../modals/RoomRelatedModals/RoomFecilites/showImagePreview";
-
+import PlacesAutocomplete from 'react-places-autocomplete';
 const AddRoomForm :React.FC<{
   closeModal:React.Dispatch<React.SetStateAction<boolean>>
 }> = (props) => {
@@ -52,24 +52,7 @@ const AddRoomForm :React.FC<{
     }));
   };
 
-  // const handleFacilityChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const { value, checked } = e.target;
-  //   console.log("facilities:", value);
 
-  //   if (checked) {
-  //     setRoomData((prevState) => ({
-  //       ...prevState,
-  //       facilities: [...prevState.facilities, value],
-  //     }));
-  //   } else {
-  //     setRoomData((prevState) => ({
-  //       ...prevState,
-  //       facilities: prevState.facilities.filter(
-  //         (facility) => facility !== value
-  //       ),
-  //     }));
-  //   }
-  // };
 
   const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, checked } = e.target;
@@ -149,6 +132,17 @@ const AddRoomForm :React.FC<{
   };
   
   useEffect(()=>{},[roomData])
+
+  
+  const handleLocationSelect = async (address: string) => {
+    setRoomData(prev => ({
+      ...prev,
+      location: address,
+    }));
+    console.log('address :',address);
+    
+  };
+
   return (
   <>
     
@@ -182,22 +176,44 @@ const AddRoomForm :React.FC<{
            required
          />
        </label>
-       {/* <label className='addRoomLabel'>
-                 <span>Rating:</span>
-                 <input className='addRoomInput' type="text" name="rating" value={roomData.rating} onChange={handleAddRoomChange} required />
-             </label> */}
-       <label className="addRoomLabel">
-         <span>Location:</span>
-         <input
-           className="addRoomInput"
-           placeholder="Add location.."
-           type="text"
-           name="location"
-           value={roomData.location}
-           onChange={handleAddRoomChange}
-           required
-         />
-       </label>
+      <label className="addRoomLabel ">
+          <span className=""> Location:</span>
+          <PlacesAutocomplete
+            
+            value={roomData.location}
+            onChange={(location) => setRoomData(prev => ({ ...prev, location }))}
+            onSelect={handleLocationSelect}
+          >
+            {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+              <div>
+                <input
+                  {...getInputProps({
+                    placeholder: "Add location..",
+                    className: "addRoomInput"
+                  })}
+                  required
+                />
+                <div className="autocomplete-dropdown-container">
+                  {loading && <div>Loading...</div>}
+                  {suggestions.map((suggestion) => {
+                    const className = suggestion.active ? "suggestion-item--active" : "suggestion-item";
+                    const style = suggestion.active ? { backgroundColor: "#fafafa", cursor: "pointer" } : { backgroundColor: "#ffffff", cursor: "pointer" };
+                    return (
+                      <div
+                        {...getSuggestionItemProps(suggestion, {
+                          className,
+                          style,
+                        })}
+                      >
+                        <h1>{suggestion.description}</h1>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </PlacesAutocomplete>
+        </label>
        <label className="addRoomLabel">
          <div>
          <span>Facilities:</span>

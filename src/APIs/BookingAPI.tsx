@@ -6,7 +6,7 @@ export const confirmBookingAPI = async (bookingData:bookingData)=>{
         return await axiosInstance.post('/user/confirmBooking',{bookingData})
     } catch (error) {
         console.log('confirm booking api error :',error);
-        
+          throw error;
     }
 }
 
@@ -15,7 +15,7 @@ export const fetchAllBookingsAPI = async ()=>{
         return await axiosInstance.get(`/user/fetchAllBookings`)
     } catch (error) {
         console.log('confirm booking api error :',error);
-        
+          throw error;
     }
 }
 
@@ -24,7 +24,7 @@ export const cancelBookingAPI = async (BookingId:any)=>{
         return await axiosInstance.put(`/user/cancelBookings?bookingId=${BookingId}`)
     } catch (error) {
         console.log('confirm booking api error :',error);
-        
+          throw error;
     }
 }
 
@@ -33,6 +33,6 @@ export const onlineBookingAPI = async (bookingData:any,roomPrice:any)=>{
         return await axiosInstance.post(`/user/onlinePayment`,{bookingData:bookingData,roomPrice})
     } catch (error) {
         console.log('confirm booking api error :',error);
-        
+          throw error;
     }
 }

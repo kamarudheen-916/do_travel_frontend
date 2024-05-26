@@ -72,7 +72,7 @@ const Rooms: React.FC<{
      hideProgressBar:true
     });
 
-    useEffect(()=>{},[props.roomData])
+    useEffect(()=>{},[props.roomData,BookingDetailsModalOpen])
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -136,10 +136,10 @@ const Rooms: React.FC<{
             {props.RoomEditModlaOpen &&  <RoomEdit RoomData={roomData} handleClose={()=>props.setRoomEditModalOpen(false)} />}
        </div>
       {currentItems?.map((room, index) => (
-        <div>
+        <div key={index}>
           {room.numOfRoomLeft >0 &&
-            <div key={index}>
-            <div  key={index} className="mt-14 flex roomsMainDiv">
+            <div >
+            <div   className="mt-14 flex roomsMainDiv">
             <div>
             </div>
             <div className="roomImg w-60  m-2 rounded">

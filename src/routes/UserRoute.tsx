@@ -14,7 +14,7 @@ import Signup from "../pages/Signup/Signup";
 import Otp from "../pages/Otp/Otp";
 import PaymentSuccess from "../pages/payments/paymentSuccess";
 import PaymentCancel from "../pages/payments/paymentCancel";
-
+import ProtectedRoute from "./Protected";
 const UserRoutes: React.FC = () => {
   const token = useSelector((state:RootState)=>state.auth.token)
 
@@ -36,7 +36,7 @@ const UserRoutes: React.FC = () => {
 
     </Routes>
    
-  );
+  ); 
 };
 
 export default UserRoutes;

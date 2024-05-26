@@ -39,6 +39,30 @@
 .form-container .addRoomButton:active{
     background: #13b456;
 }
-.editUserName{
-    
-}
+
+
+/* Add these styles to your CSS file */
+
+.autocomplete-dropdown-container {
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+    color: black;
+  }
+  
+  .suggestion-item {
+    margin:10px 10px 10px 10px;
+    cursor: pointer;
+  }
+  
+  .suggestion-item--active {
+    background-color: #fafafa;
+  }
+  
+  .suggestion-item:hover {
+    background-color: #e6e6e6;
+  }
+  

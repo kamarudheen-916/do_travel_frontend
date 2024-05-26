@@ -4,19 +4,36 @@ import { useTypedSelector } from "../../redux/reduxUseSelector";
 import { bookingData } from "../../Interfaces/interfaces";
 import { fetchAllBookingsAPI } from "../../APIs/BookingAPI";
 import ShowBookings from "../../components/BookingsComponents/ShowBookings";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Bookings: React.FC<{}> = () => {
-
+  const Dispatch = useDispatch()
+  const navigate = useNavigate();
   const isDarkModeOn = useTypedSelector((state) => state.darkTheme.isDarkTheme);
   const [bookingsData,setBookingsData] = useState<bookingData[]|[]>([])
 
   useEffect(()=>{
+    
     async function fetchAllBookings(){
+    try {
       const Res = await fetchAllBookingsAPI()
       console.log(Res);
       if(Res?.data.success){
          setBookingsData(Res.data.bookingData)
       }
+    } catch (error:any) {
+      if (error.response && error.response.data) {
+        if (
+          error.response.status === 401 &&
+          error.response.data.message === "User is blocked !!"
+        ) {
+          localStorage.removeItem("token");
+          Dispatch({ type: "logout", payload: null });
+       
+        }
+      }
+    }
     
     }
     fetchAllBookings()

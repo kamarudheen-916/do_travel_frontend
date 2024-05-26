@@ -37,10 +37,18 @@ const BookingDetailsModal: React.FC<ModalProps> = (props) => {
                        }
                     }   else{
                         console.error("Payment session creation failed", paymentRes?.data.message);
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops..!",
+                            text: paymentRes?.data.message,
+                            didClose:props.handleClose
+                          });
                     }
                 }else{
                     
                     const res =await confirmBookingAPI(props.BookingData)
+                    console.log('confirm booking response :',res);
+                    
                     if(res?.data.success){
                         Swal.fire({
                             icon: "success",
@@ -52,15 +60,21 @@ const BookingDetailsModal: React.FC<ModalProps> = (props) => {
                         Swal.fire({
                             icon: "error",
                             title: "Oops..!",
-                            text: "Your Booking is not Confirmed..!",
+                            text:res?.data.message || "Your Booking is not Confirmed..!",
                             didClose:props.handleClose
                           });
                     }
                 }
             
            
-        } catch (error) {
+        } catch (error:any) {
             console.log('uploading (confirming) booking deltails error :',error);
+            Swal.fire({
+                icon: "error",
+                title: "Oops..!",
+                text:error.response.data.message || "****!",
+                didClose:props.handleClose
+              });
             
         }
        

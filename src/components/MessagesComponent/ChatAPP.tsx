@@ -7,11 +7,14 @@ import ChatBody from "../Chats/ChatBody/ChatBody";
 import { getMessageAPI } from "../../APIs/ChatAPI";
 import { useNavigate } from "react-router-dom";
 import notificationSound from '../../../public/sounds/Iphone Message Tone Download - MobCup.Com.Co.mp3'
+import { useDispatch } from "react-redux";
 interface onlineUser {
   [userId: string]: string;
 }
 
 const ChatAPP: React.FC = () => {
+  const Dispatch = useDispatch()
+  const navigate = useNavigate();
   const Navigate = useNavigate();
   const [socket, setSocket] = useState<Socket | null>(null);
   const [onlineUser, setOnlinUser] = useState<onlineUser>();
@@ -24,11 +27,24 @@ const ChatAPP: React.FC = () => {
   const lastMessageRef = useRef<any>(null);
 
   const getMessage = async () => {
+  try {
     if (selectedUser) {
       const res = await getMessageAPI(selectedUser);
       console.log('messages ', res);
       setMessages(res?.data);
     }
+  }catch (error:any) {
+    if (error.response && error.response.data) {
+      if (
+        error.response.status === 401 &&
+        error.response.data.message === "User is blocked !!"
+      ) {
+        localStorage.removeItem("token");
+        Dispatch({ type: "logout", payload: null });
+     
+      }
+    }
+  }
   };
 
   useEffect(() => {

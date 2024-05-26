@@ -3,7 +3,7 @@ import "./Home.css";
 import NavBarMobile from "../../components/Home/subHomeComponents/NavBarMobile/NavBarMobile";
 import Logo from "../../components/Home/subHomeComponents/Logo/Logo";
 import Naves from "../../components/Home/subHomeComponents/Naves/Naves";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getAllFeedsAPI } from "../../APIs/UserAPI";
 import { userPost } from "../../Interfaces/interfaces";
@@ -11,6 +11,7 @@ import { TypedUseSelectorHook, useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import NoPost from "../../components/noPostsIcon/NoPosts";
 import PostCard from "../../components/post/postCard/PostCard";
+import { useDispatch } from "react-redux";
 
  const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -21,7 +22,8 @@ function Home() {
   const Profile: any = localStorage.getItem("userProfile");
   const userId = localStorage.getItem("userId");
   const [reload,setReload] =useState<boolean>(false)
-
+  const Dispatch = useDispatch();
+  const navigate = useNavigate();
   
   useEffect(() => {
     const fetchAllFeedsData = async () => {
@@ -37,8 +39,18 @@ function Home() {
         } else {
           console.log(AllFeeds?.data.message) 
         }
-      } catch (error) {
+      } catch (error:any) {
         console.error("Error fetching data:", error);
+        if (error.response && error.response.data) {
+          if (
+            error.response.status === 401 &&
+            error.response.data.message === "User is blocked !!"
+          ) {
+            localStorage.removeItem("token");
+            Dispatch({ type: "logout", payload: null });
+          
+          }
+        }
       }
     };
 
