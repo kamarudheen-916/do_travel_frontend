@@ -13,7 +13,7 @@ const alert :React.FC<{
        const notifyError = (message:any) => toast.error(message,{
          position:"top-center",
          autoClose:1000,
-         hideProgressBar:true
+         hideProgressBar:true,
         });
   return (
     <div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import './PorfileTop.css'
 import EditProfile from "../../../modals/editProfileModal/editProfile"
 import { cancelFollReqAPI, checkIsFollwoedAPI, fetchFollowDataAPI, followRequestAPI, unFollowAPI } from "../../../APIs/followAPI"
-import { followSchemaInterface } from "../../../Interfaces/interfaces"
+
 import FollowingModal from "../../../modals/showFollowerModal/followingModal"
 interface ProfileTopProps{
     profile :string,
@@ -102,7 +102,9 @@ useEffect(()=>{
   // console.log("fetchfollowData api ",Res);
   }
   fetchAllFollowdata()
-},[])
+},[showFollowerModal,showFollowingModal])
+
+
 const handleShowFollowersDetails = () => {
   setShowFollowerModal(true);
   setIsFollowing(false);
@@ -139,8 +141,8 @@ const handleShowFollowingsDetails = () => {
               </div>
               <div className='flex gap-8 followerDiv'>
                 <h1>{props.numberOfPosts} posts</h1>
-                <h1 onClick={handleShowFollowersDetails}>{followersData?.length || 0} followers</h1>
-                <h1 onClick={handleShowFollowingsDetails}>{followingsData?.length || 0} following</h1>
+                <h1 className="cursor-pointer" onClick={handleShowFollowersDetails}>{followersData?.length || 0} followers</h1>
+                <h1 className="cursor-pointer" onClick={handleShowFollowingsDetails}>{followingsData?.length || 0} following</h1>
                 {showFollowingModal && followingsData?.length >0 && <FollowingModal userId={props.isOthersProfile ? props.otherProfileId : userId} isFollwoing={isFollowing} data={followingsData} handleClose={() => setShowFollowingModal(false)} show={showFollowingModal} />}
                 {showFollowerModal && followersData?.length >0 && <FollowingModal userId={props.isOthersProfile ? props.otherProfileId : userId} isFollwoing={isFollowing} data={followersData} handleClose={() => setShowFollowerModal(false)} show={showFollowerModal} />}
               </div>

@@ -1,24 +1,22 @@
 import {  useState } from "react";
-import "./Comments.css";
+import "./replayComments.css";
 import { FiSend } from "react-icons/fi";
-import { comments, userPost } from "../../../Interfaces/interfaces";
-import { deleteCommentAPI, editCommentAPI, fetchRpleyCommentAPI, replayCommentAPI, submitCommentAPI } from "../../../APIs/postAPI";
+import { ReplayCommentsInterface, comments, userPost } from "../../../Interfaces/interfaces";
+import { deleteCommentAPI, editCommentAPI, replayCommentAPI, submitCommentAPI } from "../../../APIs/postAPI";
 import Loading from "../../Loading/Loading";
 import LineLoader from "../../Loading/LineLoader/LineLoader";
 import { ToastContainer,toast } from "react-toastify";
 import { useTypedSelector } from "../../../redux/reduxUseSelector";
-import ReplayComments from "../replayComments/replayComments";
 
 
 interface commentProps {
-  profile: any;
-  userName: string | null;
-  comments: comments[];
+  comments?: ReplayCommentsInterface[]|any;
   postId: string | undefined;
   setPostData: React.Dispatch<React.SetStateAction<userPost>>;
+  replayableCommentId:string|undefined
   
 }
-const Comments: React.FC<commentProps> = (props) => {
+const ReplayComments: React.FC<commentProps> = (props) => {
 
   const isDarkModeOn = useTypedSelector((state) => state.darkTheme.isDarkTheme);
   const [isSubmitting, setIsSubmitting] = useState(false); 
@@ -29,9 +27,8 @@ const Comments: React.FC<commentProps> = (props) => {
   const [isLoading,setIsLoading]= useState(false)
   const [editComment,setEditComment] = useState<string>('')
   const [replayCommentText,setReplayCommentText] = useState<string>('')
-  const [editableComment,setEditableComment] = useState<comments>()
-  const [replayableComment,setReplayableComment] =useState<comments>()
-  const reversedComments = [...props?.comments].reverse();
+  const [editableComment,setEditableComment] = useState<ReplayCommentsInterface>()
+  const [reversedComments,setReversedComments] = useState<ReplayCommentsInterface[]>([...props?.comments].reverse())
   
    const notifyError = (message:any) => toast.error(message,{
      position:"top-center",
@@ -43,29 +40,36 @@ const Comments: React.FC<commentProps> = (props) => {
     setEditComment(comment)
   }
 
-  const submitComment = async () => {    
-    if (comment === "") {
+  const submitReplayComment = async () => {    
+    if (replayCommentText === '') {
       return;
     } else {
       setIsSubmitting(true);
-      console.log('props . postId:',props);
+      const res = await replayCommentAPI(props.postId, props.replayableCommentId, replayCommentText);
+      setIsLoading(true);
       
-      const res = await submitCommentAPI(comment, props.postId);
-      setIsLoading(true)
       if (res?.data.success) {
-        setIsLoading(false)
-        props.setPostData((prev) => ({
-          ...prev,
-          comments: [...res.data.res.comments],
-        }));
+        setIsLoading(false);
+        console.log('Response from backend:', res.data);
+        
+  
+        const updatedReplayComments = res.data.replayComments;
+        
+   
+
+        setReversedComments(updatedReplayComments)
+  
         setComment("");
       } else {
-        setIsLoading(false)
+        setIsLoading(false);
       }
+      
       setIsSubmitting(false);
     }
   };
-  const deleteComment = async (comment: comments,index:number) => {
+  
+  
+  const deleteComment = async (comment: ReplayCommentsInterface,index:number) => {
     const res = await deleteCommentAPI(props.postId,comment._id,index)
     if(res?.data.success){
       setDeleteCommentIndex(null); // Close delete box
@@ -88,35 +92,19 @@ const Comments: React.FC<commentProps> = (props) => {
     }
   }
 
-  const replayCommentSubmit = async(replayComment:string,replayCommentId:any,index:number) =>{
-    
-
-    if(replayComment === '') return
-    const res = await replayCommentAPI(props.postId,replayCommentId,replayComment)
-    if(res?.data.success){
-      console.log('resoponse of replay comment : ',res.data.replayComments);
-
-     
-      setReplayableComment((prev:any)=>{
-       const data= { ...prev,
-        replayComments:res.data.replayComments}
-       
-        return data
-      })
-    }else{
-      notifyError(res?.data.message)
-    }
-  }
-
-  const onReplayCommentClick = async (index:number,commentId:any)=>{
-    setReplayCommentIndex(replayCommentIndex === null ? index : null)
-    const response = await fetchRpleyCommentAPI(commentId)
-    if(response?.data.success){
-      setReplayableComment(response.data.replayComments)
-      console.log('replay commetns :',response.data.replayComments.replayComments);
+//   const replayCommentSubmit = async(replayComment:string,replayCommentId:any) =>{
+//     if(replayCommentText === '') return
+//     const res = await replayCommentAPI(props.postId,props.replayableCommentId,replayCommentText)
+//     if(res?.data.success){
+//       console.log('resoponse of replay comment : ',res.data.post);
       
-    }
-  }
+//       props.setPostData(res?.data.post)
+     
+//       setEditCommentIndex(null)
+//     }else{
+//       notifyError(res?.data.message)
+//     }
+//   }
   return (
     <div className={`${isDarkModeOn ? 'bg-gray-800':'bg-comment'} rounded-md`}>
     <ToastContainer />
@@ -124,9 +112,9 @@ const Comments: React.FC<commentProps> = (props) => {
       <div className="Comment_div">
         <div className="commentInput">
           <input
-            placeholder="Your comments..!"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
+            placeholder="Your replay comments..!"
+            value={replayCommentText}
+            onChange={(e) => setReplayCommentText(e.target.value)}
             type="text"
             name=""
             className="w-full text-black"
@@ -135,7 +123,7 @@ const Comments: React.FC<commentProps> = (props) => {
           {isSubmitting ? (
             <Loading />
           ) : (
-            <FiSend className="sendCommentIcon " color="#178834" onClick={submitComment} />
+            <FiSend className="sendCommentIcon " color="#178834" onClick={submitReplayComment} />
           )}
         </div>
         <div className="EachComment">
@@ -162,7 +150,7 @@ const Comments: React.FC<commentProps> = (props) => {
                       <p>{new Date(comment.commentTime).toLocaleDateString()}</p>
                     </div>
                     <div className="flex gap-3 font-bold text-gray-500 cursor-pointer">
-                      <div className="deleteComment">
+                      {/* <div className="deleteComment">
                         <button
                           data-ripple-light="true"
                           data-popover-target="popover"
@@ -193,8 +181,8 @@ const Comments: React.FC<commentProps> = (props) => {
                             </div>
                           </div>
                         )}
-                      </div>
-                      <div className="editComment relative">
+                      </div> */}
+                      {/* <div className="editComment relative">
                         <h1
                           onClick={() => {
                             onEditComment(comment.comment);
@@ -213,27 +201,21 @@ const Comments: React.FC<commentProps> = (props) => {
                            </div>
                          </div>
                       )}
-                      </div>
-                      <div className="relative">
-                        <h1 onClick={()=>onReplayCommentClick(index,comment._id)}>Replay</h1>
+                      </div> */}
+                      {/* <div className="relative">
+                        <h1 onClick={()=>{
+                          setReplayCommentIndex(replayCommentIndex === null ? index : null)
+                          }}>Replay</h1>
                         {replayCommentIndex === index && ( // Conditionally render EditComment component based on openEditComment state
                          <div className="flex gap-3 ">
-                          <div>
-                            {replayCommentIndex !== null && replayableComment?.replayComments && replayableComment?.replayComments?.length > 0 && <ReplayComments postId={props.postId} setPostData={props.setPostData} replayableCommentId={replayableComment._id} comments={replayableComment?.replayComments} />}
-
-                          </div>
-                        {  replayableComment?.replayComments && replayableComment?.replayComments?.length <1  &&
-                        <div className="commentInput">
-                          <input placeholder="Your replay.." onChange={(e) => setReplayCommentText(e.target.value)} type="text" />
-                           <div className="flex items-center gap-3">
-                           <FiSend className="sendCommentIcon " color="#178834" onClick={()=>replayCommentSubmit(replayCommentText,comment._id,index)} />
-                            {/* <h1 onClick={()=>replayCommentSubmit(replayCommentText,comment._id)}>submit</h1> */}
+                           <input placeholder="Your replay.." onChange={(e) => setReplayCommentText(e.target.value)} type="text" />
+                           <div className="flex gap-3">
+                            <h1 onClick={()=>replayCommentSubmit(replayCommentText,comment._id)}>submit</h1>
                             <h1 onClick={()=>setReplayCommentIndex(null)}>X</h1>
                            </div>
-                          </div>}
                          </div>
                       )}
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
@@ -248,4 +230,4 @@ const Comments: React.FC<commentProps> = (props) => {
   
 };
 
-export default Comments;
+export default ReplayComments;

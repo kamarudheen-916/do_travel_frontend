@@ -2,7 +2,6 @@ import axiosInstance from "../services/axios";
 
 export const submitCommentAPI = async (comment:string,postId:string|undefined)=>{
     try {
-       
         return await axiosInstance.post('/user/postComment',{comment,postId})
     } catch (error) {
         console.log('submitCommentAPi error :',error);
@@ -10,6 +9,23 @@ export const submitCommentAPI = async (comment:string,postId:string|undefined)=>
     }
 }
 
+export const fetchRpleyCommentAPI = async (commentId:string)=>{
+    try {
+        return await axiosInstance.get('/user/fetchReplayComment',{params:{commentId}})
+    } catch (error) {
+        console.log('fetchRpleyCommentAPI error :',error);
+        
+    }
+}
+export const replayCommentAPI = async (postId:string|undefined,replayCommentId:any,replayComment:string)=>{
+    try {
+       
+        return await axiosInstance.post('/user/postReplayComment',{postId,replayCommentId,replayComment})
+    } catch (error) {
+        console.log('submitCommentAPi error :',error);
+        
+    }
+}
 export const deleteCommentAPI = async (postId:string|undefined,commentId:string|undefined,index:number)=>{
     try {
         return await axiosInstance.delete('/user/deleteComment',{data:{postId,commentId,index}})
@@ -27,6 +43,8 @@ export const editCommentAPI = async (postId:string|undefined,commentId:string|un
         console.log('edit comment error ',error);
     }
 }
+
+
 
 export const updateRatingAPI = async (postId:string|undefined,rating:any)=>{
     try {
@@ -93,7 +111,7 @@ export const reportPostAPI = async (data:any)=>{
         const response = await axiosInstance.post(`/user/reportPost`,data)
           return response
     } catch (error) {
-        console.log('fetchAllUserDataAPI error:',error);
+        console.log('reportPostAPI error:',error);
         
     }
 }

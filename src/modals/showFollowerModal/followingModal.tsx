@@ -4,6 +4,7 @@ import SearchSkeleton from "../../components/skeloton/userSkeleton";
 import { fetchFDataAPI } from "../../APIs/followAPI";
 import { Link } from "react-router-dom";
 import { useTypedSelector } from "../../redux/reduxUseSelector";
+import FollowMiniWindow from "../../components/Profile/FollowMiniWindow/FollowMiniWindow";
 
 interface ModalProps {
     handleClose: () => void;
@@ -25,6 +26,7 @@ const FollowingModal: React.FC<ModalProps> = ({ handleClose, show,isFollwoing,us
     const showHideClassName = show ? "modal display-block" : "modal display-none";
     const [f_data,setF_Data] = useState<follData[]|[]>()
     const [isLoading,setIsLoading]=useState<boolean>(false)
+    const [hoverIndex, setHoverIndex] = useState<number | null>(null);
     
     useEffect(()=>{
         async function fetchFData (){
@@ -41,8 +43,17 @@ const FollowingModal: React.FC<ModalProps> = ({ handleClose, show,isFollwoing,us
         fetchFData()
     },[])
     
+    const handleMouseEnter = (index: number) => {
+        setHoverIndex(index);
+    }
+
+    const handleMouseLeave = () => {
+        setHoverIndex(null);
+    }
+
     return (
         <div className={showHideClassName}>
+
             <section className={`modal-main ${isDarkThemeOn ? 'bg-gray-900':''}`}>
                 <button className={`modal-Button`} onClick={handleClose}>X</button>
                 <div><h1 className={`following_heding`}>{isFollwoing ? 'Followings':'Followers'}</h1></div>
@@ -51,17 +62,26 @@ const FollowingModal: React.FC<ModalProps> = ({ handleClose, show,isFollwoing,us
                     {f_data?.map((data:any, index:number) => (
                         <div key={index}>
                             {data !== null && 
-                                <Link to={`/OthersProfile/${data && data.id}/${data && data.isProperty}`}  key={index}>
-                                    <div className="followModalBody flex items-center gap-3 my-2 p-2 hover:bg-green-800 hover:bg-opacity-50 ">
+                                      <div
+                                      onMouseEnter={() => handleMouseEnter(index)}
+                                      onMouseLeave={handleMouseLeave}
+                                      className="followModalBody relative z-10 flex items-center gap-3 my-2 p-2 "
+                                  >
                                         <div>
                                             <img className="rounded-full " style={{width:'50px',height:'50px'}} src={data?.Profile} alt="" />
                                         </div>
-                                        <div>
+                                        <div className="">
                                             <div>{data?.Name}</div>
                                             {data?.isProperty && <div className="text-xs ">Property</div>}
+                                           
                                         </div>
+                                        {hoverIndex === index && (
+                                            <div className="absolute w-full  left-0 z-50">
+                                                <FollowMiniWindow {...data} handleClose={handleClose} isFollowing={isFollwoing}/>
+                                            </div>
+                                        )}
                                     </div>
-                                </Link>
+                                
                             }
                         </div>
                     ))}

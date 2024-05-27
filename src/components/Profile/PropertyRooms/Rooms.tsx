@@ -168,7 +168,7 @@ const Rooms: React.FC<{
                 </div>
                 <div className="cancellation">
                   <div className="">
-                    {room.freeCancellation && <h1>Free Cancellation</h1>}
+                    {room.freeCancellation && <h1>Free Cancellation Before 3 days</h1>}
                   </div>
                   <div className="">
                     {room.isBeforePayment && <h1>

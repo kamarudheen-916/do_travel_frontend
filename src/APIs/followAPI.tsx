@@ -1,6 +1,6 @@
 import axiosInstance from "../services/axios";
 
-export const followRequestAPI =async (requesterId:string|null,requesterType:any,followerId:string|undefined,followUserType:any)=> {
+export const followRequestAPI =async (requesterId:any,requesterType:any,followerId:string|undefined,followUserType:any)=> {
     try { 
         const isProperty = followUserType === 'user'? false : true
         const isRequesterProperty =requesterType ===  'user' ? false : true

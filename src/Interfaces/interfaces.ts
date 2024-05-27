@@ -54,21 +54,6 @@ export interface SetErrorLabelValue {
     message : string,
 }
 
-
-export interface comments {
-    comment:string,
-    commentedId:string,
-    commet_likes:number,
-    _id?:string,
-    commentTime:string
-}
-export interface ratingData{
-    raterId:string,
-    rate:number,
-    _id?:string,
-    ratedDate:Date, 
-    comments:string,
-}
 export interface userPost {
     _id?: string;
     userId: string;
@@ -82,6 +67,37 @@ export interface userPost {
     PostProfile:string,
     PostName:string,
   }
+
+export interface comments {
+    parantId:string,
+    comment:string,
+    commentedId:string,
+    comment_likes:number,
+    _id?:string,
+    commentTime:Date,
+    replayComments:ReplayCommentsInterface[]
+    comenterName:string;
+    comenterProfile:string;
+}
+export interface ReplayCommentsInterface {
+    parantId:string,
+    comment:string,
+    commentedId:string,
+    comment_likes:number,
+    _id?:string,
+    commentTime:Date,
+    replayComments:[string]
+    comenterName:string;
+    comenterProfile:string;
+}
+export interface ratingData{
+    raterId:string,
+    rate:number,
+    _id?:string,
+    ratedDate:Date, 
+    comments:string,
+}
+
 export interface Room{
     _id?:string,
     propertyId:string;
