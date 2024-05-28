@@ -12,7 +12,7 @@ interface UserPartProps {
   userFormData: UserFormData;
 }
 
-const userpart: React.FC<UserPartProps> = ({
+const Userpart: React.FC<UserPartProps> = ({
   userFormData,
   setUserFormData,
 }) => {
@@ -184,4 +184,4 @@ const userpart: React.FC<UserPartProps> = ({
   );
 };
 
-export default userpart;
+export default Userpart;
