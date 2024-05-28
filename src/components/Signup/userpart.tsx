@@ -1,10 +1,8 @@
 import React from "react";
 import Input from "../atoms/Input/Input";
 import "../../pages/Signup/Signup.css";
-// import { useEffect, useState } from "react";
 import { UserFormData } from "../../Interfaces/interfaces";
-// import axios from "axios";
-// import {  toast } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
 
 interface UserPartProps {
@@ -16,28 +14,12 @@ const Userpart: React.FC<UserPartProps> = ({
   userFormData,
   setUserFormData,
 }) => {
-  // const ErrorNotify = (message:string) => toast.error(message,{
-  //   position:"top-center",
-  //   autoClose:1000,
-  //   hideProgressBar:true
-  //  });
-  // const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  // const [countries, setCountries] = useState<string[]>([]);
-  // const [favorites, setFavorites] = useState<string>('');
-  // const [favoritePlace, setFavoritePlaces] = useState<string[]>([]);
 
-  // const handleCountrySelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   setUserFormData((prev) => ({
-  //     ...prev,
-  //     Country: e.target.value,
-  //   }));
-  // };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // const imageUrl = URL.createObjectURL(file);
-      // setSelectedImage(imageUrl);
+   
       const reader = new FileReader();
       reader.onload = (event) => {
         const base64String = event.target?.result as string;
@@ -56,57 +38,6 @@ const Userpart: React.FC<UserPartProps> = ({
     }
   };
 
-  // const handleAddFavoritePlaces = () => {
-  //   if(userFormData.favoritePlace.length > 5 ){
-  //     return ErrorNotify('Maximum limit is 5')
-  //   }
-  //   if (favorites.trim() !== '') {      
-  //     setUserFormData(prev => ({
-  //       ...prev,
-  //       favoritePlace: [...prev.favoritePlace,favorites]
-  //     }));
-  //     setFavorites('');
-  //   }
-  // };
-  // const removeFavoritePlaces =(index:number)=>{
-  //   try {
-  //     const favorites = userFormData.favoritePlace
-  //     favorites.splice(index,1)
-  //     console.log(favorites);
-      
-  //     setUserFormData(prev =>({
-  //       ...prev,
-  //       favoritePlace :[...favorites]
-  //     }))
-  //   } catch (error) {
-  //     console.log('remove Favorite Places error :',error);
-      
-  //   }
-  // }
-  
-
-
-  // const handleFavoritePlacesChange = (e:React.ChangeEvent<HTMLInputElement>) => {   
-  //   setFavorites(e.target.value);
-  // };
-
-  // useEffect(() => {
-  //   const fetchCountries = async () => {
-  //     try {
-  //       const response = await axios.get("https://restcountries.com/v3.1/all");
-  //       const countriesName = response.data.map(
-  //         (country: any) => country.name.common
-  //       );
-  //       // const sortedCountryNames = countriesName.sort((a: string, b: string) =>
-  //       //   a.localeCompare(b)
-  //       // );
-  //       // setCountries(sortedCountryNames);
-  //     } catch (error) {
-  //       console.error("Error fetching countries:", error);
-  //     }
-  //   };
-  //   fetchCountries();
-  // }, []);
 
   return (
     <div>

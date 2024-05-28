@@ -1,12 +1,14 @@
-import Userpart from '../../components/signup/userpart.tsx'
+
 import Button from '../../components/atoms/Button/Button'
 import './Signup.css'
 import { Link,useNavigate } from 'react-router-dom'
-import PropertyPart from '../../components/signup/PropertyPart.tsx'
+
 import { useState } from 'react'
 import { SignupApi } from '../../APIs/UserAPI'
 import Logo from '../../components/Home/subHomeComponents/Logo/Logo'
 import { ToastContainer, toast } from 'react-toastify';
+import Userpart from '../../components/signup/userpart.tsx'
+import PropertyPart from '../../components/signup/PropertyPart.tsx'
 function Signup() {
   
     const [userType, setUserType] = useState<string>('user'); 
