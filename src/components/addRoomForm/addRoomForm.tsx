@@ -91,7 +91,7 @@ const AddRoomForm :React.FC<{
           reject(new Error("Failed to read file as data URL"));
         }
       };
-      reader.onerror = (event) => {
+      reader.onerror = () => {
         reject(new Error("Failed to read file as data URL"));
       };
       reader.readAsDataURL(file);

@@ -3,14 +3,14 @@ import NavBarDesk from '../../components/Home/subHomeComponents/NaveBarDesk/NavB
 import { useTypedSelector } from '../../redux/reduxUseSelector'
 import { userPost } from '../../Interfaces/interfaces'
 import {  getOthersProfilePostsAPI } from '../../APIs/UserAPI'
-import { useNavigate, useParams } from 'react-router-dom';
+import {  useParams } from 'react-router-dom';
 import OtherProfileMain from '../../components/otherProfle/otherProfileMain'
 import { useDispatch } from 'react-redux'
 
 
-const OthersProfle:React.FC<{}>=(props)=> {
+const OthersProfle:React.FC=()=> {
   const Dispatch = useDispatch()
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
     const { profileId, isProperty } = useParams<any>();
     const [otherProfileId,setOtherProfileId]=useState(profileId)
     const [otherProfilIsProperty,setOtherProfilIsProperty]=useState(isProperty)

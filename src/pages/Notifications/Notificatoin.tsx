@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import NavBarDesk from "../../components/Home/subHomeComponents/NaveBarDesk/NavBarDesk";
 import { useTypedSelector } from "../../redux/reduxUseSelector";
-import { cancelFollReqAPI, confirmFollReqAPI, fetchFollwerRequestAPI } from "../../APIs/followAPI";
+import {  fetchFollwerRequestAPI } from "../../APIs/followAPI";
 import { NotificationData } from "../../Interfaces/interfaces";
 import { useDispatch } from "react-redux";
 import { checkCount } from "../../reducers/reducer2";
 import Notification from "../../components/NotificationComponent/Notification";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const Notificatoin: React.FC<{}> = () => {
   const Dispatch = useDispatch()
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const isDarkModeOn = useTypedSelector((state) => state.darkTheme.isDarkTheme);
 

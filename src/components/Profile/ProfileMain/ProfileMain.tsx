@@ -4,7 +4,7 @@ import ProfileModal from "../../../modals/userProfileModal/profileModal";
 import React, { useEffect, useState } from "react";
 import ProfileTop from "../ProfileTop/ProfileTop";
 import PostShow from "../ProfilePostShow/PostShow";
-import Cookies from "js-cookie";
+
 import NoPost from "../../noPostsIcon/NoPosts";
 import Rooms from "../PropertyRooms/Rooms";
 import AddRooms from "../../../modals/addRoomsModal/AddRooms";

@@ -6,12 +6,12 @@ import { TiMessages } from "react-icons/ti";
 interface chatProps{
     messages:any[]
     lastMessageRef :any
-    typingStatus:any
+    // typingStatus:any
     selectedUser:string|null|undefined
     selectedUserProfile:any
     selectedUserName:any
 }
-const ChatBody = ({ messages,lastMessageRef,typingStatus,selectedUser,selectedUserName,selectedUserProfile }:chatProps) => {
+const ChatBody = ({ messages,lastMessageRef,selectedUser,selectedUserName,selectedUserProfile }:chatProps) => {
   const userName = localStorage.getItem('userName')
   const navigate = useNavigate();
 
@@ -31,14 +31,14 @@ const ChatBody = ({ messages,lastMessageRef,typingStatus,selectedUser,selectedUs
         <button className="leaveChat__btn text-2xl" onClick={handleLeaveChat}>←</button>
         <h1>{selectedUserName}</h1>
         <div className="message__status">
-            <p>{typingStatus}...</p>
+            {/* <p>{typingStatus}...</p> */}
           </div>
       </header>
 
       <div className="message__container overflow-y-scroll">
-        {selectedUser && messages.map((message) =>
-          message.senderId === localStorage.getItem('userId') ? (
-            <div className="message__chats flex items-center gap-10 border border-green-700 w-fit pl-1 pr-4 py-1 mx-6 rounded-md" key={message.id}>
+        {selectedUser && messages.map((message) =><div key={message._id}>
+          {message.senderId === localStorage.getItem('userId') ? (
+            <div  className="message__chats flex items-center gap-10 border border-green-700 w-fit pl-1 pr-4 py-1 mx-6 rounded-md" key={message.id}>
 
                 <img className='w-12 h-12 rounded-full' src={`${localStorage.getItem('userProfile')}`} alt="" />
             
@@ -56,7 +56,8 @@ const ChatBody = ({ messages,lastMessageRef,typingStatus,selectedUser,selectedUs
                 <p className='text-gray-700 text-xs'>{message.createdAt.split('T')[1].split('.')[0]}</p>
               </div>
             </div>
-          )
+          )}
+          </div>
         )}
         <div ref={lastMessageRef} />
       </div>
@@ -73,4 +74,4 @@ const ChatBody = ({ messages,lastMessageRef,typingStatus,selectedUser,selectedUs
   );
 };
 
-export default ChatBody;
+export default ChatBody; 

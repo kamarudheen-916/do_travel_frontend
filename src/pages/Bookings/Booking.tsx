@@ -5,11 +5,11 @@ import { bookingData } from "../../Interfaces/interfaces";
 import { fetchAllBookingsAPI } from "../../APIs/BookingAPI";
 import ShowBookings from "../../components/BookingsComponents/ShowBookings";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 const Bookings: React.FC<{}> = () => {
   const Dispatch = useDispatch()
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const isDarkModeOn = useTypedSelector((state) => state.darkTheme.isDarkTheme);
   const [bookingsData,setBookingsData] = useState<bookingData[]|[]>([])
 

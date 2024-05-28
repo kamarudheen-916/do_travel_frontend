@@ -54,9 +54,3 @@ export const darkTheme = (state :any ={isDarkTheme:false},action:any)=>{
   }
 }
 
-export const notificationCountReducer = (state:any={notificationCount:0},action:any)=>{
-    return {
-        ...state,
-        notificationCount:action
-    }
-}

@@ -4,7 +4,7 @@ import { Room } from "../../Interfaces/interfaces";
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import LineLoader from "../Loading/LineLoader/LineLoader";
+// import LineLoader from "../Loading/LineLoader/LineLoader";
 import { useTypedSelector } from "../../redux/reduxUseSelector";
 import ShowImagesModal from "../../modals/RoomRelatedModals/RoomFecilites/showImagePreview";
 import { editRoomAPI } from "../../APIs/propertyAPI";
@@ -94,7 +94,7 @@ const EditRoomForm :React.FC<{
           reject(new Error("Failed to read file as data URL"));
         }
       };
-      reader.onerror = (event) => {
+      reader.onerror = () => {
         reject(new Error("Failed to read file as data URL"));
       };
       reader.readAsDataURL(file);

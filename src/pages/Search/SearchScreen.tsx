@@ -22,7 +22,7 @@ const SearchScreen: React.FC<Props> = ({ onClose, onChange, searchData, searchIn
   const Navigate =  useNavigate()
   const isDarkModeOn = useTypedSelector(state => state.darkTheme.isDarkTheme);
   const [filterOption, setFilterOption] = useState<'All' | 'People' | 'Stays'>('All');
-  const userName = localStorage.getItem('userName')
+  // const userName = localStorage.getItem('userName')
   const filteredData = () => {
     if (!searchData) return [];
     let filtered = searchData;

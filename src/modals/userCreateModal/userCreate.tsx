@@ -2,7 +2,7 @@ import React, {  useState } from 'react';
 import './userCreate.css';
 import data from '@emoji-mart/data'
 import Picker from '@emoji-mart/react'
-import EmojiPicker from 'emoji-picker-react';
+
 import { BsEmojiSmile } from "react-icons/bs";
 import { userCreateShareAPI } from '../../APIs/UserAPI';
 import Loading from '../../components/Loading/Loading';

@@ -14,9 +14,9 @@ import RatingModal from '../../../modals/RoomRelatedModals/RoomRatingModal/Ratin
 
 const Rooms: React.FC<{
   roomData: Room[]|undefined
-  setRoomEditModalOpen:React.Dispatch<SetStateAction<boolean>>
-  RoomEditModlaOpen:boolean
-  setRoomData:React.Dispatch<SetStateAction<Room[]|undefined>>
+  setRoomEditModalOpen?:React.Dispatch<SetStateAction<boolean>>
+  RoomEditModlaOpen?:boolean|undefined
+  setRoomData?:React.Dispatch<SetStateAction<Room[]|undefined>>
 }> = (props) => {
   const userType = localStorage.getItem('userType')
   const [currentPage, setCurrentPage] = useState(1);
@@ -84,7 +84,7 @@ const Rooms: React.FC<{
   };
 
   const handleBook_NowOpen = (room:Room)=>{
-    if(userType === 'property'){
+    if(userType === 'property' && props.setRoomEditModalOpen){
       props.setRoomEditModalOpen(true)
     }else{
       setRoomDetailsModalOpen(true)
@@ -107,7 +107,7 @@ const Rooms: React.FC<{
         if (result.isConfirmed) {
           const res = await deleteRoomAPI(roomId)
           if(res.data.success){         
-            if(res.data.rooms){
+            if(res.data.rooms && props.setRoomData){
               props.setRoomData(res.data.rooms)
             }
             notifySuccess(res.data.message)
@@ -133,7 +133,7 @@ const Rooms: React.FC<{
             {BookingDetailsModalOpen && <BookingDetailsModal RoomData={roomData} BookingData={bookingData} handleClose={()=>setBookingDetailsModalOpen(false)}/>}
        </div>
        <div>
-            {props.RoomEditModlaOpen &&  <RoomEdit RoomData={roomData} handleClose={()=>props.setRoomEditModalOpen(false)} />}
+            {props.RoomEditModlaOpen &&  <RoomEdit RoomData={roomData} handleClose={()=>props.setRoomEditModalOpen &&props.setRoomEditModalOpen(false)} />}
        </div>
       {currentItems?.map((room, index) => (
         <div key={index}>

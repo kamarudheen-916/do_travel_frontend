@@ -92,7 +92,7 @@ const BookingTable:React.FC=()=> {
               </td>
               
               <td>{row.Email}</td>
-              <td>{row.createdAt.toString().split('T')[0]}</td>
+              <td>{row.createdAt?.toString().split('T')[0]}</td>
               <td>{row.checkInDate}</td>
               <td>{row.paymentIsOnline ? <span className='text-green-800'>Completed</span>:<span className='text-yellow-500'>Pending</span>}</td>
               <td>₹ {row.totalPrice}/-</td>

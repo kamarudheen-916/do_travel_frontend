@@ -4,9 +4,9 @@ import './ChatBar.css'
 // import {  Socket } from 'socket.io-client';
 import {  getUsersForSidebarAPI } from '../../../APIs/ChatAPI';
 import { PropertyFormData, UserFormData } from '../../../Interfaces/interfaces';
-interface onlineUser {
-  [userId: string]: string;
-}
+// interface onlineUser {
+//   [userId: string]: string;
+// }
 interface chatProps{
     // socket:Socket
     selectedUser:string|null|undefined
@@ -17,7 +17,7 @@ interface chatProps{
 }
 const ChatBar = (props:chatProps) => {
     const [users, setUsers] = useState<UserFormData[]|PropertyFormData[]>([]);
-    const [messages,setMessages] = useState()
+    // const [messages,setMessages] = useState()
 
     // useEffect(() => {
     //     props.socket.on('newUserResponse', (data) => setUsers(data));

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useTypedSelector } from '../../redux/reduxUseSelector';
-import { Room } from '../../Interfaces/interfaces';
+// import { Room } from '../../Interfaces/interfaces';
 
 import EditRoomForm from '../../components/editRoomForm/EditRoomForm';
 import LineLoader from '../../components/Loading/LineLoader/LineLoader';

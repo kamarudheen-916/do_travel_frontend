@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ratingData, userPost } from '../../../Interfaces/interfaces';
 import './PostCard.css';
 import LikeDiv from '../postLikeDiv/likeDiv';
@@ -25,7 +25,7 @@ const PostCard: React.FC<userPost & {closeModal?:React.Dispatch<React.SetStateAc
   const [isShareOpen,setIsShareOpen] = useState<boolean>(false)
   const [isShowLikesOpen,setIsShowLikesOpen] = useState<boolean>(false)
   const [isDeletePopupVisible, setIsDeletePopupVisible] = useState<boolean>(false);
-  const [ratings, setRatings] = useState<number>(0);
+  // const [ratings, setRatings] = useState<number>(0);
 
   useEffect(() => {    
     const rate: ratingData | undefined = props.ratings?.find(item => item.raterId === userId);
@@ -41,7 +41,7 @@ const PostCard: React.FC<userPost & {closeModal?:React.Dispatch<React.SetStateAc
     setRatingStar(updatedRatings)
     const res = await updateRatingAPI(props._id, starIndex+1);
     if(res?.data.success){
-      setRatings(starIndex)
+      // setRatings(starIndex)
       setCustomAlertMessage(res.data.message);
     }else{
       setCustomAlertMessage(res?.data.message);

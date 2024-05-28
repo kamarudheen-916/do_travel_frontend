@@ -1,9 +1,9 @@
 import React from "react";
-import {BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "../pages/home/Home";
 import Profile from "../pages/Profile/Profile";
 import OthersProfle from "../pages/OthersProfile/OthersProfle";
-import { TypedUseSelectorHook, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import Notificatoin from "../pages/Notifications/Notificatoin";
 import ForgottenPassword from "../pages/ForgottenPassword/Forgotten";
 import Bookings from "../pages/Bookings/Booking";
@@ -14,7 +14,7 @@ import Signup from "../pages/Signup/Signup";
 import Otp from "../pages/Otp/Otp";
 import PaymentSuccess from "../pages/payments/paymentSuccess";
 import PaymentCancel from "../pages/payments/paymentCancel";
-import ProtectedRoute from "./Protected";
+
 const UserRoutes: React.FC = () => {
   const token = useSelector((state:RootState)=>state.auth.token)
 

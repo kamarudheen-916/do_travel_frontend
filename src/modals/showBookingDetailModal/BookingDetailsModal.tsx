@@ -5,7 +5,7 @@ import { useTypedSelector } from "../../redux/reduxUseSelector";
 import Swal from 'sweetalert2'
 import { bookingData } from "../../Interfaces/interfaces";
 import { cancelBookingAPI } from "../../APIs/BookingAPI";
-import { useState } from "react";
+// import { useState } from "react";
 interface ModalProps {
     handleClose: () => void;
     BookingData : bookingData

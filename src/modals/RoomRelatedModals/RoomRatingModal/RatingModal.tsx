@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import "./RatingModal.css";
 import { useTypedSelector } from '../../../redux/reduxUseSelector';
 import { updateRoomRatingAPI } from '../../../APIs/propertyAPI';
-import { Room } from '../../../Interfaces/interfaces';
+// import { Room } from '../../../Interfaces/interfaces';
 import { ToastContainer, toast } from 'react-toastify';
 interface props{ 
     isOpen: boolean,

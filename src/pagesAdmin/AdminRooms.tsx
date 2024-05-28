@@ -1,4 +1,4 @@
-import React from 'react'
+
 import AdminNav from '../componentsAdmin/AdminNav/AdminNav'
 
 function AdminRooms() {

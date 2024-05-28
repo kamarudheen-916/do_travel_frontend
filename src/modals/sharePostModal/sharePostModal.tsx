@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../showFollowerModal/followingModal.css";
 import SearchSkeleton from "../../components/skeloton/userSkeleton";
 import { fetchFDataAPI } from "../../APIs/followAPI";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { useTypedSelector } from "../../redux/reduxUseSelector";
 import SharePostData from "../../components/sharePostComponents/SharePostData";
 

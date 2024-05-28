@@ -1,9 +1,9 @@
 import NavBarDesk from "../../components/Home/subHomeComponents/NaveBarDesk/NavBarDesk";
 import "./Home.css";
-import NavBarMobile from "../../components/Home/subHomeComponents/NavBarMobile/NavBarMobile";
-import Logo from "../../components/Home/subHomeComponents/Logo/Logo";
-import Naves from "../../components/Home/subHomeComponents/Naves/Naves";
-import { Link, useNavigate } from "react-router-dom";
+// import NavBarMobile from "../../components/Home/subHomeComponents/NavBarMobile/NavBarMobile";
+// import Logo from "../../components/Home/subHomeComponents/Logo/Logo";
+// import Naves from "../../components/Home/subHomeComponents/Naves/Naves";
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getAllFeedsAPI } from "../../APIs/UserAPI";
 import { userPost } from "../../Interfaces/interfaces";
@@ -20,10 +20,10 @@ function Home() {
   const [AllFeeds, setAllFeeds] = useState<userPost[]>([]);
   const userName = localStorage.getItem("userName");
   const Profile: any = localStorage.getItem("userProfile");
-  const userId = localStorage.getItem("userId");
-  const [reload,setReload] =useState<boolean>(false)
+  // const userId = localStorage.getItem("userId");
+  // const [reload,setReload] =useState<boolean>(false)
   const Dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   
   useEffect(() => {
     const fetchAllFeedsData = async () => {
@@ -60,7 +60,7 @@ function Home() {
   return (
     <div className={`h-full flex  ${isDarkModeOn? 'bg-black text-white' :'bg-white'}`}>
       <div className="overflow-x-hidden">
-        <NavBarDesk reload={setReload}/>
+        <NavBarDesk />
       </div>
       <div className="middle w-full h-full flex  ">
         <div className={`middleBar  flex justify-around `}>

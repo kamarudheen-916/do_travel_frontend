@@ -10,14 +10,14 @@ const adminSlice = createSlice({
     initialState:initialState,
     reducers:{
         adminLogin(state,action:any){
-            // console.log(state.adminToken,"redux.........");
+            
             
             state.adminToken = action.payload
-            console.log(state.adminToken,"redux.........");
+
 
         },
         adminLogOut(state){
-            console.log(state.adminToken,"redux.........");
+
 
             state.adminToken = null
         }

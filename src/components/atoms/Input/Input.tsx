@@ -24,7 +24,7 @@ interface Props{
 }
 
 const Input : React.FC<Props>=(props) =>{
-  const isDarkModeOn = useTypedSelector((state) => state.darkTheme.isDarkTheme);
+  // const isDarkModeOn = useTypedSelector((state) => state.darkTheme.isDarkTheme);
   const [focused,setFocused] =useState(false)
   const handleBlur =()=>{
     setFocused(true)

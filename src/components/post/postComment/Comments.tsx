@@ -88,7 +88,7 @@ const Comments: React.FC<commentProps> = (props) => {
     }
   }
 
-  const replayCommentSubmit = async(replayComment:string,replayCommentId:any,index:number) =>{
+  const replayCommentSubmit = async(replayComment:string,replayCommentId:any) =>{
     
 
     if(replayComment === '') return
@@ -226,7 +226,7 @@ const Comments: React.FC<commentProps> = (props) => {
                         <div className="commentInput">
                           <input placeholder="Your replay.." onChange={(e) => setReplayCommentText(e.target.value)} type="text" />
                            <div className="flex items-center gap-3">
-                           <FiSend className="sendCommentIcon " color="#178834" onClick={()=>replayCommentSubmit(replayCommentText,comment._id,index)} />
+                           <FiSend className="sendCommentIcon " color="#178834" onClick={()=>replayCommentSubmit(replayCommentText,comment._id)} />
                             {/* <h1 onClick={()=>replayCommentSubmit(replayCommentText,comment._id)}>submit</h1> */}
                             <h1 onClick={()=>setReplayCommentIndex(null)}>X</h1>
                            </div>

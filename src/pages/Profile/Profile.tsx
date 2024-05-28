@@ -7,12 +7,12 @@ import { userPost } from '../../Interfaces/interfaces';
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 import { RootState } from '../../redux/store';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 function Profile() {
   const Dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const isDarkThemeOn = useTypedSelector(state=>state.darkTheme.isDarkTheme)
   const [allPosts, setAllPosts] = useState<userPost[]>([]);
   const [isOpenProfileModal,setIsOpenProfileModal] = useState<boolean>(false)

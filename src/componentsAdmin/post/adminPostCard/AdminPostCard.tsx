@@ -5,7 +5,7 @@ import LikeDiv from '../postLikeDiv/likeDiv';
 import Comments from '../postComment/Comments';
 // import { useTypedSelector } from '../../../redux/reduxUseSelector';
 import { Link } from 'react-router-dom';
-import {  isPostLikedAPI, isPostSavedAPI, likePostAPI, savePostAPI, updateRatingAPI } from '../../../APIs/postAPI';
+import {  isPostLikedAPI, isPostSavedAPI, likePostAPI, savePostAPI } from '../../../APIs/postAPI';
 import SharingModal from '../../../modals/sharePostModal/sharePostModal';
 import { ToastContainer, toast } from 'react-toastify';
 import ShowLikesModal from '../../../modals/likesModal/LikesModal';

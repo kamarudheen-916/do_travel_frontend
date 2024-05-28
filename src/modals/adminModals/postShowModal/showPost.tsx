@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useTypedSelector } from "../../../redux/reduxUseSelector";
+
 import "./showPost.css";
 import { findUserPostByIdAPI } from "../../../API_admin/adminAPI";
 import AdminPostCard from "../../../componentsAdmin/post/adminPostCard/AdminPostCard";
@@ -10,7 +10,7 @@ interface profileModalProps {
 }
 
 const ShowReportedPost: React.FC<profileModalProps> = (props) => {
-  const isDarkThemeOn = useTypedSelector(state=>state.darkTheme.isDarkTheme)
+  // const isDarkThemeOn = useTypedSelector(state=>state.darkTheme.isDarkTheme)
   const [post,setPost] = useState<any>()
 
   const findPostById = async()=>{

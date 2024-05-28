@@ -1,12 +1,13 @@
 import {  useState } from "react";
 import "./replayComments.css";
 import { FiSend } from "react-icons/fi";
-import { ReplayCommentsInterface, comments, userPost } from "../../../Interfaces/interfaces";
-import { deleteCommentAPI, editCommentAPI, replayCommentAPI, submitCommentAPI } from "../../../APIs/postAPI";
+import { ReplayCommentsInterface, userPost } from "../../../Interfaces/interfaces";
+// import { deleteCommentAPI, editCommentAPI, submitCommentAPI } from "../../../APIs/postAPI";
 import Loading from "../../Loading/Loading";
 import LineLoader from "../../Loading/LineLoader/LineLoader";
-import { ToastContainer,toast } from "react-toastify";
+// import { ToastContainer,toast } from "react-toastify";
 import { useTypedSelector } from "../../../redux/reduxUseSelector";
+import { replayCommentAPI } from "../../../APIs/postAPI";
 
 
 interface commentProps {
@@ -20,25 +21,25 @@ const ReplayComments: React.FC<commentProps> = (props) => {
 
   const isDarkModeOn = useTypedSelector((state) => state.darkTheme.isDarkTheme);
   const [isSubmitting, setIsSubmitting] = useState(false); 
-  const [deleteCommentIndex, setDeleteCommentIndex] = useState<number | null>(null);
-  const [editCommentIndex,setEditCommentIndex] = useState<number|null>(null)
-  const [replayCommentIndex,setReplayCommentIndex] = useState<number|null>(null)
-  const [comment, setComment] = useState("");
+  // const [deleteCommentIndex, setDeleteCommentIndex] = useState<number | null>(null);
+  // const [editCommentIndex,setEditCommentIndex] = useState<number|null>(null)
+  // const [replayCommentIndex,setReplayCommentIndex] = useState<number|null>(null)
+  // const [comment, setComment] = useState("");
   const [isLoading,setIsLoading]= useState(false)
-  const [editComment,setEditComment] = useState<string>('')
+  // const [editComment,setEditComment] = useState<string>('')
   const [replayCommentText,setReplayCommentText] = useState<string>('')
-  const [editableComment,setEditableComment] = useState<ReplayCommentsInterface>()
+  // const [editableComment,setEditableComment] = useState<ReplayCommentsInterface>()
   const [reversedComments,setReversedComments] = useState<ReplayCommentsInterface[]>([...props?.comments].reverse())
   
-   const notifyError = (message:any) => toast.error(message,{
-     position:"top-center",
-     autoClose:1000,
-     hideProgressBar:true
-    });
+  //  const notifyError = (message:any) => toast.error(message,{
+  //    position:"top-center",
+  //    autoClose:1000,
+  //    hideProgressBar:true
+  //   });
 
-  const onEditComment = async (comment:string) => {
-    setEditComment(comment)
-  }
+  // const onEditComment = async (comment:string) => {
+  //   setEditComment(comment)
+  // }
 
   const submitReplayComment = async () => {    
     if (replayCommentText === '') {
@@ -59,7 +60,7 @@ const ReplayComments: React.FC<commentProps> = (props) => {
 
         setReversedComments(updatedReplayComments)
   
-        setComment("");
+      
       } else {
         setIsLoading(false);
       }
@@ -69,28 +70,28 @@ const ReplayComments: React.FC<commentProps> = (props) => {
   };
   
   
-  const deleteComment = async (comment: ReplayCommentsInterface,index:number) => {
-    const res = await deleteCommentAPI(props.postId,comment._id,index)
-    if(res?.data.success){
-      setDeleteCommentIndex(null); // Close delete box
-      props.setPostData(res.data.post)
-    }else{
-      notifyError(res?.data.message)
-      setDeleteCommentIndex(null);
-    }
+  // const deleteComment = async (comment: ReplayCommentsInterface,index:number) => {
+  //   const res = await deleteCommentAPI(props.postId,comment._id,index)
+  //   if(res?.data.success){
+  //     setDeleteCommentIndex(null); // Close delete box
+  //     props.setPostData(res.data.post)
+  //   }else{
+  //     notifyError(res?.data.message)
+  //     setDeleteCommentIndex(null);
+  //   }
 
-  };
-  const editCommentSubmit = async(editedComment:string) =>{
-    if(editedComment === '') return
-    const res = await editCommentAPI(props.postId,editableComment?._id,editedComment)
-    if(res?.data.success){
-      props.setPostData(res?.data.post)
+  // };
+  // const editCommentSubmit = async(editedComment:string) =>{
+  //   if(editedComment === '') return
+  //   const res = await editCommentAPI(props.postId,editableComment?._id,editedComment)
+  //   if(res?.data.success){
+  //     props.setPostData(res?.data.post)
      
-      setEditCommentIndex(null)
-    }else{
-      notifyError(res?.data.message)
-    }
-  }
+  //     setEditCommentIndex(null)
+  //   }else{
+  //     notifyError(res?.data.message)
+  //   }
+  // }
 
 //   const replayCommentSubmit = async(replayComment:string,replayCommentId:any) =>{
 //     if(replayCommentText === '') return
@@ -107,7 +108,7 @@ const ReplayComments: React.FC<commentProps> = (props) => {
 //   }
   return (
     <div className={`${isDarkModeOn ? 'bg-gray-800':'bg-comment'} rounded-md`}>
-    <ToastContainer />
+    {/* <ToastContainer /> */}
       {isLoading && <LineLoader />}
       <div className="Comment_div">
         <div className="commentInput">

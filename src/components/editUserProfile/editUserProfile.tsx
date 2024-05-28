@@ -22,7 +22,7 @@ const editUserProfile: React.FC<editUserProfileProps> = ({
     autoClose:1000,
     hideProgressBar:true
    });
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  // const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [countries, setCountries] = useState<string[]>([]);
   const [favorites, setFavorites] = useState<string>('');
   // const [favoritePlace, setFavoritePlaces] = useState<string[]>([]);
@@ -37,8 +37,8 @@ const editUserProfile: React.FC<editUserProfileProps> = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setSelectedImage(imageUrl);
+      // const imageUrl = URL.createObjectURL(file);
+      // setSelectedImage(imageUrl);
       const reader = new FileReader();
       reader.onload = (event) => {
         const base64String = event.target?.result as string;

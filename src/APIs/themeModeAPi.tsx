@@ -1,6 +1,6 @@
 import axiosInstance from "../services/axios";
 
-export const setThemModeAPI =async (mode:string,userId:string|undefined)=> {
+export const setThemModeAPI =async (mode:string)=> {
     try {        
         return await axiosInstance.put(`/user/setThemeMode`,{mode})
     } catch (error) {

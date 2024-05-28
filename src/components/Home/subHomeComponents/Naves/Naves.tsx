@@ -1,4 +1,4 @@
-import { JSX, useState } from "react";
+import { JSX } from "react";
 import "./Naves.css";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 import { RootState } from "../../../../redux/store";

@@ -30,7 +30,7 @@ const editProfile: React.FC<editProfileProps> = (props) => {
     autoClose:1000,
     hideProgressBar:true
    });
-  const userId = localStorage.getItem("userId");
+  // const userId = localStorage.getItem("userId");
   const userType = localStorage.getItem('userType')
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [propertyFormData,setPropertyFormData] = useState({

@@ -5,21 +5,32 @@ import { io, Socket } from 'socket.io-client';
 import ChatFooter from "../Chats/ChatFooter/ChatFooter";
 import ChatBody from "../Chats/ChatBody/ChatBody";
 import { getMessageAPI } from "../../APIs/ChatAPI";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import notificationSound from '../../../public/sounds/Iphone Message Tone Download - MobCup.Com.Co.mp3'
 import { useDispatch } from "react-redux";
+// import { setMessageCount } from "../../reducers/messageCountSlice";
 interface onlineUser {
   [userId: string]: string;
 }
 
+interface messages 
+  {
+    _id?:string,
+    senderId:string,
+    receiverId:string,
+    message: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+  }
+
 const ChatAPP: React.FC = () => {
   const Dispatch = useDispatch()
-  const navigate = useNavigate();
-  const Navigate = useNavigate();
+  // const navigate = useNavigate();
+  // const Navigate = useNavigate();
   const [socket, setSocket] = useState<Socket | null>(null);
   const [onlineUser, setOnlinUser] = useState<onlineUser>();
-  const [messages, setMessages] = useState<any[]>([]);
-  const [typingStatus, setTypingStatus] = useState('');
+  const [messages, setMessages] = useState<messages[]>([]);
+  // const [typingStatus, setTypingStatus] = useState('');
   const [selectedUser, setSelectedUser] = useState<string | null>();
   const [selectedUserProfile, setSelectedUserProfile] = useState<string | null>();
   const [selectedUserName, setSelectedUserName] = useState<string | null>();
@@ -31,7 +42,11 @@ const ChatAPP: React.FC = () => {
     if (selectedUser) {
       const res = await getMessageAPI(selectedUser);
       console.log('messages ', res);
-      setMessages(res?.data);
+      if(res){
+        setMessages(res?.data);
+        // Dispatch(setMessageCount(res.data.length))
+      }
+      
     }
   }catch (error:any) {
     if (error.response && error.response.data) {
@@ -100,7 +115,7 @@ const ChatAPP: React.FC = () => {
         <ChatBody
           selectedUser={selectedUser}
           messages={messages}
-          typingStatus={typingStatus}
+          // typingStatus={typingStatus}
           lastMessageRef={lastMessageRef}
           selectedUserProfile={selectedUserProfile}
           selectedUserName={selectedUserName}

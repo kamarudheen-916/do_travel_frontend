@@ -12,7 +12,7 @@ interface Props{
     multiple?:boolean;
     onChange?: React.ChangeEventHandler<HTMLInputElement>; 
 }
-const DynamicInput:React.FC<Props> =(props)=> {
+const DynamicInput:React.FC<Props> =()=> {
     const [typeOfStays,setTypeOfStays] = useState<string[]>([''])
   const handleAddStay = ()=>{
     setTypeOfStays(previous => [...previous,''])

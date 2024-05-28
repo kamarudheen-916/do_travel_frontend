@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route, Navigate } from "react-router-dom";
 import AdminLogin from '../pagesAdmin/adminLogin';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 import AdminHome from '../pagesAdmin/adminHome/AdminHome';
 import AdminUser from '../pagesAdmin/AdminUser';
 import AdminProperty from '../pagesAdmin/AdminProperty';

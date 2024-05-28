@@ -5,7 +5,7 @@ import { comments, userPost } from "../../../Interfaces/interfaces";
 import { deleteCommentAPI, editCommentAPI, submitCommentAPI } from "../../../APIs/postAPI";
 
 import { ToastContainer,toast } from "react-toastify";
-import { useTypedSelector } from "../../../redux/reduxUseSelector";
+// import { useTypedSelector } from "../../../redux/reduxUseSelector";
 import LineLoader from "../../../components/Loading/LineLoader/LineLoader";
 import Loading from "../../../components/Loading/Loading";
 
@@ -20,7 +20,7 @@ interface commentProps {
 }
 const Comments: React.FC<commentProps> = (props) => {
 
-  const isDarkModeOn = useTypedSelector((state) => state.darkTheme.isDarkTheme);
+  // const isDarkModeOn = useTypedSelector((state) => state.darkTheme.isDarkTheme);
   const [isSubmitting, setIsSubmitting] = useState(false); 
   const [deleteCommentIndex, setDeleteCommentIndex] = useState<number | null>(null);
   const [editCommentIndex,setEditCommentIndex] = useState<number|null>(null)
