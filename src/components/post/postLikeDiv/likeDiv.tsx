@@ -24,9 +24,9 @@ const  LikeDiv : React.FC<props>=(props) =>{
                       <i onClick={()=>props.setIsComment(!props.isComment)} className={`fa-regular fa-comment text-xl text-green-700`}></i>
                       <p className="text-xs font-bold text-green-600">{props.numberOfComments} Comments</p>
                     </div>
-                    <div>
+                    {/* <div>
                       <i onClick={()=>props.setIsShareOpen(true)} className="fa-regular fa-paper-plane text-xl text-green-700"></i>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="save">
                     <div>

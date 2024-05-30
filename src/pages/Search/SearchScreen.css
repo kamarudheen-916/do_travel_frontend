@@ -1,22 +1,20 @@
 /* SearchScreen.css */
 .search-screen {
     position: fixed;
-    top: 0;
-    left: 42%;
+    
+    /* left: 42%; */
     width: 400px;
     height: 100dvh;
     background-color: #ffffffce;
     z-index: 1000; /* Ensure it appears above other content */
     transition: transform 3s ease-in-out;
-    transform: translateX(-100%);
+    /* transform: translateX(-100%); */
     border:1px solid #178834;
     overflow-x: hidden;
+
   }
   
-  .search-screen.show {
-    transform: translateX(0);
-  }
-  
+ 
   .search-screen-content {
     width: 400px; /* Adjust as needed */
  

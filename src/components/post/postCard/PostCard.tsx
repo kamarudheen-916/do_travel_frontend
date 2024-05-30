@@ -62,7 +62,8 @@ const PostCard: React.FC<userPost & {closeModal?:React.Dispatch<React.SetStateAc
       setIsLiked(!isLiked)
       const res = await likePostAPI(props._id,isLiked)
       if(res?.data.success){
-        setCustomAlertMessage(res.data.message)
+        setPostData(res.data.post)
+        // setCustomAlertMessage(res.data.message)
       }else{
         setCustomAlertMessage(res?.data.message)
       }
@@ -147,8 +148,8 @@ const PostCard: React.FC<userPost & {closeModal?:React.Dispatch<React.SetStateAc
           <div>
             <LikeDiv 
             setIsShowLikesOpen={()=>setIsShowLikesOpen(!isShowLikesOpen)}
-            numberOfComments={props.comments.length}
-            numberOfLikes={props.like.length}
+            numberOfComments={postData.comments.length}
+            numberOfLikes={postData.like.length}
             handlePostLike={handlePostLike}
             setIsShareOpen={setIsShareOpen}
             handlePostSave={handlePostsave}
