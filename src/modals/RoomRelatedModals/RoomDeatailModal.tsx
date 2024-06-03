@@ -5,6 +5,7 @@ import { useTypedSelector } from "../../redux/reduxUseSelector";
 import { Room, bookingData } from "../../Interfaces/interfaces";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
+import { checkRoomAvailabilityAPI } from "../../APIs/BookingAPI";
 
 interface ModalProps {
     handleClose: () => void;
@@ -30,15 +31,18 @@ const ShowRoomDetailsModal: React.FC<ModalProps> = (props) => {
     const [TotalPrice,setTotalPrice] =useState(props.data?.price)
     const [isCheckIn,setIsCheckIn] = useState<boolean>(false)
     const [isCheckOut,setIsCheckOut] = useState<boolean>(false)
+    // const [checkOutDate,setCheckOutdate] = useState<string>()
+    const [checkInDate,setCheckIndate] = useState<string>()
+    const [isRoomNotAvailable,setIsRoomNotAvailable] = useState<boolean>(false)
 
-    const handleSelectDate = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleSelectDate = async(e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         const currentDate = new Date();
         const selectedDate = new Date(value);
-    
         // Validation for the first input
         if (name === 'checkInDate' && selectedDate <= currentDate) {
             notifyError('Check-in date must be greater than the current date.');
+
             setIsCheckIn(false)
             return;
         }
@@ -46,6 +50,7 @@ const ShowRoomDetailsModal: React.FC<ModalProps> = (props) => {
         // Validation for the second input
         if (name === 'checkOutDate' && selectedDate <= currentDate) {
             setIsCheckOut(false);
+
             notifyError('Check-out date must be greater than the current date.');
             return;
         }
@@ -56,6 +61,20 @@ const ShowRoomDetailsModal: React.FC<ModalProps> = (props) => {
             setIsCheckOut(false);
             notifyError('Check-out date must be greater than the check-in date.');
             return;
+        }
+        if(name === 'checkInDate'){
+            setIsRoomNotAvailable(false)
+            setCheckIndate(value)
+        }else if(name === 'checkOutDate'){
+            // setCheckOutdate(value)   
+            const res = await checkRoomAvailabilityAPI(props.data?._id,checkInDate,value)
+            console.log(res.data);
+            if(!res.data.success){
+                notifyError(res.data.message)
+                setIsRoomNotAvailable(true)
+                return;
+            }
+            
         }
             setIsCheckIn(true) 
             setIsCheckOut(true);
@@ -125,9 +144,16 @@ const ShowRoomDetailsModal: React.FC<ModalProps> = (props) => {
     }
     const isDarkThemeOn = useTypedSelector(state=>state.darkTheme.isDarkTheme)
 
-    const handleBookNow = () => {
+    const handleBookNow = async() => {
         
         const { checkInDate, checkOutDate } = props.bookingData;
+        const res = await checkRoomAvailabilityAPI(props.data?._id,checkInDate,checkOutDate)
+        console.log(res.data);
+        if(!res.data.success){
+            notifyError(res.data.message)
+            setIsRoomNotAvailable(true)
+            return;
+        }
         if(checkInDate !== '' && checkOutDate !== ''){
             setIsCheckIn(true)
             setIsCheckOut(true)
@@ -205,6 +231,9 @@ const ShowRoomDetailsModal: React.FC<ModalProps> = (props) => {
                         <div><label htmlFor="">To : </label></div>
                             <input onChange={handleSelectDate} className={ ` ${!isCheckOut ? 'border-red-800':''} border-2 text-black border-r-4 rounded-md p-1 border-green-800 w-80 `} type="date" name="checkOutDate"  />
                         </div>
+                        {isRoomNotAvailable && <div className="text-red-500 text-xs font-bold">
+                            <h1>Sorry...This room is not available at this selected date..! Please choose another date..</h1>
+                        </div>}
                     </div>
                    <div className="border border-green-700 py-2 px-1 justify-around flex flex-wrap gap-10 mx-2 my-5 rounded-md ">
                 <div className="flex gap-3">

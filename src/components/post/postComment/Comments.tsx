@@ -19,10 +19,10 @@ interface commentProps {
   
 }
 const Comments: React.FC<commentProps> = (props) => {
-
+  const userId = localStorage.getItem('userId')
   const isDarkModeOn = useTypedSelector((state) => state.darkTheme.isDarkTheme);
   const [isSubmitting, setIsSubmitting] = useState(false); 
-  const [deleteCommentIndex, setDeleteCommentIndex] = useState<number | null>(null);
+  const [deleteCommentId, setDeleteCommentId] = useState<string |undefined| null>(null);
   const [editCommentIndex,setEditCommentIndex] = useState<number|null>(null)
   const [replayCommentIndex,setReplayCommentIndex] = useState<number|null>(null)
   const [comment, setComment] = useState("");
@@ -48,7 +48,7 @@ const Comments: React.FC<commentProps> = (props) => {
       return;
     } else {
       setIsSubmitting(true);
-      console.log('props . postId:',props);
+ 
       
       const res = await submitCommentAPI(comment, props.postId);
       setIsLoading(true)
@@ -68,11 +68,11 @@ const Comments: React.FC<commentProps> = (props) => {
   const deleteComment = async (comment: comments,index:number) => {
     const res = await deleteCommentAPI(props.postId,comment._id,index)
     if(res?.data.success){
-      setDeleteCommentIndex(null); // Close delete box
+      setDeleteCommentId(null); // Close delete box
       props.setPostData(res.data.post)
     }else{
       notifyError(res?.data.message)
-      setDeleteCommentIndex(null);
+      setDeleteCommentId(null);
     }
 
   };
@@ -94,9 +94,6 @@ const Comments: React.FC<commentProps> = (props) => {
     if(replayComment === '') return
     const res = await replayCommentAPI(props.postId,replayCommentId,replayComment)
     if(res?.data.success){
-      console.log('resoponse of replay comment : ',res.data.replayComments);
-
-     
       setReplayableComment((prev:any)=>{
        const data= { ...prev,
         replayComments:res.data.replayComments}
@@ -113,9 +110,11 @@ const Comments: React.FC<commentProps> = (props) => {
     const response = await fetchRpleyCommentAPI(commentId)
     if(response?.data.success){
       setReplayableComment(response.data.replayComments)
-      console.log('replay commetns :',response.data.replayComments.replayComments);
-      
     }
+  }
+  const SelectDeleteCommentId = (commentId:string|undefined|null)=>{
+    setDeleteCommentId(commentId)
+    console.log(`${commentId}--${deleteCommentId}`)
   }
   return (
     <div className={`${isDarkModeOn ? 'bg-gray-800':'bg-comment'} rounded-md`}>
@@ -167,14 +166,15 @@ const Comments: React.FC<commentProps> = (props) => {
                           data-ripple-light="true"
                           data-popover-target="popover"
                           className="text-center font-sans text-xs font-bold text-gray-500"
-                          onClick={() => setDeleteCommentIndex(index)}
+                          onClick={()=>SelectDeleteCommentId(comment._id)}
                         >
                           Delete
                         </button>
-                        {deleteCommentIndex === index && (
-                          <div
+                        {deleteCommentId === comment._id && (
+                        <div>
+                            <div
                             data-popover="popover"
-                            className="absolute gap-3 p-2 mt-5 text-sm font-normal break-words whitespace-normal border rounded-lg shadow-lg w-max border-red-400 bg-white"
+                            className="relative z-10 top-0 gap-3 p-2 mt-1 text-sm font-normal break-words whitespace-normal border rounded-lg shadow-lg w-max border-red-400 bg-white"
                           >
                             <h1>Do you want to delete the comment?</h1>
                             <div className="flex gap-3 ">
@@ -186,15 +186,16 @@ const Comments: React.FC<commentProps> = (props) => {
                               </h1>
                               <h1
                                 className="hover:scale-105"
-                                onClick={() => setDeleteCommentIndex(null)}
+                                onClick={() => setDeleteCommentId(null)}
                               >
                                 No
                               </h1>
                             </div>
                           </div>
+                        </div>
                         )}
                       </div>
-                      <div className="editComment relative">
+                    { comment.commentedId === userId && <div className="editComment relative">
                         <h1
                           onClick={() => {
                             onEditComment(comment.comment);
@@ -213,7 +214,7 @@ const Comments: React.FC<commentProps> = (props) => {
                            </div>
                          </div>
                       )}
-                      </div>
+                      </div>}
                       <div className="relative">
                         <h1 onClick={()=>onReplayCommentClick(index,comment._id)}>Replay</h1>
                         {replayCommentIndex === index && ( // Conditionally render EditComment component based on openEditComment state

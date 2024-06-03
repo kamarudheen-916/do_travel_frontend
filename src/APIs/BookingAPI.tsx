@@ -36,3 +36,14 @@ export const onlineBookingAPI = async (bookingData:any,roomPrice:any)=>{
           throw error;
     }
 }
+
+export const checkRoomAvailabilityAPI = async (roomId:string|undefined,checkInDate:string|undefined,checkOutDate:string|undefined)=>{
+    try {
+        console.log('roomId:',roomId,'checkinDate',checkInDate,'checkOutdate',checkOutDate);
+        
+        return await axiosInstance.get(`/user/checkRoomAvailability`,{params:{roomId,checkInDate,checkOutDate}})
+    } catch (error) {
+        console.log('checkRoomAvailabilityAPI error :',error);
+        throw error
+    }
+}

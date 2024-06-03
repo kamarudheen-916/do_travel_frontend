@@ -72,11 +72,15 @@ const EditRoomForm :React.FC<{
   
     const imagesArray: string[] = [];
     for (const file of files) {
-      const base64String = await readFileAsDataURL(file);
-      imagesArray.push(base64String);
+      if (file.type.startsWith('image/')) { // Check if the file is an image
+        const base64String = await readFileAsDataURL(file);
+        imagesArray.push(base64String);
+      } else {
+        notifyError('Selected file is not an image');
+      }
     }
-    console.log('images arara:',imagesArray);
-    
+    // console.log('images array:', imagesArray);
+  
     setRoomData((prevState) => ({
       ...prevState,
       images: imagesArray,
@@ -303,7 +307,7 @@ const EditRoomForm :React.FC<{
          <span>Images:</span>
          <div>
            <input
-           required
+           required={roomData.images.length > 0 ? false : true}
            className="addRoomInput"
            type="file"
            name="images"
@@ -321,7 +325,7 @@ const EditRoomForm :React.FC<{
          <h1 onClick={()=>setImagesOpen(true)} className="mr-8 text-sm text-blue-500 cursor-pointer mt-1 ">Click here for previw</h1>
          }
          {
-          isImagesOpen && <ShowImagesModal setData={setRoomData} handleClose={()=>setImagesOpen(false)} data={roomData.images} /> 
+          isImagesOpen && <ShowImagesModal setRoomData={setRoomData} handleClose={()=>setImagesOpen(false)} data={roomData.images} /> 
          }
          </div>
        <button className="addRoomButton" type="submit">

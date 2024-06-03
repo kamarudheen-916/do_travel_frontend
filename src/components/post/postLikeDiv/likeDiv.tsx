@@ -17,11 +17,11 @@ const  LikeDiv : React.FC<props>=(props) =>{
     <div className="likeDiv flex justify-between mt-1">
                   <div className="likeCommentShare flex w-fit  gap-2 text-center">
                     <div>
-                      <i onClick={props.handlePostLike} className={`${props.isLiked ? 'fa-solid':'fa-regular'} fa-heart text-xl text-green-700`}></i>
+                      <i onClick={props.handlePostLike} className={`${props.isLiked ? 'fa-solid':'fa-regular'} cursor-pointer fa-heart text-xl text-green-700`}></i>
                       <p onClick={props.setIsShowLikesOpen} className="text-xs font-bold text-green-600 cursor-pointer">{props.numberOfLikes} Likes</p>
                     </div>
                     <div>
-                      <i onClick={()=>props.setIsComment(!props.isComment)} className={`fa-regular fa-comment text-xl text-green-700`}></i>
+                      <i onClick={()=>props.setIsComment(!props.isComment)} className={`fa-regular fa-comment text-xl cursor-pointer text-green-700`}></i>
                       <p className="text-xs font-bold text-green-600">{props.numberOfComments} Comments</p>
                     </div>
                     {/* <div>

@@ -3,13 +3,12 @@ import { sendMessageAPI } from '../../../APIs/ChatAPI';
 
 interface chatProps {
   recipientId: string | null | undefined;
-  addMessage: (message: any) => void; // Add the addMessage prop
+  addMessage: (message: any) => void;
+  handleTyping: () => void;
+  handleStopTyping: () => void;
 }
 
-const ChatFooter: React.FC<chatProps> = ({ 
-  recipientId, 
-  addMessage // Destructure the addMessage prop
-}) => {
+const ChatFooter: React.FC<chatProps> = ({ recipientId, addMessage, handleTyping, handleStopTyping }) => {
   const [message, setMessage] = useState('');
 
   const handleSendMessage = async (e: React.ChangeEvent<HTMLFormElement>) => {
@@ -19,7 +18,7 @@ const ChatFooter: React.FC<chatProps> = ({
       console.log('send res ', res);
 
       if (res?.data) {
-        addMessage(res.data); // Update the state immediately with the new message
+        addMessage(res.data);
       }
     }
     setMessage('');
@@ -34,6 +33,8 @@ const ChatFooter: React.FC<chatProps> = ({
           className="message w-full mx-4 rounded px-2 text-black border border-green-500 focus:outline-none"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          onFocus={handleTyping}
+          onBlur={handleStopTyping}
         />
         <button className="sendBtn border border-green-500 hover:bg-green-800 hover:text-white px-2 rounded">
           SEND

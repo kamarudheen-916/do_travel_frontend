@@ -4,9 +4,11 @@ import "./ShowRoomDetailsModal.css";
 import { useTypedSelector } from "../../redux/reduxUseSelector";
 import Swal from 'sweetalert2'
 import { Room, bookingData } from "../../Interfaces/interfaces";
-import { confirmBookingAPI } from "../../APIs/BookingAPI";
+import { checkRoomAvailabilityAPI, confirmBookingAPI } from "../../APIs/BookingAPI";
 import {loadStripe} from '@stripe/stripe-js'
 import { onlineBookingAPI } from "../../APIs/BookingAPI";
+import { ToastContainer, toast } from "react-toastify";
+
 interface ModalProps {
     handleClose: () => void;
     BookingData : bookingData
@@ -16,13 +18,25 @@ interface ModalProps {
 
 
 const BookingDetailsModal: React.FC<ModalProps> = (props) => {
+
     const isDarkThemeOn = useTypedSelector(state=>state.darkTheme.isDarkTheme)
+    const notifyError = (message:any) => toast.error(message,{
+        position:"top-center",
+        autoClose:2000,
+        hideProgressBar:true
+       });
+
     async function handleConfimBooking (){
 
 
         try {
 
-            if(props.BookingData.paymentIsOnline){
+            const res = await checkRoomAvailabilityAPI(props.BookingData?.roomId,props.BookingData.checkInDate,props.BookingData.checkOutDate)
+            console.log(res.data);
+            if(!res.data.success){
+                notifyError(res.data.message)
+                return;
+            }else if(props.BookingData.paymentIsOnline){
                     const Publishable_key =  import.meta.env.VITE_STRIPE_Publishable_key 
                     const stripe = await loadStripe(Publishable_key)
                     const paymentRes = await onlineBookingAPI(props.BookingData,props.RoomData?.price)
@@ -81,7 +95,8 @@ const BookingDetailsModal: React.FC<ModalProps> = (props) => {
     }
     return (
         <div className={'roomDetailesModal '} >
-    
+             <ToastContainer theme={`${isDarkThemeOn ? 'light':'dark'}`}/>
+            
             <section className={`roomDetailesModal-main ${isDarkThemeOn ? 'bg-gray-900':''}`} >
                 <div className={`roomDetailesModal-header  ${isDarkThemeOn ? 'bg-gray-900':'bg-white'} `}>
                    <button className={`roomDetailesModal-Button`} onClick={props.handleClose}>X</button>
@@ -132,7 +147,7 @@ const BookingDetailsModal: React.FC<ModalProps> = (props) => {
                                     <h1>Check out Time &nbsp;:&nbsp;{props.BookingData.checkOutDate} -  12.30 PM</h1>
                                 </div>
                                 <div className="paymentDetails ">
-                            <h1>Payment status &nbsp;:&nbsp; Pending (Before Check-in)</h1>
+                            <h1>Payment status &nbsp;:&nbsp;{props.BookingData.paymentIsOnline ? `Payment Successfull` : `Pending (Before Check-in)`}  </h1>
                             <h1>Total Price &nbsp;:&nbsp; ₹ {props.BookingData.totalPrice}/-</h1>
                         </div>
                         </div>
@@ -149,6 +164,7 @@ const BookingDetailsModal: React.FC<ModalProps> = (props) => {
                             <div className="">
                                 <h1>Number of Adults &nbsp;:&nbsp; {props.BookingData.numberOfAdults}</h1>
                                 <h1>Number of Children &nbsp;:&nbsp; {props.BookingData.numberOfChilden}</h1>
+                                <h1>Number of Rooms &nbsp;:&nbsp; {props.BookingData.numberOfRoom}</h1>
                                 <h1>Length of Days &nbsp;:&nbsp; {props.BookingData.numberDays}</h1>
                             </div>
                         </div>

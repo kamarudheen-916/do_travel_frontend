@@ -17,10 +17,20 @@ const Booking_Details_Modal: React.FC<ModalProps> = (props) => {
     const isDarkThemeOn = useTypedSelector(state=>state.darkTheme.isDarkTheme)
     async function handleCancellBooking (){
         try {
+            const checkInDate = new Date(props.BookingData.checkInDate);
+            const currentDate = new Date();
+            const timeDifference = checkInDate.getTime() - currentDate.getTime();
+            const daysDifference = timeDifference / (1000 * 3600 * 24);
+
+            let cancelMessage = '';
+
+            if (daysDifference <= 3 && props.BookingData.paymentIsOnline) {
+                cancelMessage = "Your free cancellation time is expired. You will be charged 5% of your Booking amount to cancel the Booking!";
+            }
 
             Swal.fire({
                 title: "Are you sure?",
-                text: "You won't be able to revert this!",
+                text:cancelMessage,
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -78,9 +88,12 @@ const Booking_Details_Modal: React.FC<ModalProps> = (props) => {
                    <div className="flex justify-evenly flex-wrap my-9" >
 
                         <div className="RoomDetails ">
-                                    <div className=" font-extrabold text-lg underline"><h1>Room Details</h1></div>
+                             <div className=" font-extrabold text-lg underline"><h1>Room Details</h1></div>
                                 <div className="flex ">
                                     <h1>Type of Your Room &nbsp;:&nbsp;  {props.BookingData.roomType}</h1>
+                                </div>
+                                <div>
+                                    <h1>Location : {props.BookingData.location}</h1>
                                 </div>
                                 <div className="flex flex-wrap gap-2  ">
                                     <h1>Facilities &nbsp;:&nbsp;</h1>
@@ -105,7 +118,7 @@ const Booking_Details_Modal: React.FC<ModalProps> = (props) => {
                                     <h1>Check out Time &nbsp;:&nbsp;{props.BookingData.checkOutDate} -  12.30 PM</h1>
                                 </div>
                                 <div className="paymentDetails ">
-                            <h1>Payment status &nbsp;:&nbsp; Pending (Before Check-in)</h1>
+                                <h1>Payment status &nbsp;:&nbsp;{props.BookingData.paymentIsOnline ? `Payment Successfull` : `Pending (Before Check-in)`}  </h1>
                             <h1>Total Price &nbsp;:&nbsp; ₹ {props.BookingData.totalPrice}/-</h1>
                         </div>
                         </div>
@@ -122,6 +135,7 @@ const Booking_Details_Modal: React.FC<ModalProps> = (props) => {
                             <div className="">
                                 <h1>Number of Adults &nbsp;:&nbsp; {props.BookingData.numberOfAdults}</h1>
                                 <h1>Number of Children &nbsp;:&nbsp; {props.BookingData.numberOfChilden}</h1>
+                                <h1>Number of Rooms &nbsp;:&nbsp; {props.BookingData.numberOfRoom}</h1>
                                 <h1>Length of Days &nbsp;:&nbsp; {props.BookingData.numberDays}</h1>
                             </div>
                         </div>
@@ -129,10 +143,16 @@ const Booking_Details_Modal: React.FC<ModalProps> = (props) => {
                    </div>
                    
                    <div className="px-2 pb-2 my-4" >
-                        <button 
+                       {props.BookingData.bookingStatus !== 'cancelled' ? <button 
                         onClick={handleCancellBooking} 
-                        className="bg-green-800 rounded py-2 text-white w-full hover:bg-green-700">Cancel Booking</button>
-
+                        className="bg-green-800 rounded py-2 text-white w-full hover:bg-green-700">
+                        Cancel Booking
+                        </button> :
+                        <button 
+                        className="bg-red-800 rounded py-2 text-white w-full hover:bg-green-700">
+                        This Booking is cancelled
+                        </button>
+                        }
                     </div>
                 </div>
             </section>

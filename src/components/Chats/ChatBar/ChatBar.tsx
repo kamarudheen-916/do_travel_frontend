@@ -1,29 +1,20 @@
 
 import  { useState, useEffect, SetStateAction } from 'react';
 import './ChatBar.css'
-// import {  Socket } from 'socket.io-client';
+
 import {  getUsersForSidebarAPI } from '../../../APIs/ChatAPI';
 import { PropertyFormData, UserFormData } from '../../../Interfaces/interfaces';
-// interface onlineUser {
-//   [userId: string]: string;
-// }
+
 interface chatProps{
-    // socket:Socket
     selectedUser:string|null|undefined
     setSelectedUser:React.Dispatch<SetStateAction<string|null|undefined>>
     setSelectedUserName:React.Dispatch<SetStateAction<string|null|undefined>>
     setSelectedUserProfile:React.Dispatch<SetStateAction<string|null|undefined>>
     onlineUsers:any
+    typingStatus:any
 }
 const ChatBar = (props:chatProps) => {
     const [users, setUsers] = useState<UserFormData[]|PropertyFormData[]>([]);
-    // const [messages,setMessages] = useState()
-
-    // useEffect(() => {
-    //     props.socket.on('newUserResponse', (data) => setUsers(data));
-    //     console.log(users);
-        
-    //   }, [props.socket, users]);
 
 
       async function getChatUsers (){
@@ -45,10 +36,15 @@ const ChatBar = (props:chatProps) => {
       props.setSelectedUser(id)
       props.setSelectedUserName(name)
       props.setSelectedUserProfile(profile)
+      setUsers((prevUser:any)=>{
+        const selectedUser = prevUser.find((user:any)=>user._id === id)
+        const otherUser = prevUser.filter((user:any)=>user._id !== id)
+        return selectedUser ?  [selectedUser,...otherUser] : prevUser
+      })
+      
     }
       return (
         <div className="chat__sidebar border-r border-green-800 h-dvh min-w-60   ">
-          {/* <h2 className=''>Open Chat</h2> */}
           <div>
             <h4 className="chat__header text-center py-1 my-5">ACTIVE USERS</h4>
             <div className="chat__users">

@@ -176,9 +176,13 @@ const Rooms: React.FC<{
                     </h1>}
                   </div>
                 </div>
-                <div className="text-red-700">
+                <div className="">
+                    <h1><span>{room.numOfNights}</span>night, <span>{room.numOfAdults}</span> adults</h1>
+                  </div>
+                {/* <div className="text-red-700">
+
                   <h1>Only <span>{room.numOfRoomLeft}</span> room left at this price on our site</h1>
-                </div>
+                </div> */}
               </div>
               <div className="secondPart flex flex-col justify-between">
                 <div className="reviewDiv">
@@ -191,9 +195,7 @@ const Rooms: React.FC<{
                   </div>
                 </div>
                 <div>
-                  <div className="numberOfdays">
-                    <h1><span>{room.numOfNights}</span>night, <span>{room.numOfAdults}</span> adults</h1>
-                  </div>
+                 
                   <div className="roomPrice">
                     <span>₹4,320</span>
                     <h1>₹{room.price}</h1>

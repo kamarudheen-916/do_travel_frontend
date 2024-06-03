@@ -6,12 +6,12 @@ import { TiMessages } from "react-icons/ti";
 interface chatProps{
     messages:any[]
     lastMessageRef :any
-    // typingStatus:any
+    typingStatus:any
     selectedUser:string|null|undefined
     selectedUserProfile:any
     selectedUserName:any
 }
-const ChatBody = ({ messages,lastMessageRef,selectedUser,selectedUserName,selectedUserProfile }:chatProps) => {
+const ChatBody = ({ messages,lastMessageRef,selectedUser,typingStatus,selectedUserName,selectedUserProfile }:chatProps) => {
   const userName = localStorage.getItem('userName')
   const navigate = useNavigate();
 
@@ -31,7 +31,7 @@ const ChatBody = ({ messages,lastMessageRef,selectedUser,selectedUserName,select
         <button className="leaveChat__btn text-2xl" onClick={handleLeaveChat}>←</button>
         <h1>{selectedUserName}</h1>
         <div className="message__status">
-            {/* <p>{typingStatus}...</p> */}
+            <p>{typingStatus}</p>
           </div>
       </header>
 

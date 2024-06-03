@@ -5,10 +5,8 @@ import { io, Socket } from 'socket.io-client';
 import ChatFooter from "../Chats/ChatFooter/ChatFooter";
 import ChatBody from "../Chats/ChatBody/ChatBody";
 import { getMessageAPI } from "../../APIs/ChatAPI";
-// import { useNavigate } from "react-router-dom";
 import notificationSound from '../../../public/sounds/Iphone Message Tone Download - MobCup.Com.Co.mp3'
 import { useDispatch } from "react-redux";
-// import { setMessageCount } from "../../reducers/messageCountSlice";
 interface onlineUser {
   [userId: string]: string;
 }
@@ -25,12 +23,10 @@ interface messages
 
 const ChatAPP: React.FC = () => {
   const Dispatch = useDispatch()
-  // const navigate = useNavigate();
-  // const Navigate = useNavigate();
   const [socket, setSocket] = useState<Socket | null>(null);
   const [onlineUser, setOnlinUser] = useState<onlineUser>();
   const [messages, setMessages] = useState<messages[]>([]);
-  // const [typingStatus, setTypingStatus] = useState('');
+  const [typingStatus, setTypingStatus] = useState('');
   const [selectedUser, setSelectedUser] = useState<string | null>();
   const [selectedUserProfile, setSelectedUserProfile] = useState<string | null>();
   const [selectedUserName, setSelectedUserName] = useState<string | null>();
@@ -90,9 +86,24 @@ const ChatAPP: React.FC = () => {
       sound.play()
       setMessages((prevMessages) => [...prevMessages, newMessage])
     });
-    
-    return ()=> {socket?.off('newMessage')}
-  }, [socket]);
+    socket?.on('typing', (data) => {
+      // alert('test typing..')
+      if (data.senderId === selectedUser) {
+        setTypingStatus(`typing...`);
+      }
+    });
+
+    socket?.on('stopTyping', (data) => {
+      if (data.senderId === selectedUser) {
+        setTypingStatus('');
+      }
+    });
+    return ()=> {
+      socket?.off('newMessage')
+      socket?.off('typing');
+      socket?.off('stopTyping');
+    }
+  }, [socket,selectedUser]);
 
   useEffect(() => {
     lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -100,6 +111,18 @@ const ChatAPP: React.FC = () => {
 
   const addMessage = (message: any) => {
     setMessages((prevMessages) => [...prevMessages, message]);
+  };
+
+  const handleTyping = () => {
+    if (selectedUser && socket) {
+      socket.emit('typing', { senderId: userId, receiverId: selectedUser, senderName: localStorage.getItem('userName') });
+    }
+  };
+
+  const handleStopTyping = () => {
+    if (selectedUser && socket) {
+      socket.emit('stopTyping', { senderId: userId, receiverId: selectedUser, senderName: localStorage.getItem('userName') });
+    }
   };
 
   return (
@@ -110,12 +133,13 @@ const ChatAPP: React.FC = () => {
         setSelectedUserProfile={setSelectedUserProfile}
         setSelectedUserName={setSelectedUserName}
         onlineUsers={onlineUser}
+        typingStatus={typingStatus}
       />
       <div className="w-full">
         <ChatBody
           selectedUser={selectedUser}
           messages={messages}
-          // typingStatus={typingStatus}
+          typingStatus={typingStatus}
           lastMessageRef={lastMessageRef}
           selectedUserProfile={selectedUserProfile}
           selectedUserName={selectedUserName}
@@ -123,7 +147,9 @@ const ChatAPP: React.FC = () => {
         {selectedUser && (
           <ChatFooter
             recipientId={selectedUser}
-            addMessage={addMessage} // Pass the addMessage function as a prop
+            addMessage={addMessage} 
+            handleTyping={handleTyping}
+            handleStopTyping={handleStopTyping}
           />
         )}
       </div>

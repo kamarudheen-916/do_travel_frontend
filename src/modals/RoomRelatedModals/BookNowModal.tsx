@@ -26,9 +26,10 @@ const BookNowModal: React.FC<ModalProps> = (props) => {
     }
 
     async function handlePaymentMethod (e:React.ChangeEvent<HTMLInputElement>){
+
             props.setBookingData(prev =>({
                 ...prev,
-                paymentIsOnline: e.target.name === 'onlinePayment' ? true :false 
+                paymentIsOnline: e.target.value === 'onlinePayment' ? true :false 
             }))
     }
     async function handleBooking (e:React.ChangeEvent<HTMLFormElement>){
@@ -169,11 +170,11 @@ const BookNowModal: React.FC<ModalProps> = (props) => {
                                     <h1 className="underline font-extrabold my-2">Select Payment method</h1>
                                     <div className="flex justify-center gap-5 p-3">
                                         <div className="flex gap-1">
-                                            <input onChange={handlePaymentMethod} required type="radio" defaultChecked name="paymentMethod" id="onlinePayment" />
+                                            <input onChange={handlePaymentMethod} required type="radio"  name="paymentMethod" value={'onlinePayment'} id="onlinePayment" />
                                             <label htmlFor="onlinePayment">Online</label>
                                         </div>
                                         <div className="flex gap-1">
-                                            <input onChange={handlePaymentMethod} required type="radio" name="paymentMethod" id="afterPayment" />
+                                            <input onChange={handlePaymentMethod} required type="radio" name="paymentMethod" value={'afterPayment'} id="afterPayment" />
                                             <label htmlFor="afterPayment">Pay before check-in</label>
                                         </div>
                                     </div>
