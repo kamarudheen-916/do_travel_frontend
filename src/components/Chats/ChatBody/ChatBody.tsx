@@ -51,7 +51,7 @@ const ChatBody = ({ messages,lastMessageRef,selectedUser,typingStatus,selectedUs
             </div>
           ) : (
             <div className="message__chats flex items-center gap-10 border border-green-700 w-fit pl-1 pr-4 py-1 mx-6 rounded-md ml-auto" key={message.id}>
-                {selectedUser ? (<img className='w-12 h-12 rounded-full' src={selectedUserProfile} alt="" />) : (<i className='text-4xl ml-3 fa-user fa-solid'></i>)}
+                {(selectedUserProfile ) ? (<img className='w-12 h-12 rounded-full' src={selectedUserProfile} alt="" />) : (<i className='text-4xl ml-3 fa-user fa-solid'></i>)}
                 {/* <img className='w-12 h-12 rounded-full' src={selectedUserProfile} alt="" /> */}
               <div className="message__recipient">
                 <p>{message.message}</p>
