@@ -1,7 +1,7 @@
 import axios,{AxiosInstance} from "axios";
 
 const axiosInstance :AxiosInstance = axios.create({
-    baseURL:'http://localhost:3000/api'
+    baseURL:'https://dotravel.mobilescart.shop/api'
 })
 
 axiosInstance.interceptors.request.use(

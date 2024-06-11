@@ -64,7 +64,7 @@ const ChatAPP: React.FC = () => {
 
   useEffect(() => {
     if (userId) {
-      const socket: Socket = io('http://localhost:3000', {
+      const socket: Socket = io('https://dotravel.mobilescart.shop/', {
         query: { userId }
       });
       setSocket(socket);
