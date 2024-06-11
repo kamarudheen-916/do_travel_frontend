@@ -3,7 +3,7 @@ import Input from "../atoms/Input/Input";
 import "../../pages/Signup/Signup.css";
 import { UserFormData } from "../../Interfaces/interfaces";
 
-import 'react-toastify/dist/ReactToastify.css';
+import 'react-toastify/dist/ReactToastify.css'; 
 
 interface UserPartProps {
   setUserFormData: React.Dispatch<React.SetStateAction<UserFormData>>;
