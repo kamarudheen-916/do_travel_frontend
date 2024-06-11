@@ -130,9 +130,9 @@ const PostCard: React.FC<userPost & {closeModal?:React.Dispatch<React.SetStateAc
             </div>
            </Link>
            <div className='flex gap-5  '>
-                {props.isProperty && <Link to={`/OthersProfile/${props && props.userId}/${props && props.isProperty}`}>
+                {/* {props.isProperty && <Link to={`/OthersProfile/${props && props.userId}/${props && props.isProperty}`}>
                     <button className='bg-green-800 text-white px-3 rounded-sm'>Book your stay</button>
-                </Link> }
+                </Link> } */}
                 <div className='font-extrabold '>
                   <p className='text-green-700 cursor-pointer' onClick={()=>setIsDeletePopupVisible(true)}>•••</p>
                  <div>
@@ -181,7 +181,9 @@ const PostCard: React.FC<userPost & {closeModal?:React.Dispatch<React.SetStateAc
               ))}
             </div>
             <div className="text-green-600">
-              <Link to={''}>Chat With Resort</Link>
+            {props.isProperty && <Link to={`/OthersProfile/${props && props.userId}/${props && props.isProperty}`}>
+                    <h1 className='text-green-800  px-3 rounded-sm'>Book your stay</h1>
+                </Link> }
             </div>
           </div>}
         </div>
