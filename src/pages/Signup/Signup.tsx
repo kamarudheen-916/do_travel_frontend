@@ -7,8 +7,8 @@ import { useState } from 'react'
 import { SignupApi } from '../../APIs/UserAPI.tsx'
 import Logo from '../../components/Home/subHomeComponents/Logo/Logo.tsx'
 import { ToastContainer, toast } from 'react-toastify';
-import Userpart from '../../components/Singup/UserPart.tsx'
-import PropertyPart from '../../components/Singup/PropertyPart.tsx'
+import Userpart from '../../components/Singup/UserPart'
+import PropertyPart from '../../components/Singup/PropertyPart'
 function Signup() {
   
     const [userType, setUserType] = useState<string>('user'); 
