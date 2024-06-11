@@ -180,9 +180,9 @@ const PostCard: React.FC<userPost & {closeModal?:React.Dispatch<React.SetStateAc
                 ></i>
               ))}
             </div>
-            <div className="text-green-600">
+            <div className="">
             {props.isProperty && <Link to={`/OthersProfile/${props && props.userId}/${props && props.isProperty}`}>
-                    <h1 className=''>Book your stay</h1>
+                    <h1 className='text-green-600'>Book your stay</h1>
                 </Link> }
             </div>
           </div>}

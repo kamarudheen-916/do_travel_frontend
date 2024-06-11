@@ -11,7 +11,7 @@
 
 @media (max-width: 500px) {
     .centerBar {
-        background-image:url('../../../public/images/loginpageImage-2.jpg'); /* Change background image for screens smaller than 768px */
+        /* background-image:url('../../../public/images/loginpageImage-2.jpg');  */
     }
     .sideBar{
         display: none;
