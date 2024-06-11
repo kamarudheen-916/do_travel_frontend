@@ -6,7 +6,7 @@
 
 }
 .centerBar{
-    min-width: 500px;
+    min-width: 320px;
 }
 
 @media (max-width: 500px) {
