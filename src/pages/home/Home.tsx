@@ -65,7 +65,7 @@ function Home() {
           <div className="LogoInMobileView">
             <Logo/>
           </div>
-            <div className="w-80">{AllFeeds.length < 1 && <NoPost />}</div>
+            <div className="max-w-96">{AllFeeds.length < 1 && <NoPost />}</div>
             {AllFeeds.map((post,index) => (
              <div key={index}>
                 <PostCard  key={index} {...post}/>
