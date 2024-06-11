@@ -39,6 +39,7 @@ const ChatBody = ({ messages,lastMessageRef,selectedUser,typingStatus,selectedUs
         {selectedUser && messages.map((message) =><div key={message._id}>
           {message.senderId === localStorage.getItem('userId') ? (
             <div  className="message__chats flex items-center gap-10 border border-green-700 w-fit pl-1 pr-4 py-1 mx-6 rounded-md" key={message.id}>
+                {(localStorage.getItem('userProfile') ) !== '' ? (<img className='w-12 h-12 rounded-full'  src={`${localStorage.getItem('userProfile')}`} alt="" />) : (<i className='text-4xl ml-3 fa-user fa-solid'></i>)}
 
                 <img className='w-12 h-12 rounded-full' src={`${localStorage.getItem('userProfile')}`} alt="" />
             
