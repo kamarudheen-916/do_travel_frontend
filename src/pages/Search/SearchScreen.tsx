@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { Socket, io } from 'socket.io-client';
 
-const socket: Socket = io('http://localhost:3000');
+const socket: Socket = io('https://dotravel.mobilescart.shop/');
 const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 interface Props {

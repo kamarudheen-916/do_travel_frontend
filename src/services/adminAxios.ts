@@ -2,7 +2,7 @@ import axios,{AxiosInstance} from "axios";
 import Cookies from "js-cookie";
 
 const adminAxiosInstance :AxiosInstance = axios.create({
-    baseURL:'http://localhost:3000/api'
+    baseURL:'https://dotravel.mobilescart.shop/api'
 })
 
 adminAxiosInstance.interceptors.request.use(
