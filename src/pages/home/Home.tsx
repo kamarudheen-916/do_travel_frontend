@@ -61,11 +61,11 @@ function Home() {
       </div>
       <div className="middle w-full h-full flex  ">
         <div className={`middleBar  flex justify-around `}>
-          <div className="overflow-y-scroll">
+          <div className={`${AllFeeds.length < 1 ? 'w-full':''} overflow-y-scroll`}>
           <div className="LogoInMobileView">
             <Logo/>
           </div>
-            <div className="max-w-96">{AllFeeds.length < 1 && <NoPost />}</div>
+            <div className="">{AllFeeds.length < 1 && <NoPost />}</div>
             {AllFeeds.map((post,index) => (
              <div key={index}>
                 <PostCard  key={index} {...post}/>
