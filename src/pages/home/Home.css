@@ -39,6 +39,17 @@
 .thirdBar{
     width: 500px;
 }
+
+.LogoInMobileView{
+    display: none;
+ }
+
+@media (max-width : 700px){
+    .LogoInMobileView{
+       display: block;
+    }
+}
+
 /* 
 @media (max-width : 1000px){
     .postInHome{

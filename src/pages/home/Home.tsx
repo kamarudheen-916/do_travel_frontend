@@ -12,6 +12,7 @@ import { RootState } from "../../redux/store";
 import NoPost from "../../components/noPostsIcon/NoPosts";
 import PostCard from "../../components/post/postCard/PostCard";
 import { useDispatch } from "react-redux";
+import Logo from "../../components/Home/subHomeComponents/Logo/Logo";
 
  const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
@@ -33,11 +34,7 @@ function Home() {
         
         if (AllFeeds?.data.success) {
           const data = AllFeeds.data.allFeeds.flat()
-          console.log('*****>',AllFeeds.data.allFeeds);
-          
           setAllFeeds(data);
-        } else {
-          console.log(AllFeeds?.data.message) 
         }
       } catch (error:any) {
         console.error("Error fetching data:", error);
@@ -65,7 +62,10 @@ function Home() {
       <div className="middle w-full h-full flex  ">
         <div className={`middleBar  flex justify-around `}>
           <div className="overflow-y-scroll">
-            <div className="w-96">{AllFeeds.length < 1 && <NoPost />}</div>
+          <div className="LogoInMobileView">
+            <Logo/>
+          </div>
+            <div className="w-80">{AllFeeds.length < 1 && <NoPost />}</div>
             {AllFeeds.map((post,index) => (
              <div key={index}>
                 <PostCard  key={index} {...post}/>
