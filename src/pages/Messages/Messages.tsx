@@ -11,7 +11,7 @@ const Messages :React.FC <{}>=() =>{
         <div className=''>
             <NavBarDesk />
         </div>
-        <div className='w-full'>
+        <div className='w-full m-auto'>
               <ChatApp />
         </div>
     </div>

@@ -21,7 +21,7 @@ const ChatBody = ({ messages,lastMessageRef,selectedUser,typingStatus,selectedUs
     localStorage.removeItem('userName');
     navigate('/messages');
     setSelectedUser('')
-    window.location.reload();
+    // window.location.reload();
   };
 
   console.log('selected user :',selectedUser);
