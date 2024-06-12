@@ -143,8 +143,8 @@ const editProfile: React.FC<editProfileProps> = (props) => {
         <div className="w-full bg-green-800 p-1 font-bold text-white text-center">
           Edit Profile
         </div>
-        <div className={`p-4 ${isDarkModeOn?'bg-black text-white':''}`}>
-          <div className={`editBody  flex justify-center gap-32 ${isDarkModeOn?'bg-black text-white':''}`}>
+        <div className={`p-4 h-[90dvh] overflow-auto ${isDarkModeOn?'bg-black text-white':''}`}>
+          <div className={`editBody  flex flex-wrap justify-center gap-32 ${isDarkModeOn?'bg-black text-white':''}`}>
             <div className="editImg">
               <div>
                 {fileUrl ? (

@@ -141,7 +141,7 @@ const  EditPropertyProfile : React.FC<PropertyPartProps>=({setPropertyFormData,p
     }
   }
   return (
-    <div className="flex justify-evenly w-full p-4 text-black gap-3">
+    <div className="flex flex-wrap justify-evenly w-full p-4 text-black gap-3">
         <ToastContainer/>
             <div className="w-96">
             <Input 

@@ -111,7 +111,7 @@ const editUserProfile: React.FC<editUserProfileProps> = ({
 
   return (
     <div>
-      <div className="userPart flex p-4 text-black gap-3">
+      <div className="userPart flex flex-wrap p-4 text-black gap-3">
        <div>
        <Input
           pattern="^[A-Za-z0-9]{3,16}$"
@@ -177,7 +177,7 @@ const editUserProfile: React.FC<editUserProfileProps> = ({
           id={"confirmPassword"}
           placeholder={"Confirm Your Password"}
         />
-        <div className=" flex items-center">
+        <div className=" flex flex-wrap items-center">
           <Input
             required={true}
             value={userFormData.DOB}
@@ -192,7 +192,7 @@ const editUserProfile: React.FC<editUserProfileProps> = ({
             <label className="ml-2 mr-2" htmlFor="">
               Gender :
             </label>
-            <div className="ml-2 mr-2">
+            <div className="ml-2 mr-2 text-green-800">
               <input
                 onChange={handleChange}
                 className="ml-2 mr-2"
