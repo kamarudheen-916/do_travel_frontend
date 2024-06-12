@@ -135,7 +135,7 @@ const ReplayComments: React.FC<commentProps> = (props) => {
               {reversedComments.map((comment, index) => (
                 <div key={index} className="">
                   <div className="comment_profile">
-                    {comment.comenterProfile !== "" ? (
+                    {comment.comenterProfile ? (
                       <img src={comment.comenterProfile} alt="profile" />
                     ) : (
                       <i

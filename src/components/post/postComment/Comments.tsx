@@ -220,7 +220,13 @@ const Comments: React.FC<commentProps> = (props) => {
                         {replayCommentIndex === index && ( // Conditionally render EditComment component based on openEditComment state
                          <div className="flex gap-3 ">
                           <div>
-                            {replayCommentIndex !== null && replayableComment?.replayComments && replayableComment?.replayComments?.length > 0 && <ReplayComments postId={props.postId} setPostData={props.setPostData} replayableCommentId={replayableComment._id} comments={replayableComment?.replayComments} />}
+                            {replayCommentIndex !== null && replayableComment?.replayComments && replayableComment?.replayComments?.length > 0 &&
+                             <ReplayComments 
+                             postId={props.postId} 
+                             setPostData={props.setPostData} 
+                             replayableCommentId={replayableComment._id} 
+                             comments={replayableComment?.replayComments} 
+                            />}
 
                           </div>
                         {  replayableComment?.replayComments && replayableComment?.replayComments?.length <1  &&
