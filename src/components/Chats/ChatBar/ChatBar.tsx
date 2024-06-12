@@ -47,7 +47,7 @@ const ChatBar = (props:chatProps) => {
         <div className={`chat__sidebar overflow-y-scroll border-r border-green-800 h-dvh min-w-60 
           ${props.selectedUser ? 'hideAtBobileScreen':'ShowAtmobileScreen'}`}>
           <div>
-            <h4 className="chat__header text-center py-1 my-5">{props.selectedUser ? 'Messages':''}</h4>
+            <h4 className="chat__header text-center py-1 my-5">{!props.selectedUser ? 'Messages':''}</h4>
             <div className="chat__users ">
               {users.map((user:any,index:number) => (
 
