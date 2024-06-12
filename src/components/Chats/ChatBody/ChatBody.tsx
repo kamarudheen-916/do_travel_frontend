@@ -2,6 +2,7 @@
 import { useNavigate } from 'react-router-dom';
 import './ChatBody.css'
 import { TiMessages } from "react-icons/ti";
+import { SetStateAction } from 'react';
 
 interface chatProps{
     messages:any[]
@@ -10,14 +11,16 @@ interface chatProps{
     selectedUser:string|null|undefined
     selectedUserProfile:any
     selectedUserName:any
+    setSelectedUser:React.Dispatch<SetStateAction<string|null|undefined>>
 }
-const ChatBody = ({ messages,lastMessageRef,selectedUser,typingStatus,selectedUserName,selectedUserProfile }:chatProps) => {
+const ChatBody = ({ messages,lastMessageRef,selectedUser,typingStatus,selectedUserName,selectedUserProfile,setSelectedUser }:chatProps) => {
   const userName = localStorage.getItem('userName')
   const navigate = useNavigate();
 
   const handleLeaveChat = () => {
     localStorage.removeItem('userName');
-    navigate('/');
+    navigate('/messages');
+    setSelectedUser('')
     window.location.reload();
   };
 

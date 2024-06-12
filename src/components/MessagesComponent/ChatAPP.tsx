@@ -126,7 +126,7 @@ const ChatAPP: React.FC = () => {
   };
 
   return (
-    <div className="chat">
+    <div className={`chat ${selectedUser ? 'hideAtBobileScreen':'ShowAtmobileScreen'}`}>
       <ChatBar
         selectedUser={selectedUser}
         setSelectedUser={setSelectedUser}
@@ -135,8 +135,9 @@ const ChatAPP: React.FC = () => {
         onlineUsers={onlineUser}
         typingStatus={typingStatus}
       />
-      <div className="w-full">
+      <div className={`w-full ${selectedUser ? 'ShowAtmobileScreen':'hideAtBobileScreen'}`}>
         <ChatBody
+          setSelectedUser={setSelectedUser}
           selectedUser={selectedUser}
           messages={messages}
           typingStatus={typingStatus}

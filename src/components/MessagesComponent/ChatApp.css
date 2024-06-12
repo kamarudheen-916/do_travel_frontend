@@ -20,3 +20,14 @@
     color: rgb(238, 102, 102);
     font-style: italic;
   }
+
+  @media (max-width: 550px){
+    .ShowAtmobileScreen{
+      display: block;
+    }
+    .hideAtBobileScreen{
+      display: none;
+    }
+    
+  }
+

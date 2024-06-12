@@ -44,10 +44,10 @@ const ChatBar = (props:chatProps) => {
       
     }
       return (
-        <div className="chat__sidebar border-r border-green-800 h-dvh min-w-60   ">
+        <div className="chat__sidebar overflow-y-scroll border-r border-green-800 h-dvh min-w-60   ">
           <div>
-            <h4 className="chat__header text-center py-1 my-5">ACTIVE USERS</h4>
-            <div className="chat__users">
+            <h4 className="chat__header text-center py-1 my-5"></h4>
+            <div className="chat__users ">
               {users.map((user:any,index:number) => (
 
                 <div onClick={()=>onUserClick(user._id,user.firstName||user.PropertyName,user.Profile||user.PropertyProfile)} key={index} className={` mt-1 cursor-pointer  flex items-center justify-between py-2 px-1 ${props.selectedUser===user._id ? "bg-green-800":""}`}>
