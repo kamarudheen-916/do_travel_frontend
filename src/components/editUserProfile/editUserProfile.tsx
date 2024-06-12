@@ -282,7 +282,7 @@ const editUserProfile: React.FC<editUserProfileProps> = ({
                   onClick={handleAddFavoritePlaces}
                 ></i>
         </div>
-        <div className="setOfFavorites rounded-md text-left p-2" style={{background:'rgba(0, 197, 76, 0.1)'}} id="setOfFavorites">
+        <div className="setOfFavorites  rounded-md text-left p-2 bg-gray-300"  id="setOfFavorites">
                  {userFormData.favoritePlace.map((place,index)=>(
                   <div key={index} className="flex justify-between cursor-pointer '">
                      <h1 >{place}</h1>
