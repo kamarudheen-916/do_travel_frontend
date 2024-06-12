@@ -19,6 +19,7 @@ const Rooms: React.FC<{
   setRoomData?:React.Dispatch<SetStateAction<Room[]|undefined>>
 }> = (props) => {
   const userType = localStorage.getItem('userType')
+  const userId =  localStorage.getItem('userId')
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5); 
   const [activeButton, setActiveButton] = useState(1); 
@@ -205,9 +206,9 @@ const Rooms: React.FC<{
             </div>
             
           </div>
-          <div>
+         {userId === room.propertyId && <div>
               <button onClick={()=>handleDeleteRoom(room._id)} className='bg-green-800 rounded px-2 py-1 w-full'>Delete</button>
-            </div>
+            </div>}
             </div>
           }
         </div>

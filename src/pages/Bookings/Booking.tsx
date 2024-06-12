@@ -51,7 +51,7 @@ const Bookings: React.FC<{}> = () => {
         <div className="bg-green-800 text-white font-extrabold w-full text-center py-1 text-lg">
           <h1>Bookings</h1>
         </div>
-        <div>
+        <div className="overflow-auto h-[90dvh]">
           {
             bookingsData.length === 0 && (
               <div className="text-center border border-green-600 placeholder my-28 py-6 px-12 rounded">
